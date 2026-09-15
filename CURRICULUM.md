@@ -1,445 +1,1694 @@
-# Teaching Day 1 — From AI to your first tested change
+# Aetherlink × Worldline Classroom
 
-**Day 1 outcome:** I understand what Claude Code is and can safely use it to explore, plan, make, test and review a small change.
+## Revised slide-by-slide content
 
-## Opening: Why are we here?
+This document replaces the current 82-slide curriculum content while retaining the existing HTML presentation engine, visual language, presenter view, prompt panel and assignment styling.
 
-**Slide 1 — Aetherlink × Worldline**
-On slide:
-- Building useful AI workflows together
-- Teaching Day 1 — Working with Claude Code
+The practical project is the **AetherBot Library**. Participants use Claude Code to build and enrich an AI knowledge library, make a repeated content method reusable as a skill, process multiple terms through a bounded agentic run, create a learning game and connect approved workplace systems through MCP.
 
-**Slide 2 — The seven-day journey**
-On slide:
-- Learn the foundations
-- Practise with Claude Code
-- Build reliable workflows
-- Apply them to team challenges
+The shared working method throughout both days is:
 
-Visual distinction: Teaching Days 1–2 / Supporting Days 1–5. Do not explain all seven days in detail yet.
+**Explore → Plan → Create → Test → Human review → Handoff**
 
-**Slide 3 — Our destination**
-On slide: By the end of this programme, your squad can build or improve an AI-supported workflow that the team can understand, verify and reuse.
-Supporting words: Useful / Safe / Shared / Reusable
+The agent loop is:
 
-**Slide 4 — Start with the problem**
-On slide: What recurring task or frustration costs your team time?
-Prompt underneath: Describe the problem, not the solution.
-Very short opening discussion.
-
-**Slide 5 — Today's destination**
-On slide: By 16:00, you can use Claude Code to:
-- explore a project
-- make a plan
-- create a small change
-- test the result
-- review the evidence
-
-## Part 1: Understanding AI
-
-**Slide 6 — What is AI?**
-On slide: AI is the broader field of creating systems that perform tasks associated with human intelligence.
-Small examples: recognise, predict, generate, decide, act.
-
-**Slide 7 — From AI to generative AI**
-On slide: Artificial intelligence → Machine learning → Generative AI → Large language models
-One short definition beneath each term.
-
-**Slide 8 — What is an LLM?**
-On slide: A large language model generates a likely continuation based on patterns learned from data and the context it receives.
-Key line: It generates an answer. It does not guarantee the truth.
-
-**Slide 9 — Input, model and output**
-On slide: Your input + available context → model → generated output
-Underneath: Better context improves the likelihood of a useful result. Verification determines whether the result can be trusted.
-
-**Slide 10 — Tokens and context**
-On slide:
-- Tokens are pieces of text processed by the model.
-- The context window is the information available during the interaction.
-- More context is not automatically better context.
-Key phrase: Give Claude what is relevant, current and allowed.
-
-**Slide 11 — Why AI can be wrong**
-On slide: missing context; ambiguous instructions; outdated information; incorrect assumptions; plausible-looking fabrication.
-Bottom: AI output is a proposal until it is verified.
-
-**Slide 12 — Model behaviour**
-On slide:
-- Different models have different capabilities.
-- Model choice affects speed, cost and depth.
-- Temperature affects variation, not truthfulness.
-This should remain brief. It is supporting knowledge, not the main lesson.
-
-## Part 2: Meet Claude
-
-**Slide 13 — Claude is more than one interface**
-On slide (table):
-| Product | Primary use |
-|---|---|
-| Claude Chat | Think and converse |
-| Claude Desktop | Claude on your computer |
-| Claude Code | Work inside technical projects |
-| Claude API | Build Claude into software |
-
-Cowork and other interfaces can be mentioned verbally without turning this into an extensive product catalogue.
-
-**Slide 14 — Claude Chat versus Claude Code**
-On slide (table):
-| Claude Chat | Claude Code |
-|---|---|
-| Works mainly in a conversation | Works inside a project |
-| Responds with content | Can inspect and act |
-| Receives what you provide | Can read approved project files |
-| Produces an answer | Can use tools and run checks |
-
-Bottom: Claude Code is already agentic.
-
-**Slide 15 — What makes Claude Code agentic?**
-On slide: Claude Code can: observe; plan; use tools; make changes; check results; adjust or stop.
-Important clarification: Using Claude Code means working with an existing agentic tool. It does not mean you have already built your own standalone agent.
-
-**Slide 16 — Why the terminal?**
-On slide: The terminal gives Claude Code access to the tools and commands used by the project.
-Examples: navigate; inspect files; start applications; run tests; use Git; review changes.
-Key line: You do not need to memorise every command, but you must understand what you approve.
-
-**Slide 17 — Your first Claude Code conversation** (LIVE DEMO)
-On slide:
-- Explore this project.
-- Explain what it does and how it is structured.
-- Do not change anything.
-- Show which evidence supports your explanation.
-This is a simple trainer demonstration in a small neutral example, before introducing the Academy.
-
-**Slide 18 — What just happened?**
-On slide: Claude: inspected files; gathered context; formed an explanation; used evidence; remained read-only.
-Question: What did Claude do that a normal chatbot could not do here?
-
-## Part 3: The Human-AI working method
-
-**Slide 19 — One method throughout the programme**
-On slide: Explore → Plan → Change → Test → Human review
-This becomes the visual red thread used repeatedly in both teaching days.
-[TERMINOLOGY NOTE: label this diagram/recurring motif "Human in the loop" throughout the deck, per the confirmed red line — see below.]
-
-**Slide 20 — Explore**
-On slide: Understand before acting.
-Check: What is the goal? What already exists? Which files are relevant? What remains unknown? What must not be changed?
-
-**Slide 21 — Plan**
-On slide: Agree on the intended change before implementation.
-A useful plan includes: desired outcome; files affected; approach; risks; validation; stop conditions.
-
-**Slide 22 — Change**
-On slide: Make the smallest useful change.
-Boundaries: stay within scope; avoid unrelated changes; pause when assumptions are required; preserve existing work.
-
-**Slide 23 — Test**
-On slide: Evidence, not confidence.
-Possible evidence: automated tests; command output; manual check; screenshot; comparison with acceptance criteria.
-
-**Slide 24 — Human review**
-On slide: The human decides: Does the result match the intent? Is the evidence sufficient? Are the risks acceptable? Should we accept, revise or stop?
-Bottom: Human review is part of the workflow, not an optional final step.
-
-**Slide 25 — Working agreement**
-On slide: During this workshop, Claude must: explore before changing; show a plan first; make small changes; run relevant checks; show evidence; mark uncertainty as OPEN; wait for human approval.
-
-## Part 4: Meet the Aetherlink Academy
-
-The Academy is only introduced now. Participants understand Claude Code and the working method first.
-
-**Slide 26 — Your practice environment**
-On slide: The Aetherlink Academy — A shared learning platform that we will improve while learning how to collaborate with Claude Code.
-
-**Slide 27 — Why the Academy?**
-On slide: We are not building disconnected exercises.
-During the course, the Academy becomes: our participant directory; our terminology library; our learning journal; our shared knowledge base; our evidence and handoff environment.
-
-**Slide 28 — Safe workshop boundaries**
-On slide:
-Participants may change: profiles; terminology; learning content; prepared interface features.
-Participants may not independently change: authentication; secrets; production configuration; facilitator controls; deployment settings.
-
-## Assignment block 1
-
-**Slide 29 — Assignment 1: Explore the Academy**
-On slide: Explore the repository without changing anything.
-Deliver: what the Academy does; project structure; relevant files; available commands; sensitive areas; OPEN questions.
-Time: 25 minutes
-Goal: Gather reliable context before acting.
-
-**Slide 30 — Assignment 1: Review**
-On slide: Compare Claude's explanation with the repository: What was correct? What was an assumption? What evidence did Claude use? What remains OPEN?
-Human decision: Is there enough understanding to begin changing the project?
-
-## Assignment block 2
-
-**Slide 31 — Assignment 2: Join the Academy**
-On slide: Add your participant profile.
-Include: name; role and team; experience; learning goal; one workflow you want to improve.
-Required method: Explore → Plan → Human approval → Change → Test → Review
-
-**Slide 32 — Definition of done**
-On slide: Your profile: follows the existing structure; appears correctly in the Academy; contains no inappropriate personal information; passes the relevant validation; has been reviewed by another participant.
-
-## Assignment block 3
-
-**Slide 33 — Assignment 3: Teach the Academy one term**
-On slide: Add one AI term containing: plain-language definition; example; common misconception; relevance to this programme.
-Rule: Verify the explanation before adding it.
-
-**Slide 34 — From individual knowledge to team knowledge**
-On slide: A useful contribution can be understood and reused by someone who did not create it.
-Short group review of selected glossary entries.
-
-## Assignment block 4
-
-**Slide 35 — Assignment 4: Improve the Academy**
-On slide: Choose one: profile search; role or team filter; terminology search; category filter; learning-goal overview; empty state; contribution status.
-Deliver: One small, tested, reviewable improvement.
-
-**Slide 36 — Team roles** [CONTENT EDIT REQUIRED — see terminology notes below: reframe as a PREVIEW of roles used once mob programming starts in the support days, NOT something practiced live now. Every participant works solo in Days 1-2; no pairing/mob programming yet.]
-On slide (as originally drafted, to be reframed as preview-only):
-- Driver: operates Claude Code
-- Navigator: guides the next action
-- Reviewer: checks intent and evidence
-- Observer/tester: records assumptions, tests and lessons
-(Original text said "Roles rotate during the exercise" — remove/reframe this since Day 1-2 is solo only.)
-
-**Slide 37 — Review gate**
-On slide: Before accepting the work: Did we achieve the intended outcome? Did we remain within scope? What did we test? What evidence do we have? What remains OPEN?
-Decision: PASS / REVISE / OPEN
-
-## Day 1 closing
-
-**Slide 38 — Your raw learning note**
-On slide: Without asking Claude to rewrite it, record: what you worked on; what changed; what you tested; what worked; what remains open; what you learned; what should happen next.
-This note becomes the Day 2 input.
-[IMPLEMENTATION NOTE: this note is saved as notes/day1-learning-note.md in the participant's own practice repo.]
-
-**Slide 39 — What changed today?**
-On slide: This morning: Claude Code was an unfamiliar tool. This afternoon: You used it to understand, change, test and review a real project.
-
-**Slide 40 — Tomorrow**
-On slide: How do we turn one successful AI interaction into a reliable method the whole team can reuse?
-Preview only: context; CLAUDE.md; skills; MCP; bounded agent workflows.
+**Observe → Decide → Act → Check → Repeat or stop**
 
 ---
 
-# Teaching Day 2 — From one-off prompt to reusable agent workflow
+# Teaching Day 1
 
-**Day 2 outcome:** I can make Claude Code's work more consistent, reusable, connected and controllable.
+## AI foundations and working with Claude Code
 
-## Opening and recap
+### Slide 1 — Aetherlink × Worldline
 
-**Slide 41 — Day 2: Making AI work repeatable**
-On slide: Prompt → Standard → Skill → Connected workflow → Human gate
+**Kicker:** TEACHING DAY 1
 
-**Slide 42 — Day 1 retrieval challenge**
-On slide: Without looking at yesterday's slides, explain:
+**Title:** Working with AI and Claude Code
+
+**Subtitle:** From AI foundations to your first tested change
+
+---
+
+### Slide 2 — The seven-day programme
+
+**Title:** The seven-day programme
+
+**On slide:**
+
+- Two teaching days establish the foundation.
+- Five support days apply the method to agent workflows and team work.
+
+**Visual labels:**
+
+- Teaching Days 1–2: understand and practise
+- Support Days 1–5: deepen and apply
+
+---
+
+### Slide 3 — Programme outcome
+
+**Title:** Programme outcome
+
+**On slide:**
+
+By the end of the programme, participants can help design, build and review an AI-supported workflow that other people can understand and reuse.
+
+**Four words:**
+
+- Useful
+- Safe
+- Verifiable
+- Reusable
+
+---
+
+### Slide 4 — Starting question
+
+**Title:** Work that could improve
+
+**On slide:**
+
+Which recurring task costs you time or creates unnecessary uncertainty?
+
+Describe the current problem. Leave the solution open for now.
+
+---
+
+### Slide 5 — Day 1 outcome
+
+**Title:** Day 1 outcome
+
+**On slide:**
+
+By 16:00, you can use Claude Code to:
+
+- understand an existing project;
+- plan a small change;
+- create the change;
+- test the result;
+- review the evidence.
+
+---
+
+## Part 1 — AI foundations
+
+### Slide 6 — Artificial intelligence
+
+**Title:** Artificial intelligence
+
+**On slide:**
+
+Artificial intelligence is the broad field of building systems that perform tasks associated with human intelligence.
+
+Examples include recognising patterns, making predictions, generating content and selecting actions.
+
+---
+
+### Slide 7 — The AI landscape
+
+**Title:** The AI landscape
+
+**On slide:**
+
+- Artificial intelligence is the broad field.
+- Machine learning finds patterns from data.
+- Generative AI creates new content.
+- Large language models generate and process language.
+
+---
+
+### Slide 8 — Large language models
+
+**Title:** Large language models
+
+**On slide:**
+
+An LLM generates a response from patterns learned during training and the context available in the current interaction.
+
+**Key line:**
+
+A plausible response still requires verification.
+
+---
+
+### Slide 9 — Input, context and output
+
+**Title:** Input, context and output
+
+**On slide:**
+
+**Input**
+Your instruction, question or goal
+
+**Context**
+Relevant information available to the model
+
+**Output**
+The response or proposed action
+
+**Bottom line:**
+
+Useful context improves the response. Evidence determines whether you can trust it.
+
+---
+
+### Slide 10 — Tokens and context windows
+
+**Title:** Tokens and context windows
+
+**On slide:**
+
+- Models process text as tokens.
+- A context window limits how much information the model can consider at once.
+- Irrelevant context can distract from the task.
+- Relevant, current and permitted context works best.
+
+---
+
+### Slide 11 — Model choice
+
+**Title:** Model choice
+
+**On slide:**
+
+Different models offer different balances of capability, speed and cost.
+
+Temperature influences variation in generated responses. It does not make an answer more truthful.
+
+**Facilitator note:** Keep this slide brief. Participants do not configure model APIs during Day 1.
+
+---
+
+### Slide 12 — AI failure modes
+
+**Title:** AI failure modes
+
+**On slide:**
+
+- Missing context
+- Ambiguous instructions
+- Unsupported assumptions
+- Outdated information
+- Fabricated details
+
+**Bottom line:**
+
+Treat AI output as a proposal until you verify it.
+
+---
+
+### Slide 13 — A reliable request
+
+**Title:** A reliable request
+
+**On slide:**
+
+A useful request gives Claude:
+
+- the intended outcome;
+- relevant context;
+- constraints;
+- success criteria;
+- the required output;
+- a validation method.
+
+---
+
+### Slide 14 — Knowledge check
+
+**Title:** Knowledge check
+
+**On slide:**
+
+Which statement is most accurate?
+
+A. An LLM retrieves a guaranteed correct answer.
+
+B. An LLM generates a response that still needs verification.
+
+C. More context always produces a better answer.
+
+D. Temperature controls factual accuracy.
+
+**Answer:** B
+
+---
+
+### Slide 15 — Break
+
+**Title:** Short break
+
+**On slide:**
+
+Return in 15 minutes.
+
+---
+
+## Part 2 — Claude and Claude Code
+
+### Slide 16 — Claude interfaces
+
+**Title:** Claude interfaces
+
+**On slide:**
+
+**Claude chat**
+Conversation, thinking and content
+
+**Claude Code**
+Agentic work inside technical projects
+
+**Claude API**
+Claude capabilities inside an application
+
+**Connected tools**
+Approved access to other information and systems
+
+---
+
+### Slide 17 — Claude chat and Claude Code
+
+**Title:** Claude chat and Claude Code
+
+**On slide:**
+
+| Claude chat | Claude Code |
+|---|---|
+| Works mainly through conversation | Works inside a project |
+| Uses the context you provide | Can inspect approved project files |
+| Produces responses | Can use tools and run commands |
+| Helps you think and write | Can plan, change and validate work |
+
+---
+
+### Slide 18 — AI agents
+
+**Title:** AI agents
+
+**On slide:**
+
+An AI agent works toward a goal by gathering context, choosing actions, using tools and checking results.
+
+It can continue, adjust, stop or ask for human input.
+
+---
+
+### Slide 19 — Claude Code as an agent
+
+**Title:** Claude Code as an agentic tool
+
+**On slide:**
+
+Claude Code can:
+
+- inspect a repository;
+- form a plan;
+- read and edit files;
+- run commands and tests;
+- inspect results;
+- adjust its approach.
+
+Using Claude Code means using an existing agentic tool.
+
+---
+
+### Slide 20 — The terminal
+
+**Title:** The terminal
+
+**On slide:**
+
+The terminal lets you interact with your computer and project through commands.
+
+Claude Code uses the same project tools developers already use for files, Git, applications and tests.
+
+**Key line:**
+
+You do not need to memorise every command. You must understand what you approve.
+
+---
+
+### Slide 21 — Permissions and Plan Mode
+
+**Title:** Permissions and Plan Mode
+
+**On slide:**
+
+Permissions control which actions Claude Code may perform without further approval.
+
+Plan Mode lets Claude investigate and prepare a plan before implementation.
+
+**Working rule:**
+
+Start with exploration. Review the plan before allowing changes.
+
+---
+
+### Slide 22 — First Claude Code demonstration
+
+**Title:** Repository exploration
+
+**On slide:**
+
+Watch Claude Code inspect a small project without changing it.
+
+**Prompt panel:**
+
+```text
+Explore this repository without changing anything.
+
+Explain what the application does, how it is structured and how I can verify your explanation. Support your claims with evidence from the files. Mark anything you cannot confirm as OPEN.
+```
+
+---
+
+### Slide 23 — Demonstration review
+
+**Title:** What Claude Code did
+
+**On slide:**
+
+- Read project files
+- Gathered context
+- Used tools
+- Connected claims to evidence
+- Marked uncertainty
+- Remained read-only
+
+**Question:**
+
+Which of these actions would a normal chat interface be unable to perform without access to the project?
+
+---
+
+### Slide 24 — Lunch
+
+**Title:** Lunch
+
+**On slide:**
+
+We continue at 13:00 with the practice repository.
+
+---
+
+## Part 3 — Working method
+
+### Slide 25 — Human and AI working method
+
+**Title:** Human and AI working method
+
+**On slide:**
+
+1. Explore
+2. Plan
+3. Create
+4. Test
+5. Human review
+6. Handoff
+
+**Bottom line:**
+
+The human owns the goal, boundaries and final decision.
+
+---
+
+### Slide 26 — Agent loop
+
+**Title:** Agent loop
+
+**On slide:**
+
+1. Observe
+2. Decide
+3. Act
+4. Check
+5. Repeat or stop
+
+**Bottom line:**
+
+The agent loop happens within a bounded task.
+
+---
+
+### Slide 27 — Two related loops
+
+**Title:** Two related loops
+
+**On slide:**
+
+**Human and AI working method**
+
+Controls the complete assignment from intent to handoff.
+
+**Agent loop**
+
+Describes how the agent works through steps inside the assignment.
+
+**Key distinction:**
+
+The agent may iterate. The human still reviews the result.
+
+---
+
+### Slide 28 — Working agreement
+
+**Title:** Working agreement
+
+**On slide:**
+
+During the exercises:
+
+- investigate before changing;
+- show the plan first;
+- make small changes;
+- run relevant checks;
+- show evidence;
+- mark uncertainty as `OPEN`;
+- wait for human approval before committing.
+
+---
+
+## Part 4 — AetherBot Library
+
+### Slide 29 — Practice project
+
+**Title:** AetherBot Library
+
+**On slide:**
+
+A small AI knowledge library that grows throughout the two teaching days.
+
+It will contain:
+
+- participant profiles;
+- an AI glossary;
+- enriched concept cards;
+- a learning game.
+
+---
+
+### Slide 30 — Repository setup
+
+**Title:** Practice repository setup
+
+**On slide:**
+
+```bash
+git clone https://github.com/jyse/aetherlink-classroom-practice.git
+cd aetherlink-classroom-practice
+npm install
+npm start
+```
+
+Open `http://localhost:3000`.
+
+In a second terminal:
+
+```bash
+claude
+```
+
+**Expected starting state:**
+
+Profiles and Glossary pages containing sample data.
+
+---
+
+### Slide 31 — Assignment 1: Repository explorer
+
+**Title:** Assignment 1: Repository explorer
+
+**Time:** 25 minutes
+
+**On slide:**
+
+Use Claude Code to understand the project without changing it.
+
+Deliver:
+
+- application purpose;
+- project structure;
+- relevant files;
+- start and validation commands;
+- protected areas;
+- `OPEN` questions.
+
+**Prompt panel:**
+
+```text
+Explore this repository without changing anything.
+
+Explain:
+- what the application does;
+- how it is structured;
+- where profiles and glossary terms live;
+- how to start it;
+- how to validate a change;
+- which files require extra care.
+
+Support your explanation with evidence from the repository. Mark anything you cannot verify as OPEN.
+```
+
+**Repository before:** Working application with sample data.
+
+**Repository after:** No code changes. The participant has an evidence-based repository map.
+
+---
+
+### Slide 32 — Assignment 1 review
+
+**Title:** Repository exploration review
+
+**On slide:**
+
+- Which claims came from actual files?
+- Which claims were assumptions?
+- Did Claude change anything?
+- Did it find the correct commands?
+- What remains `OPEN`?
+
+**Decision:** PASS, REVISE or OPEN
+
+---
+
+### Slide 33 — Assignment 2: Participant profile
+
+**Title:** Assignment 2: Participant profile
+
+**Time:** 30 minutes
+
+**On slide:**
+
+Add a profile containing:
+
+- name;
+- role;
+- relevant experience;
+- learning goal;
+- one task you would like AI to improve.
+
+**Prompt panel:**
+
+```text
+Inspect the existing profile structure and propose a participant profile for me.
+
+First show:
+- the proposed content;
+- the files you would change;
+- how you will validate the result.
+
+Do not edit anything until I approve the plan. Do not include confidential or unnecessary personal information.
+```
+
+**Repository before:** Sample profiles and an existing profile schema.
+
+**Repository after:** The participant's profile appears in the application and passes validation.
+
+---
+
+### Slide 34 — Profile review
+
+**Title:** Profile review
+
+**On slide:**
+
+Check:
+
+- The profile follows the existing structure.
+- The content is appropriate to share.
+- The profile appears correctly.
+- No unrelated files changed.
+- The participant reviewed the diff.
+
+---
+
+### Slide 35 — Short break
+
+**Title:** Short break
+
+**On slide:**
+
+Return in 15 minutes.
+
+---
+
+### Slide 36 — Assignment 3: Glossary contribution
+
+**Title:** Assignment 3: Glossary contribution
+
+**Time:** 30 minutes
+
+**On slide:**
+
+Choose one AI term and add:
+
+- a short definition;
+- one practical example;
+- one common misunderstanding;
+- its relevance to this course.
+
+**Prompt panel:**
+
+```text
+Help me add the term [TERM] to the glossary.
+
+Write for product managers and developers who are new to agentic AI. Follow the existing glossary structure. Show the draft before editing the repository. Do not add claims that we cannot verify.
+```
+
+**Repository before:** A small glossary with sample entries.
+
+**Repository after:** A new basic glossary entry appears in the application.
+
+---
+
+### Slide 37 — Assignment 4: Enriched concept card
+
+**Title:** Assignment 4: Enriched concept card
+
+**Time:** 45 minutes
+
+**On slide:**
+
+Turn one glossary term into a complete concept card containing:
+
+- plain-language explanation;
+- practical example;
+- common misunderstanding;
+- essential points;
+- related concepts;
+- reliable resources.
+
+**Prompt panel:**
+
+```text
+Turn the glossary entry [TERM] into a complete concept card.
+
+First inspect the existing data structure and application design. Propose the card content and the smallest implementation plan. Verify the factual explanation and include reliable resources. Wait for my approval before changing files. Run the relevant checks afterwards.
+```
+
+**Repository before:** A basic glossary term.
+
+**Repository after:** One enriched concept card appears in the Library.
+
+---
+
+### Slide 38 — Concept card review
+
+**Title:** Concept card review
+
+**On slide:**
+
+Review the card with another participant:
+
+- Is the definition accurate?
+- Does the example make the concept clearer?
+- Are the sources appropriate?
+- Did Claude invent anything?
+- Does the card follow the required structure?
+
+**Decision:** PASS, REVISE or OPEN
+
+---
+
+### Slide 39 — Day 1 learning note
+
+**Title:** Day 1 learning note
+
+**On slide:**
+
+Record:
+
+- what you created;
+- how you used Claude Code;
+- what you tested;
+- what you learned;
+- what remains unclear;
+- what you want to try tomorrow.
+
+Write the note yourself. Preserve uncertainty as `OPEN`.
+
+---
+
+### Slide 40 — Day 1 recap
+
+**Title:** Day 1 recap
+
+**On slide:**
+
+Today you:
+
+- learned the AI foundations;
+- used Claude Code as an agentic tool;
+- explored an unfamiliar repository;
+- made and validated small changes;
+- created the first concept card;
+- applied human review.
+
+**Tomorrow:** Turn the repeated method into a reusable skill and use it to build the rest of the Library.
+
+---
+
+# Teaching Day 2
+
+## Reusable methods, agentic work and connected context
+
+### Slide 41 — Day 2
+
+**Kicker:** TEACHING DAY 2
+
+**Title:** Reusable and connected AI workflows
+
+**Subtitle:** From one concept card to a repeatable method
+
+---
+
+### Slide 42 — Retrieval check
+
+**Title:** Retrieval check
+
+**On slide:**
+
+Explain in your own words:
+
 - Why is Claude Code agentic?
 - What is context?
-- What are the five steps in our working method?
-- Why is human review necessary?
-
-**Slide 43 — The four levels**
-On slide: Ask Claude / Use Claude Code / Customise Claude Code / Design an agent workflow
-Bottom: These levels can overlap, but they are not identical.
-
-**Slide 44 — Using versus building**
-On slide (table):
-| Situation | What you are doing |
-|---|---|
-| Claude answers a question | Chatting |
-| Claude Code changes a project | Using an agentic tool |
-| CLAUDE.md and skills guide its work | Customising Claude Code |
-| Trigger, tools and process are designed | Building an agent workflow |
-| Workflow runs as its own system | Building a standalone agent |
-
-## Part 1: Context and project memory
-
-**Slide 45 — Claude needs context**
-On slide: Useful context includes: objective; relevant files and information; constraints; examples; success criteria; validation method.
-Bottom: Context tells Claude what matters now.
-
-**Slide 46 — Where does context live?**
-On slide (table):
-| Context | Example |
-|---|---|
-| Conversation | Current request |
-| Project instructions | CLAUDE.md |
-| Task documents | intent.md, plan or ticket |
-| Repository | Code, tests and documentation |
-| External system | Retrieved through a tool or MCP |
-
-**Slide 47 — What is CLAUDE.md?**
-On slide: Persistent project instructions for Claude Code.
-Good contents: project purpose; architecture and conventions; approved commands; working boundaries; validation expectations.
-Not: every document in the project; temporary personal notes; a guarantee that rules are enforced; a new standalone agent.
-
-**Slide 48 — Instructions versus enforcement**
-On slide: CLAUDE.md tells Claude what it should do. Permissions control what it may do. Hooks can enforce specific technical rules. Human review determines whether work is accepted.
-This prepares participants for hooks during Ryan's support days without making hooks a large build assignment now.
-
-## Assignment 5: Improve project context
-
-**Slide 49 — Assignment 5: Teach Claude about this project**
-On slide: Review and improve CLAUDE.md.
-Include: purpose; relevant structure; conventions; approved commands; privacy boundaries; validation; human approval.
-Rule: Only add instructions that should remain useful in future sessions.
-
-**Slide 50 — The fresh-session test**
-On slide: A different participant starts a fresh session.
-Can Claude determine: what the project does? where contributions belong? how to validate them? what it must not change? when it must stop?
-Goal: Prove the context works without the original author explaining it.
-
-## Part 2: From prompt to reusable skill
-
-**Slide 51 — Start with a real repeated task**
-On slide: Every training day, we produce notes, evidence, lessons and next steps.
-Question: How do we make those notes useful to the whole squad?
-
-## Assignment 6: Review the raw note
-
-**Slide 52 — Assignment 6: Check yesterday's note**
-On slide: Ask Claude to: preserve your meaning; improve spelling and clarity; check completeness; identify missing evidence; ask instead of guessing; return READY, REVISE or OPEN.
-Important: Do this with a normal prompt first.
-
-**Slide 53 — Compare the results**
-On slide: Did Claude preserve the meaning? Did it invent information? Which checks did it perform? Were the results consistent? What would we need to repeat next time?
-This discussion creates the need for a shared method.
-
-**Slide 54 — From individual prompts to a team standard**
-On slide: A team standard describes what "good" means before AI generates or reviews the work.
-The class creates one Learning Note Checklist.
-
-## Assignment 7: Create the checklist
-
-**Slide 55 — Assignment 7: Define a useful learning note**
-On slide: The checklist must cover: intent; work completed; validation; evidence; learning; open questions; next step; privacy; human ownership.
-
-**Slide 56 — What is a skill?**
-On slide: A skill is a reusable method that teaches Claude how to perform a recurring task consistently.
-A skill defines: when to use it; required input; steps; output; boundaries; stop conditions.
-
-**Slide 57 — When should we create a skill?**
-On slide: Create one when: the task happens repeatedly; the method can be described; consistency matters; more than one person benefits.
-Do not create one simply because Claude can.
-
-## Assignment 8: Build the Learning Publisher skill
-
-**Slide 58 — Assignment 8: Package the method**
-On slide: Create: academy-learning-publisher
-It must: check the note; identify missing facts; preserve OPEN items; improve language; prepare reusable outputs; stop for human approval.
-
-**Slide 59 — One input, several outputs**
-On slide: An approved note can become: Academy article; daily recap; email draft; technical handoff.
-Important distinction: Checking establishes reliability. Transforming adapts the information for an audience.
-
-**Slide 60 — Skill boundaries**
-On slide: The skill must not: invent evidence; alter the author's meaning; expose confidential information; publish automatically; send an email; approve its own output.
-
-**Slide 61 — Test the skill**
-On slide: A fresh participant uses the skill on another note.
-Check: Was it understandable? Did it request missing information? Was the output consistent? Did it follow the boundaries? Could the result be reviewed?
-
-## Part 3: Tools and MCP
-
-**Slide 62 — An agent needs more than a model**
-On slide: An agent workflow may need: instructions; context; memory; tools; external information; validation; permission; human judgement.
-
-**Slide 63 — What is a tool?**
-On slide: A tool allows an AI system to perform or request a specific operation.
-Examples: read a file; run a test; search documentation; retrieve a mission; submit a proposal.
-
-**Slide 64 — What is MCP?**
-On slide: MCP is a standard way to connect AI applications to approved tools and information sources.
-Use it to: retrieve context; access capabilities; standardise connections; control what is available.
-Bottom: Connection does not equal permission.
-
-**Slide 65 — MCP in the Academy**
-On slide: Claude Code can use approved Academy tools to: retrieve the mission; read the shared document; search knowledge; submit evidence; suggest a document change.
-Human-only actions remain human-only.
-
-## Assignment 9: Connect to the Academy
-
-**Slide 66 — Assignment 9: Retrieve the mission**
-On slide: Use the Academy connection to retrieve: current mission; shared intent; relevant knowledge; constraints; available evidence.
-First action: Explain what you found. Do not submit or change anything.
-
-## Part 4: Build a bounded agent workflow
-
-**Slide 67 — Anatomy of an agent workflow**
-On slide: Trigger, Goal, Input, Context, Decisions, Tools, Actions, Checks, Output, Human gate
-
-**Slide 68 — The agent loop**
-On slide: Observe → Decide → Act → Check → Repeat or stop
-Clarification: The agent loop happens inside the task. The task follows the Human-AI working method. The task exists inside the larger SDLC.
-[TERMINOLOGY NOTE: keep all 5 steps including "Decide" — this is the confirmed final wording, matches the reconciled red-line diagram.]
-
-**Slide 69 — Our agent's responsibility**
-On slide: Turn a raw learning note into reliable, reviewable communication.
-It may: retrieve; check; ask; correct; transform; propose.
-It may not: invent; approve; publish; send; deploy.
-
-## Assignment 10: Build the Learning Publisher workflow
-
-**Slide 70 — Assignment 10: Connect the pieces**
-On slide: The workflow must: receive a learning note; retrieve mission and intent; use the Learning Publisher skill; check completeness and privacy; prepare an article, recap and email; show evidence; stop for human review.
-
-**Slide 71 — Required output**
-On slide: Status: READY, REVISE or OPEN / Facts used / Missing information / Validation performed / Academy article / Daily recap / Email draft / Human decision required
-
-**Slide 72 — Agent test scenarios**
-On slide: Test the workflow with: a complete note; a note missing evidence; a note containing sensitive information; a note with an unsupported claim.
-Goal: Verify behaviour, including when the agent should stop.
-
-**Slide 73 — Human review gate**
-On slide: The reviewer decides: Is the meaning preserved? Are claims supported? Is anything confidential? Are OPEN items visible? Is the output useful? Can it be accepted?
-Decision: PASS / REVISE / OPEN
-
-**Slide 74 — Handoff challenge**
-On slide: Can a new participant reproduce the result without speaking to the creator?
-The handoff contains: input; instructions; settings; tools; checks; outputs; evidence; open questions.
-
-## Closing the two teaching days
-
-**Slide 75 — What you have built**
-On slide: Together, we created: participant profiles; an AI terminology library; Academy improvements; project instructions; a shared review standard; a reusable skill; an MCP connection; a bounded agent workflow.
-
-**Slide 76 — What you now understand**
-On slide: how Claude Code works; why context matters; how to collaborate safely; when to use a skill; what MCP provides; what makes a workflow agentic; why evidence and human review remain necessary.
-
-**Slide 77 — What happens during the support days?**
-On slide:
-- Place the method inside the AI-native SDLC
-- Strengthen the feedback and handoff loop
-- Build an agent in n8n
-- Rebuild and control it in Claude Code
-- Apply everything to a team issue
-
-**Slide 78 — The complete progression**
-On slide: Use Claude Code → Make one good change → Make the method reusable → Build a bounded workflow → Build and compare agents → Improve a real team workflow
-
-**Slide 79 — The responsibility remains human**
-On slide: AI can explore, propose, create, check and transform.
-Humans remain responsible for intent, judgement, approval and impact.
-
-**Slide 80 — Final reflection**
-On slide: Complete these statements:
-- I can now…
-- I still need help with…
-- The first team workflow I want to improve is…
-- The boundary we must preserve is…
+- What happens during human review?
+- What is the difference between a claim and evidence?
+- What are the six steps in our working method?
 
 ---
 
-## Terminology red line (apply throughout — see plan file for full rationale)
+### Slide 43 — Levels of AI use
 
-1. **SDLC** (outermost): Plan → Design → Build → Test → Deploy → Maintain (6 phases — matches the live Academy app's own "Fase" control strip and `aetherlink-training-template`'s governance loop; do NOT use Need/Review/Release wording anywhere).
-2. **Human in the loop** (middle): Explore → Plan → Change → Test → Human review. Rename any "Human-AI working method" diagram label to "Human in the loop"; fine to say "the human-in-the-loop working method" in prose on first mention.
-3. **Agent loop** (innermost): Observe → Decide → Act → Check → Repeat or stop (5 steps, keep "Decide").
+**Title:** Levels of AI use
 
-Nesting caption: "The agent loop happens within a task. A task sits within the team's software lifecycle."
+**On slide:**
+
+1. Ask a model for a response.
+2. Use Claude Code to work inside a project.
+3. Customise Claude Code with project instructions and skills.
+4. Design a bounded workflow with tools and checks.
+5. Build a separately deployed agent application.
+
+**Bottom line:**
+
+Today focuses on levels 3 and 4.
+
+---
+
+### Slide 44 — Sources of context
+
+**Title:** Sources of context
+
+**On slide:**
+
+| Source | Example |
+|---|---|
+| Current conversation | The task requested now |
+| Project instructions | `CLAUDE.md` |
+| Task files | Brief, ticket or plan |
+| Repository | Code, tests and documentation |
+| Connected system | Jira, GitLab or Confluence through approved tools |
+
+---
+
+### Slide 45 — CLAUDE.md
+
+**Title:** CLAUDE.md
+
+**On slide:**
+
+`CLAUDE.md` provides persistent project instructions to Claude Code.
+
+Useful contents:
+
+- project purpose and structure;
+- conventions;
+- approved commands;
+- privacy boundaries;
+- validation requirements;
+- human approval points.
+
+It guides Claude. Permissions and technical controls enforce access.
+
+---
+
+### Slide 46 — Assignment 5: Project instructions
+
+**Title:** Assignment 5: Project instructions
+
+**Time:** 30 minutes
+
+**On slide:**
+
+Review and improve the repository's `CLAUDE.md`.
+
+**Prompt panel:**
+
+```text
+Review this repository and its CLAUDE.md.
+
+Propose the minimum persistent instructions Claude needs to work safely and consistently here. Cover project purpose, relevant structure, conventions, approved commands, privacy, validation and human approval. Do not add temporary assignment notes or personal preferences. Show the proposed changes before editing.
+```
+
+**Repository before:** A deliberately minimal `CLAUDE.md`.
+
+**Repository after:** Clear project instructions that remain useful in future sessions.
+
+---
+
+### Slide 47 — Fresh-session test
+
+**Title:** Fresh-session test
+
+**On slide:**
+
+Start a fresh Claude Code session.
+
+Can Claude determine:
+
+- what the project does;
+- where content belongs;
+- how to validate changes;
+- which boundaries apply;
+- when human approval is required?
+
+**Decision:** PASS, REVISE or OPEN
+
+---
+
+### Slide 48 — Break
+
+**Title:** Short break
+
+**On slide:**
+
+Return in 15 minutes.
+
+---
+
+## Part 2 — From repeated prompt to skill
+
+### Slide 49 — A repeated method
+
+**Title:** A repeated method
+
+**On slide:**
+
+Yesterday, one concept card required instructions for:
+
+- structure;
+- source checking;
+- examples;
+- missing information;
+- validation;
+- human approval.
+
+The next card requires the same method.
+
+---
+
+### Slide 50 — Assignment 6: Create a second card
+
+**Title:** Assignment 6: Create a second card
+
+**Time:** 25 minutes
+
+**On slide:**
+
+Create a second concept card with an ordinary prompt.
+
+Do not use a skill yet.
+
+**Prompt panel:**
+
+```text
+Turn the glossary entry [TERM] into a complete concept card.
+
+Use the same requirements and validation method as yesterday's approved card. Show the draft and implementation plan before changing anything.
+```
+
+**Repository before:** One approved concept card and several basic glossary entries.
+
+**Repository after:** A second concept card created through another one-off prompt.
+
+---
+
+### Slide 51 — Compare the two runs
+
+**Title:** Compare the two runs
+
+**On slide:**
+
+- Which instructions did you repeat?
+- Did the cards follow the same structure?
+- Did Claude perform the same checks?
+- Which parts should become a shared method?
+- What must still require human judgement?
+
+---
+
+### Slide 52 — Skills
+
+**Title:** Claude Code skills
+
+**On slide:**
+
+A skill packages a reusable method for a recurring task.
+
+A skill can define:
+
+- when it applies;
+- required input;
+- procedure;
+- output format;
+- boundaries;
+- stop conditions.
+
+A skill does not start Claude Code or run continuously.
+
+---
+
+### Slide 53 — Prompt, CLAUDE.md and skill
+
+**Title:** Prompt, CLAUDE.md and skill
+
+**On slide:**
+
+| Mechanism | Purpose |
+|---|---|
+| Prompt | The task Claude should perform now |
+| `CLAUDE.md` | Project instructions that apply across sessions |
+| Skill | A reusable method for one type of task |
+
+---
+
+### Slide 54 — The starter skill
+
+**Title:** Create Concept Card skill
+
+**On slide:**
+
+The repository contains an intentionally incomplete skill:
+
+```text
+.claude/skills/create-concept-card/SKILL.md
+```
+
+Your task is to inspect, improve and test it.
+
+**Facilitator note:** Preparing an incomplete skill is safer and clearer than asking every participant to invent the structure from nothing.
+
+---
+
+### Slide 55 — Assignment 7: Teach Claude the method
+
+**Title:** Assignment 7: Teach Claude the method
+
+**Time:** 45 minutes
+
+**On slide:**
+
+Improve the Create Concept Card skill so it covers:
+
+- required source information;
+- card structure;
+- factual verification;
+- missing information;
+- validation;
+- human approval.
+
+**Prompt panel:**
+
+```text
+Inspect the existing create-concept-card skill and the two approved concept cards.
+
+Propose improvements that make the method reliable and reusable. The skill must use sources, preserve uncertainty as OPEN, follow the existing card structure, validate its output and stop for human approval. Show the revised skill before editing it.
+```
+
+**Repository before:** An incomplete skill and two approved cards.
+
+**Repository after:** A complete `create-concept-card` skill.
+
+---
+
+### Slide 56 — Lunch
+
+**Title:** Lunch
+
+**On slide:**
+
+We continue at 13:00 by applying the skill across the Library.
+
+---
+
+## Part 3 — Bounded agentic work
+
+### Slide 57 — Bounded autonomy
+
+**Title:** Bounded autonomy
+
+**On slide:**
+
+Claude Code can perform several steps after receiving one goal.
+
+Boundaries define:
+
+- what it may read;
+- what it may change;
+- which checks it must run;
+- when it must stop;
+- which decisions remain human.
+
+---
+
+### Slide 58 — Assignment 8: Build the card library
+
+**Title:** Assignment 8: Build the card library
+
+**Time:** 45 minutes
+
+**On slide:**
+
+Use one instruction to process every approved glossary term.
+
+**Prompt panel:**
+
+```text
+Use the Create Concept Card skill to process every approved glossary term.
+
+For each term:
+1. Read the glossary entry.
+2. Check whether the available information and sources are sufficient.
+3. Create the concept card.
+4. Validate the required fields.
+5. Record READY, REVISE or OPEN.
+6. Continue with the next term.
+
+Do not invent missing information. Do not commit anything. When all terms are processed, run the project checks and show me the complete report for human review.
+```
+
+**Repository before:** Several basic glossary terms, two cards and one reusable skill.
+
+**Repository after:** Draft concept cards for all suitable terms plus a status report.
+
+---
+
+### Slide 59 — Agentic behaviour in the assignment
+
+**Title:** Agentic behaviour in the assignment
+
+**On slide:**
+
+**Observe**
+Read the next term and source.
+
+**Decide**
+Determine whether the information is sufficient.
+
+**Act**
+Create or revise the card.
+
+**Check**
+Validate the card.
+
+**Repeat or stop**
+Continue, mark `OPEN` or request human input.
+
+---
+
+### Slide 60 — Batch review
+
+**Title:** Concept card review
+
+**On slide:**
+
+Review the batch before accepting it:
+
+- Did the skill apply consistently?
+- Which cards lack reliable sources?
+- Which claims require correction?
+- Did Claude report actual test results?
+- Which items remain `OPEN`?
+
+**Human decision:** Accept, revise or reject each card.
+
+---
+
+### Slide 61 — Break
+
+**Title:** Short break
+
+**On slide:**
+
+Return in 15 minutes.
+
+---
+
+## Part 4 — Learning game
+
+### Slide 62 — Explain It Back
+
+**Title:** Explain It Back
+
+**On slide:**
+
+The Library now contains enough structured knowledge to support a learning game.
+
+The game shows:
+
+- one AI term;
+- an answer field;
+- the approved concept card;
+- feedback or self-review;
+- the next term.
+
+---
+
+### Slide 63 — Game starter state
+
+**Title:** Game starter state
+
+**On slide:**
+
+Already available:
+
+- game page and visual design;
+- term card;
+- answer field;
+- Submit button;
+- empty feedback area;
+- approved concept-card data.
+
+Participants complete the behaviour.
+
+---
+
+### Slide 64 — Assignment 9: Learning game
+
+**Title:** Assignment 9: Learning game
+
+**Time:** 60 minutes
+
+**On slide:**
+
+Complete the Explain It Back game.
+
+Minimum behaviour:
+
+- show one term;
+- accept an explanation;
+- reveal the approved concept card;
+- support self-review;
+- continue to the next term.
+
+**Prompt panel:**
+
+```text
+Explore the existing game page and concept-card data.
+
+Propose the smallest implementation that lets a participant read a term, enter an explanation, reveal the approved concept card, reflect on missing elements and continue to the next term. Reuse the existing visual design. Do not add authentication, a database or external AI calls. Show the plan and test cases before implementation.
+```
+
+**Repository before:** Static game design with incomplete behaviour.
+
+**Repository after:** A working browser-based learning game with self-review.
+
+---
+
+### Slide 65 — Optional extension: AI feedback
+
+**Title:** Optional extension: AI feedback
+
+**On slide:**
+
+With an approved model endpoint, the Submit button can request AI-generated feedback.
+
+Application flow:
+
+1. Participant submits an explanation.
+2. Backend retrieves the approved concept card.
+3. Backend sends the answer and reference to the model.
+4. Model returns structured feedback.
+5. Application displays the feedback.
+
+**Boundary:** A Claude Code subscription does not automatically provide an application API credential.
+
+---
+
+### Slide 66 — Evaluation criteria
+
+**Title:** Concept explanation criteria
+
+**On slide:**
+
+The evaluator checks:
+
+- central meaning;
+- important elements;
+- practical example;
+- incorrect claims;
+- missing information;
+- recommended resources.
+
+Use descriptive feedback:
+
+- Strong explanation
+- Partially complete
+- Review this concept
+- Unable to evaluate
+
+---
+
+### Slide 67 — Optional extension assignment
+
+**Title:** Optional assignment: AI Concept Coach
+
+**Time:** 60–90 minutes, only with a prepared backend and approved model access
+
+**On slide:**
+
+Connect the existing Submit button to the prepared evaluation API route.
+
+**Prompt panel:**
+
+```text
+Complete the prepared evaluation API route.
+
+When the participant submits an explanation:
+- retrieve the approved concept card;
+- compare the answer with its essential points;
+- return what the participant understood;
+- identify missing or incorrect elements;
+- recommend relevant resources;
+- display structured feedback.
+
+Keep credentials server-side. Handle unavailable model responses. Do not treat different wording as automatically incorrect. Propose the implementation and tests before changing files.
+```
+
+**Repository before:** Working self-review game, prepared backend route and approved model access.
+
+**Repository after:** The game displays AI-generated feedback.
+
+**Fallback:** Continue with the self-review version from Assignment 9.
+
+---
+
+### Slide 68 — Game review
+
+**Title:** Game review
+
+**On slide:**
+
+Test with:
+
+- a strong explanation;
+- an incomplete explanation;
+- an incorrect explanation;
+- an empty answer;
+- an unavailable evaluation service.
+
+Check whether the game provides useful feedback without inventing facts.
+
+---
+
+## Part 5 — MCP and workplace systems
+
+### Slide 69 — Model Context Protocol
+
+**Title:** Model Context Protocol
+
+**On slide:**
+
+MCP standardises how AI applications connect to approved information and capabilities.
+
+An MCP server may expose:
+
+- resources;
+- reusable prompts;
+- tools.
+
+Connecting a server does not remove permissions or human responsibility.
+
+---
+
+### Slide 70 — Repository access and MCP
+
+**Title:** Repository access and MCP
+
+**On slide:**
+
+**Local repository**
+
+Claude Code uses built-in tools to read files and run project commands.
+
+**External system**
+
+MCP can provide approved access to Jira, GitLab or Confluence.
+
+The repository itself does not require MCP.
+
+---
+
+### Slide 71 — Connection setup
+
+**Title:** Approved connections
+
+**On slide:**
+
+Connect the approved Worldline services:
+
+- Jira
+- GitLab
+- Confluence
+
+Inside Claude Code, use:
+
+```text
+/mcp
+```
+
+Confirm which connections and capabilities are available.
+
+**Facilitator note:** Insert the exact Worldline-approved setup instructions after technical preflight. Do not place credentials on this slide.
+
+---
+
+### Slide 72 — Assignment 10: Connected context
+
+**Title:** Assignment 10: Connected context
+
+**Time:** 30 minutes
+
+**On slide:**
+
+Retrieve one authorised item in read-only mode.
+
+Choose:
+
+- one Jira ticket;
+- one GitLab issue or merge request;
+- one Confluence page.
+
+**Prompt panel:**
+
+```text
+Use the approved connection to retrieve one authorised [Jira ticket / GitLab item / Confluence page].
+
+Use read-only actions. Explain:
+- what information was retrieved;
+- which source fields support your explanation;
+- what remains unclear;
+- which actions the connection could perform but you did not approve.
+
+Do not modify the external system.
+```
+
+**Repository before:** Local Library plus approved MCP configuration.
+
+**Repository after:** No external changes. The participant has a sourced explanation of one connected item.
+
+---
+
+### Slide 73 — Transfer exercise
+
+**Title:** Transfer to workplace information
+
+**On slide:**
+
+For the item you retrieved, decide:
+
+1. What is the trusted source?
+2. What output would help your work?
+3. What reusable method could create it?
+4. What should Claude verify?
+5. Which action requires human approval?
+
+**Possible outputs:**
+
+- ticket brief;
+- feature explanation;
+- technical guide;
+- merge-request summary;
+- acceptance-criteria review;
+- onboarding article.
+
+---
+
+### Slide 74 — The same pattern
+
+**Title:** The same pattern across systems
+
+**On slide:**
+
+**AetherBot Library**
+
+Glossary source → concept card → validation → human approval
+
+**Workplace system**
+
+Jira, GitLab or Confluence source → useful work output → validation → human approval
+
+**Bottom line:**
+
+The source and output change. The design questions remain the same.
+
+---
+
+## Closing
+
+### Slide 75 — What you built
+
+**Title:** What you built
+
+**On slide:**
+
+- Participant profile
+- AI glossary contribution
+- Enriched concept cards
+- Improved `CLAUDE.md`
+- Reusable Create Concept Card skill
+- Bounded multi-card agentic run
+- Explain It Back learning game
+- Approved external connection
+
+---
+
+### Slide 76 — What you can now do
+
+**Title:** What you can now do
+
+**On slide:**
+
+- Use Claude Code inside a repository.
+- Provide context and boundaries.
+- Review plans, changes and evidence.
+- Distinguish prompts, project instructions and skills.
+- Recognise bounded agentic behaviour.
+- Explain what MCP provides.
+- preserve human review and handoff.
+
+---
+
+### Slide 77 — The five support days
+
+**Title:** The five support days
+
+**On slide:**
+
+The support programme builds on this foundation:
+
+1. AI-native SDLC foundations
+2. Planning, testing, review and handoff
+3. Agent workflow in n8n
+4. Agent workflow in Claude Code with deeper controls
+5. Application to a small team issue
+
+---
+
+### Slide 78 — Complete progression
+
+**Title:** Complete progression
+
+**On slide:**
+
+1. Understand AI and Claude Code.
+2. Make one safe, tested change.
+3. Turn a repeated method into a skill.
+4. Let Claude perform a bounded sequence of work.
+5. Build an interactive AI-supported feature.
+6. Connect approved workplace information.
+7. Apply the method during the support days.
+
+---
+
+### Slide 79 — Human responsibility
+
+**Title:** Human responsibility
+
+**On slide:**
+
+AI can inspect, propose, create, transform and check.
+
+People remain responsible for:
+
+- the goal;
+- permitted context;
+- approval boundaries;
+- factual and technical review;
+- the impact of the final decision.
+
+---
+
+### Slide 80 — Final reflection
+
+**Title:** Final reflection
+
+**On slide:**
+
+Complete these statements:
+
+- I can now…
+- I still need help with…
+- One workflow I want to investigate is…
+- The source of truth would be…
+- The human decision must remain…
+
+---
+
+# Repository preparation checklist
+
+The following items must exist before the revised assignments can run:
+
+## Existing and reusable
+
+- Working Node application
+- Profiles page
+- Glossary page
+- `profiles.json`
+- `glossary.json`
+- Minimal `CLAUDE.md`
+- Start command
+
+## Add before teaching
+
+- Concept-card schema and one example card
+- Concept Cards navigation item and view
+- Intentionally incomplete `.claude/skills/create-concept-card/SKILL.md`
+- Game navigation item and styled starter screen
+- Term card, answer input, Submit button and feedback area
+- Self-review behaviour or clear TODO markers for Assignment 9
+- Validation command and tests for profile, glossary and concept-card data
+- Test fixtures for complete and incomplete glossary entries
+- Local fallback files for the MCP exercise
+
+## Optional AI feedback extension
+
+- Prepared server-side API route
+- Approved model endpoint and credentials
+- Server-side environment-variable instructions
+- Structured evaluation response schema
+- Loading and error states
+- Usage and privacy boundaries
+- Deterministic fallback when model access fails
+
+## Worldline technical preflight
+
+- Confirm Jira MCP route
+- Confirm GitLab MCP route
+- Confirm Confluence MCP route
+- Confirm personal authentication flow
+- Confirm read-only exercise permissions
+- Prepare exact setup instructions
+- Prepare screenshots or local fixtures as fallback
+
+---
+
+# Resolved alignment decisions (2026-09-15)
+
+This document was drafted separately and reviewed against the existing build.
+Three points were explicitly discussed and resolved with Jessy before
+building from it — apply these on top of everything above:
+
+## 1. Assignment 9 ("Explain It Back" game): AI feedback is REQUIRED, not optional, and needs no API credentials
+
+Do **not** build Slides 65–67 as written (self-review as the required
+behaviour, real AI feedback gated behind "an approved model endpoint" and
+server-side credentials). That framing solves a problem we don't have:
+Claude Code, running in each participant's own terminal, is already
+authenticated — there is no need for the web app to hold a separate model
+API key at all.
+
+**Build this instead, as the required Assignment 9 behaviour:**
+1. Participant reads the shown term, types their explanation, clicks Submit.
+2. The app POSTs the explanation to the local server, which writes it to
+   `data/latest-submission.json` (single slot, resets each round — no
+   history needed for now).
+3. The participant explicitly tells their own Claude Code session to check
+   it (exact phrase belongs in the assignment's prompt panel), e.g.
+   "Check my latest submission using the term-checker skill."
+4. Claude Code reads `data/latest-submission.json` directly (normal file
+   read — no MCP needed, this is local-repo access) and `checklist.md`
+   (see below), applies **Skill #2** (the checker skill, separate from
+   Skill #1 the card-maker skill from Assignment 7), and writes structured
+   feedback to `data/latest-feedback.json`.
+5. The app has a **manual "Check feedback" button** (not auto-polling —
+   keep every step visibly human-triggered) that GETs the feedback file
+   and displays it.
+
+Fold this into Slide 64 directly (extend its prompt panel and "minimum
+behaviour" list to include steps 2–5 above). Delete the "optional
+extension" framing from Slides 65–67 — repurpose Slide 66's evaluation
+criteria list as the content of `checklist.md` (participants may
+edit/extend it), and drop the API-credential/backend-route content
+entirely; it no longer applies.
+
+**`checklist.md`** lives at the repo root, separate from the skill file —
+participant/class-authored, listing what a good explanation must contain.
+Skill #2 (`.claude/skills/<name>/SKILL.md`, name TBD, e.g. `term-checker`)
+should be written generically: "read `checklist.md`, read the latest
+submission, compare, write feedback" — not with the criteria hardcoded
+into the skill itself. This mirrors the doc's own good pattern of keeping
+`create-concept-card` (Skill #1) separate from the concept-card schema.
+
+## 2. Add the three-tier "SDLC → working method → agent loop" framing back in
+
+This doc's Slide 27 ("Two related loops") only shows two tiers. Restore
+the outer SDLC tier from the earlier-agreed red-line diagram, nested
+around the two loops already here:
+
+- **Outer — SDLC** (the team's whole journey): Plan → Design → Build →
+  Test → Deploy → Maintain (six phases — matches
+  `aetherlink-training-template`'s governance loop and the live Academy
+  app's own facilitator "Fase" strip).
+- **Middle — the working method** (this doc's own current label, "Human
+  and AI working method," kept as-is — do not revert to "Human in the
+  loop" unless Jessy asks): Explore → Plan → Create → Test → Human review
+  → Handoff (six steps, per this doc).
+- **Inner — Agent loop**: Observe → Decide → Act → Check → Repeat or stop
+  (unchanged from this doc and from the existing build).
+
+Expand Slide 27 into a "Three views of the same work" slide carrying all
+three tiers nested (Build+Test of the SDLC contains the working method's
+Create+Test, which contains the agent loop) — same nesting logic as the
+original diagram, closing caption: "The agent loop happens within a task.
+A task sits within the team's software lifecycle."
+
+## 3. Part 5 (Jira/GitLab/Confluence via MCP): real connections are confirmed, not a stretch goal
+
+Worldline's MCP access for Jira/GitLab/Confluence is already arranged —
+build Slides 69–74 and Assignment 10 against the real connections as the
+primary path. Still keep the local-fixtures fallback from the
+"Repository preparation checklist" above (good practice regardless of
+confirmed access), but it's a safety net, not the main plan.
+
+## Everything else in this document is authoritative as written
+
+Including: the six-step working method wording, the pre-seeded
+intentionally-incomplete `create-concept-card` skill (Skill #1), the
+break/lunch pacing, all exact prompt panels, and the "Repository
+preparation checklist" section (treat "Add before teaching" as the
+concrete build list, adjusted per point 1 above to include `checklist.md`
+and the term-checker skill alongside the items already listed there).
+

@@ -5,7 +5,7 @@
    keyboard nav, the segmented footer progress bar, per-slide dark variant,
    the "Do this now" exercise panel, all 7 layout renderers. Removed: the
    multi-squad/day picker, glossary, mascot, and the framework-mode fallback
-   branches — this deck is always a single flat 80-slide array.
+   branches — this deck is always a single flat 78-slide array.
    New: assignment-visibility styling and the presenter-view sync (BroadcastChannel
    with a localStorage fallback) — see presenter.js for the receiving end.
    ========================================================================== */
@@ -214,7 +214,7 @@ $('next').addEventListener('click', () => go(current + 1));
 $('prompt').addEventListener('click', () => showPrompt());
 $('presenter').addEventListener('click', openPresenterView);
 $('chapters').addEventListener('click', () => {
-  const list = node('nav', 'chapter-list'); list.setAttribute('aria-label', 'All 80 slides');
+  const list = node('nav', 'chapter-list'); list.setAttribute('aria-label', 'All ' + slides.length + ' slides');
   slides.forEach((s, i) => { const b = node('button', 'chapter-link'); b.append(node('span', null, String(i + 1).padStart(2, '0')), node('strong', null, s.title)); b.setAttribute('aria-current', String(i === current)); b.addEventListener('click', () => { closePanel(); go(i); }); list.append(b); });
   openPanel('Chapters', list);
 });
