@@ -450,12 +450,12 @@ window.SLIDES = [
   subtitle: "Every participant works solo, in their own local copy.",
   type: "context",
   cards: [
-    { title: "1 · Clone it", body: "git clone <link in chat>\ncd aetherlink-classroom-practice" },
+    { title: "1 · Clone it", body: "git clone https://github.com/jyse/aetherlink-classroom-practice.git\ncd aetherlink-classroom-practice" },
     { title: "2 · Install", body: "npm install" },
     { title: "3 · Run it", body: "npm start\nOpen http://localhost:3000" },
     { title: "4 · Confirm", body: "You should see Profiles and Glossary pages, already populated with sample data." }
   ],
-  prompt: "Clone the repo from the link in chat, then run npm install and npm start. You should see the Academy practice app running at localhost:3000 — put a checkmark in chat once you see it.",
+  prompt: "Clone https://github.com/jyse/aetherlink-classroom-practice.git, then run npm install and npm start. You should see the Academy practice app running at localhost:3000 — put a checkmark in chat once you see it.",
   notes: "This is a facilitator-led step, not a self-paced assignment — walk the room through it together and watch chat for stragglers before moving on. If someone's npm install hangs or fails, pair them with a neighbour to keep pace rather than debugging live for everyone; the repo README has a plain troubleshooting section too."
 },
 
