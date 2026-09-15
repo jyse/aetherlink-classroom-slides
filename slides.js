@@ -601,11 +601,11 @@ Do not edit anything until I approve the plan. Do not include confidential or un
   layout: "exercise",
   timer: 30,
   cards: [
-    { title: "Add", body: "a short definition\none practical example\none common misunderstanding\nits relevance to this course" }
+    { title: "Add", body: "a short, plain-language definition" }
   ],
   steps: [
-    "Choose one AI term.",
-    "Draft a definition, example, common misunderstanding and relevance.",
+    "Choose one AI term not already in the glossary.",
+    "Draft a clear, accurate definition.",
     "Show the draft before editing the repository.",
     "Add the entry to the glossary.",
     "Confirm it appears correctly."
