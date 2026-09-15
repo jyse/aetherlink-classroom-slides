@@ -2,7 +2,7 @@
 
 The 78-slide HTML deck for the two teaching days ("Working with AI and
 Claude Code" and "Reusable and connected AI workflows"), built around the
-**AetherBot Library** practice project. Plain static site — HTML, CSS,
+**Aether Library** practice project. Plain static site — HTML, CSS,
 vanilla JS. No build step, no framework, no dependencies to install.
 
 Content source of truth: `CURRICULUM.md` in this repo, including its
@@ -116,7 +116,7 @@ with a treatment that's unmistakable from across a room:
 Palette copied from the Academy app (`aetherlink-academy-app/src/style.css`)
 so this deck looks visually continuous with the product participants use for
 the rest of the seven days — no purple/orange AetherBOT branding, no mascot
-(that branding is specific to the separate AetherBot Library practice repo,
+(that branding is specific to the separate Aether Library practice repo,
 not this presentation).
 
 - **Font:** Inter, with the same system-font fallback stack the Academy app
@@ -242,10 +242,10 @@ things that don't apply here:
   session" picker, `?day=`/`?squad=` query params, and the framework-mode
   fallback slides were removed rather than adapted.
 - **No mascot** — removed per the brief; that's specific to the separate
-  AetherBot Library practice repo, not this deck.
+  Aether Library practice repo, not this deck.
 - **No glossary panel** — the source engine's glossary was tied to its own
   `glossary.js` fixture, which doesn't exist for this curriculum; Assignment
-  3's glossary work happens in the AetherBot Library practice repo, not this
+  3's glossary work happens in the Aether Library practice repo, not this
   deck.
 - **Slide type is set explicitly** (a `type` field on every slide) rather
   than guessed from kicker/title text via regex, as the source engine did.
@@ -288,7 +288,7 @@ yourself before teaching:
    narrating the nesting out loud once before teaching it live.
 4. **Confirm slide 30's clone command** still points at
    `aetherlink-classroom-practice.git` while the on-screen product name
-   reads "AetherBot Library" elsewhere — this mismatch is intentional (the
+   reads "Aether Library" elsewhere — this mismatch is intentional (the
    GitHub repo name isn't changing) but is worth double-checking against
    whatever the practice repo actually ships with.
 5. **Test the presenter view on your real dual-monitor/projector setup** —

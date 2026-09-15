@@ -47,7 +47,7 @@ window.SLIDES = [
   dark: true,
   cards: [
     { title: "What we're doing", body: "Building useful, safe, verifiable and reusable AI-supported workflows together." },
-    { title: "Today", body: "AI foundations, Claude Code, the working method, and your first assignments in the AetherBot Library." }
+    { title: "Today", body: "AI foundations, Claude Code, the working method, and your first assignments in the Aether Library." }
   ],
   notes: "Open on time. Welcome the room, introduce yourself, and name the shape of the seven days: two teaching days, then five support days. Keep this short — the real content starts at slide 2."
 },
@@ -374,7 +374,7 @@ Explain what the application does, how it is structured and how I can verify you
   subtitle: "We continue at 13:00 with the practice repository.",
   type: "pause",
   cards: [
-    { title: "Back at 13:00", body: "We continue with the working method and the AetherBot Library." }
+    { title: "Back at 13:00", body: "We continue with the working method and the Aether Library." }
   ],
   notes: "Exact resume time: 13:00. Use the break to double-check the practice repo clones cleanly on the demo machine and that your own MCP-independent setup still works — the afternoon's assignments start immediately after lunch."
 },
@@ -448,16 +448,16 @@ Explain what the application does, how it is structured and how I can verify you
   cards: [
     { title: "During the exercises", body: "investigate before changing\nshow the plan first\nmake small changes\nrun relevant checks\nshow evidence\nmark uncertainty as OPEN\nwait for human approval before committing" }
   ],
-  notes: "Frame this as the room's own working agreement with Claude Code, not a rule imposed from outside — ask if anyone wants to add anything before moving into the AetherBot Library."
+  notes: "Frame this as the room's own working agreement with Claude Code, not a rule imposed from outside — ask if anyone wants to add anything before moving into the Aether Library."
 },
 
 /* ---------------------------------------------------------------------- */
-/* DAY 1 — Part 4: AetherBot Library                                       */
+/* DAY 1 — Part 4: Aether Library                                       */
 /* ---------------------------------------------------------------------- */
 
 { // Slide 29
-  title: "AetherBot Library",
-  kicker: "DAY 1 · PART 4 · AETHERBOT LIBRARY",
+  title: "Aether Library",
+  kicker: "DAY 1 · PART 4 · AETHER LIBRARY",
   subtitle: "A small AI knowledge library that grows throughout the two teaching days.",
   type: "context",
   cards: [
@@ -466,12 +466,12 @@ Explain what the application does, how it is structured and how I can verify you
     { title: "Enriched concept cards", body: "Definitions turned into complete, sourced explanations." },
     { title: "A learning game", body: "Explain It Back — practise recalling and applying the terms." }
   ],
-  notes: "The AetherBot Library is only introduced now — participants understand Claude Code and the working method first. Point participants to clone their own copy right after this slide."
+  notes: "The Aether Library is only introduced now — participants understand Claude Code and the working method first. Point participants to clone their own copy right after this slide."
 },
 
 { // Slide 30
   title: "Practice repository setup",
-  kicker: "DAY 1 · PART 4 · AETHERBOT LIBRARY",
+  kicker: "DAY 1 · PART 4 · AETHER LIBRARY",
   subtitle: "Every participant works solo, in their own local copy.",
   type: "context",
   cards: [
@@ -481,7 +481,7 @@ Explain what the application does, how it is structured and how I can verify you
     { title: "Expected starting state", body: "Profiles and Glossary pages containing sample data." }
   ],
   prompt: "Clone https://github.com/jyse/aetherlink-classroom-practice.git, then run npm install and npm start. Open http://localhost:3000 — you should see Profiles and Glossary pages with sample data. Then open a second terminal in the same folder and run claude. Put a checkmark in chat once both are running.",
-  notes: "Facilitator-led step, not self-paced — walk the room through it together and watch chat for stragglers before moving on. The GitHub repo name stays aetherlink-classroom-practice; only the product's on-screen branding is AetherBot Library, so don't be thrown if the clone URL doesn't match the name on screen. If someone's npm install hangs, pair them with a neighbour to keep pace rather than debugging live for everyone."
+  notes: "Facilitator-led step, not self-paced — walk the room through it together and watch chat for stragglers before moving on. The GitHub repo name stays aetherlink-classroom-practice; only the product's on-screen branding is Aether Library, so don't be thrown if the clone URL doesn't match the name on screen. If someone's npm install hangs, pair them with a neighbour to keep pace rather than debugging live for everyone."
 },
 
 /* ---------------------------------------------------------------------- */
@@ -540,7 +540,7 @@ Support your explanation with evidence from the repository. Mark anything you ca
 { // Slide 33
   title: "Assignment 2: Participant profile",
   kicker: "DAY 1 · ASSIGNMENT 2 · 30 MIN",
-  subtitle: "Add your profile to the AetherBot Library.",
+  subtitle: "Add your profile to the Aether Library.",
   type: "practice",
   layout: "exercise",
   timer: 30,
@@ -634,7 +634,7 @@ Write for product managers and developers who are new to agentic AI. Follow the 
     "Wait for approval before changing files.",
     "Run the relevant checks afterwards."
   ],
-  expected: "One enriched concept card appears in the AetherBot Library, verified and checked.",
+  expected: "One enriched concept card appears in the Aether Library, verified and checked.",
   prompt: `Turn the glossary entry [TERM] into a complete concept card.
 
 First inspect the existing data structure and application design. Propose the card content and the smallest implementation plan. Verify the factual explanation and include reliable resources. Wait for my approval before changing files. Run the relevant checks afterwards.`,
@@ -1202,7 +1202,7 @@ Do not modify the external system.`,
     { title: "Decide", body: "1. What is the trusted source?\n2. What output would help your work?\n3. What reusable method could create it?\n4. What should Claude verify?\n5. Which action requires human approval?" },
     { title: "Possible outputs", body: "ticket brief\nfeature explanation\ntechnical guide\nmerge-request summary\nacceptance-criteria review\nonboarding article" }
   ],
-  notes: "This is where the AetherBot Library's whole method (source → structured output → validation → human approval) gets pointed at real Worldline work — give the room a few minutes to actually answer these five questions for their own retrieved item, not just read them."
+  notes: "This is where the Aether Library's whole method (source → structured output → validation → human approval) gets pointed at real Worldline work — give the room a few minutes to actually answer these five questions for their own retrieved item, not just read them."
 },
 
 { // Slide 72
@@ -1212,7 +1212,7 @@ Do not modify the external system.`,
   type: "concept",
   layout: "compare",
   columns: [
-    { title: "AetherBot Library", items: [
+    { title: "Aether Library", items: [
       "Glossary source → concept card → validation → human approval"
     ] },
     { title: "Workplace system", items: [

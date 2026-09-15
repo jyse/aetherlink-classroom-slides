@@ -4,7 +4,7 @@
 
 This document replaces the current 82-slide curriculum content while retaining the existing HTML presentation engine, visual language, presenter view, prompt panel and assignment styling.
 
-The practical project is the **AetherBot Library**. Participants use Claude Code to build and enrich an AI knowledge library, make a repeated content method reusable as a skill, process multiple terms through a bounded agentic run, create a learning game and connect approved workplace systems through MCP.
+The practical project is the **Aether Library**. Participants use Claude Code to build and enrich an AI knowledge library, make a repeated content method reusable as a skill, process multiple terms through a bounded agentic run, create a learning game and connect approved workplace systems through MCP.
 
 The shared working method throughout both days is:
 
@@ -469,11 +469,11 @@ During the exercises:
 
 ---
 
-## Part 4 — AetherBot Library
+## Part 4 — Aether Library
 
 ### Slide 29 — Practice project
 
-**Title:** AetherBot Library
+**Title:** Aether Library
 
 **On slide:**
 
@@ -1442,7 +1442,7 @@ For the item you retrieved, decide:
 
 **On slide:**
 
-**AetherBot Library**
+**Aether Library**
 
 Glossary source → concept card → validation → human approval
 
