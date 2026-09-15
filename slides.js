@@ -441,10 +441,44 @@ window.SLIDES = [
 },
 
 /* ---------------------------------------------------------------------- */
-/* DAY 1 — Assignment block 1                                              */
+/* DAY 1 — Setup: get ready                                                */
 /* ---------------------------------------------------------------------- */
 
 { // Slide 29
+  title: "Get your practice repo",
+  kicker: "DAY 1 · SETUP",
+  subtitle: "Every participant works solo, in their own local copy.",
+  type: "context",
+  cards: [
+    { title: "1 · Clone it", body: "git clone <link in chat>\ncd aetherlink-classroom-practice" },
+    { title: "2 · Install", body: "npm install" },
+    { title: "3 · Run it", body: "npm start\nOpen http://localhost:3000" },
+    { title: "4 · Confirm", body: "You should see Profiles and Glossary pages, already populated with sample data." }
+  ],
+  prompt: "Clone the repo from the link in chat, then run npm install and npm start. You should see the Academy practice app running at localhost:3000 — put a checkmark in chat once you see it.",
+  notes: "This is a facilitator-led step, not a self-paced assignment — walk the room through it together and watch chat for stragglers before moving on. If someone's npm install hangs or fails, pair them with a neighbour to keep pace rather than debugging live for everyone; the repo README has a plain troubleshooting section too."
+},
+
+{ // Slide 30
+  title: "Set up Claude Code",
+  kicker: "DAY 1 · SETUP",
+  subtitle: "Confirm Claude Code can see your project before Assignment 1 starts.",
+  type: "context",
+  cards: [
+    { title: "1 · Open it", body: "In the same project folder, run:\nclaude" },
+    { title: "2 · Sign in", body: "Follow the sign-in prompt if this is your first time using Claude Code." },
+    { title: "3 · Sanity check", body: "Ask it: \"What's in this folder?\"" },
+    { title: "What good looks like", body: "Claude describes your actual practice repo — profiles, glossary, CLAUDE.md — not a generic answer." }
+  ],
+  prompt: "Open a terminal in your project folder, type claude, sign in if asked, then ask it: what's in this folder? You should see it describe your actual project, not a generic answer.",
+  notes: "This is the first live proof Claude Code is actually working before the room starts Assignment 1 — don't skip the sanity-check question, it's what catches a broken install or auth early. If someone's stuck on auth, have them continue read-only alongside a neighbour rather than blocking the whole room; this is exactly the kind of live-setup moment the instructor guide's fallback section covers."
+},
+
+/* ---------------------------------------------------------------------- */
+/* DAY 1 — Assignment block 1                                              */
+/* ---------------------------------------------------------------------- */
+
+{ // Slide 31
   title: "Assignment 1: Explore the Academy",
   kicker: "DAY 1 · ASSIGNMENT 1 · 25 MIN",
   subtitle: "Explore the repository without changing anything.",
@@ -468,7 +502,7 @@ window.SLIDES = [
   notes: "First solo assignment of the day — expect questions about basic terminal use in the first five minutes, that's normal. Start the timer visibly. At 5 minutes remaining, give a verbal warning. If someone finishes early, have them dig into one OPEN question rather than move ahead."
 },
 
-{ // Slide 30
+{ // Slide 32
   title: "Assignment 1: Review",
   kicker: "DAY 1 · ASSIGNMENT 1 · REVIEW",
   subtitle: "Compare Claude's explanation with the repository.",
@@ -484,7 +518,7 @@ window.SLIDES = [
 /* DAY 1 — Assignment block 2                                              */
 /* ---------------------------------------------------------------------- */
 
-{ // Slide 31
+{ // Slide 33
   title: "Assignment 2: Join the Academy",
   kicker: "DAY 1 · ASSIGNMENT 2",
   subtitle: "Add your participant profile.",
@@ -506,7 +540,7 @@ window.SLIDES = [
   notes: "Required method: Explore → Plan → Human approval → Change → Test → Review. Watch for participants who skip straight to editing the file — redirect them back to Explore/Plan without being heavy-handed about it, this is the first time they'll feel the method in their own hands."
 },
 
-{ // Slide 32
+{ // Slide 34
   title: "Definition of done",
   kicker: "DAY 1 · ASSIGNMENT 2 · DEFINITION OF DONE",
   subtitle: "Your profile:",
@@ -521,7 +555,7 @@ window.SLIDES = [
 /* DAY 1 — Assignment block 3                                              */
 /* ---------------------------------------------------------------------- */
 
-{ // Slide 33
+{ // Slide 35
   title: "Assignment 3: Teach the Academy one term",
   kicker: "DAY 1 · ASSIGNMENT 3",
   subtitle: "Add one AI term.",
@@ -543,7 +577,7 @@ window.SLIDES = [
   notes: "The verification step is the whole point of this assignment — if someone's first draft goes straight in unchecked, stop and ask them to verify it against today's material first."
 },
 
-{ // Slide 34
+{ // Slide 36
   title: "From individual knowledge to team knowledge",
   kicker: "DAY 1 · ASSIGNMENT 3 · REVIEW",
   subtitle: "A useful contribution can be understood and reused by someone who did not create it.",
@@ -558,7 +592,7 @@ window.SLIDES = [
 /* DAY 1 — Assignment block 4                                              */
 /* ---------------------------------------------------------------------- */
 
-{ // Slide 35
+{ // Slide 37
   title: "Assignment 4: Improve the Academy",
   kicker: "DAY 1 · ASSIGNMENT 4",
   subtitle: "Choose one small, tested, reviewable improvement.",
@@ -580,7 +614,7 @@ window.SLIDES = [
   notes: "The single biggest risk on this slide is scope creep — someone will want to do two improvements at once. Hold the line on 'one small, tested, reviewable improvement' the same way you held 'smallest useful change' on slide 22."
 },
 
-{ // Slide 36 — CONTENT EDIT: reframed as a preview, solo only in Days 1-2
+{ // Slide 38 — CONTENT EDIT: reframed as a preview, solo only in Days 1-2
   title: "Team roles (preview)",
   kicker: "PREVIEW · SUPPORT DAYS",
   subtitle: "A preview of the roles used once mob programming starts in the support days — not something we practise solo today.",
@@ -595,7 +629,7 @@ window.SLIDES = [
   notes: "This is a preview only — the same pattern as slide 40's 'Tomorrow' and slide 77's support-days preview. Do not run a rotation exercise here: everyone in the room is working their own solo practice repo through Assignment 4, full stop. Say plainly: 'you'll actually use these roles once mob programming starts in the support days.'"
 },
 
-{ // Slide 37
+{ // Slide 39
   title: "Review gate",
   kicker: "DAY 1 · ASSIGNMENT 4 · REVIEW",
   subtitle: "Before accepting the work:",
@@ -611,7 +645,7 @@ window.SLIDES = [
 /* DAY 1 — Closing                                                          */
 /* ---------------------------------------------------------------------- */
 
-{ // Slide 38
+{ // Slide 40
   title: "Your raw learning note",
   kicker: "DAY 1 · CLOSING",
   subtitle: "Without asking Claude to rewrite it, record:",
@@ -623,7 +657,7 @@ window.SLIDES = [
   notes: "Save this as notes/day1-learning-note.md in your own practice repo — it's already sitting in the environment you'll need it from tomorrow. Emphasise 'without asking Claude to rewrite it': today the note stays raw and personal, in the participant's own words. Day 2 Assignment 6 is exactly about reviewing this note with Claude — don't let anyone jump ahead and polish it now."
 },
 
-{ // Slide 39
+{ // Slide 41
   title: "What changed today?",
   kicker: "DAY 1 · CLOSING",
   subtitle: "From an unfamiliar tool to a working method.",
@@ -640,7 +674,7 @@ window.SLIDES = [
   notes: "Let this land as a genuine before/after — ask one or two people to name, in their own words, what changed for them today."
 },
 
-{ // Slide 40
+{ // Slide 42
   title: "Tomorrow",
   kicker: "PREVIEW · DAY 2",
   subtitle: "How do we turn one successful AI interaction into a reliable method the whole team can reuse?",
@@ -663,7 +697,7 @@ window.SLIDES = [
 /* DAY 2 — Opening and recap                                               */
 /* ---------------------------------------------------------------------- */
 
-{ // Slide 41
+{ // Slide 43
   title: "Day 2: Making AI work repeatable",
   kicker: "DAY 2 · WELCOME",
   subtitle: "Prompt → Standard → Skill → Connected workflow → Human gate",
@@ -679,7 +713,7 @@ window.SLIDES = [
   notes: "This chain is Day 2's own red thread, the same role slide 19's five steps played on Day 1. Point at it now, come back to it at the closing slides."
 },
 
-{ // Slide 42
+{ // Slide 44
   title: "Day 1 retrieval challenge",
   kicker: "DAY 2 · RECAP",
   subtitle: "Without looking at yesterday's slides, explain:",
@@ -693,7 +727,7 @@ window.SLIDES = [
   notes: "Genuinely make them answer without looking back at Day 1's deck — cold retrieval, not open-book. If the room struggles with the five steps, that's useful signal: slow down Part 1 rather than push ahead."
 },
 
-{ // Slide 43
+{ // Slide 45
   title: "The four levels",
   kicker: "DAY 2 · RECAP",
   subtitle: "These levels can overlap, but they are not identical.",
@@ -709,7 +743,7 @@ window.SLIDES = [
   notes: "This is the map for the whole day: Part 1 lives at level 2-3 (context, CLAUDE.md), Part 2 at level 3 (skills), Part 3-4 at level 4 (MCP, workflows). Point forward to today's four parts as you introduce each level."
 },
 
-{ // Slide 44
+{ // Slide 46
   title: "Using versus building",
   kicker: "DAY 2 · RECAP",
   subtitle: "Five situations, five different things you might actually be doing.",
@@ -738,7 +772,7 @@ window.SLIDES = [
 /* DAY 2 — Part 1: Context and project memory                             */
 /* ---------------------------------------------------------------------- */
 
-{ // Slide 45
+{ // Slide 47
   title: "Claude needs context",
   kicker: "DAY 2 · PART 1 · CONTEXT & CLAUDE.MD",
   subtitle: "Context tells Claude what matters now.",
@@ -750,7 +784,7 @@ window.SLIDES = [
   notes: "This picks straight back up from Day 1 slide 10's 'relevant, current, allowed' — say that connection explicitly."
 },
 
-{ // Slide 46
+{ // Slide 48
   title: "Where does context live?",
   kicker: "DAY 2 · PART 1 · CONTEXT & CLAUDE.MD",
   subtitle: "Five places context can come from.",
@@ -765,7 +799,7 @@ window.SLIDES = [
   notes: "The last row is the one to underline — it's the seed for Part 3's MCP content later today."
 },
 
-{ // Slide 47
+{ // Slide 49
   title: "What is CLAUDE.md?",
   kicker: "DAY 2 · PART 1 · CONTEXT & CLAUDE.MD",
   subtitle: "Persistent project instructions for Claude Code.",
@@ -777,7 +811,7 @@ window.SLIDES = [
   notes: "The 'Not' column matters as much as the 'Good contents' column — CLAUDE.md is deliberately not a prompt landfill. This is the seed repo's own README pattern; point participants to their seed CLAUDE.md now."
 },
 
-{ // Slide 48
+{ // Slide 50
   title: "Instructions versus enforcement",
   kicker: "DAY 2 · PART 1 · CONTEXT & CLAUDE.MD",
   subtitle: "Four different jobs, four different mechanisms.",
@@ -796,7 +830,7 @@ window.SLIDES = [
 /* DAY 2 — Assignment 5                                                    */
 /* ---------------------------------------------------------------------- */
 
-{ // Slide 49
+{ // Slide 51
   title: "Assignment 5: Teach Claude about this project",
   kicker: "DAY 2 · ASSIGNMENT 5",
   subtitle: "Review and improve CLAUDE.md.",
@@ -818,7 +852,7 @@ window.SLIDES = [
   notes: "Watch for participants pasting today's entire to-do list into CLAUDE.md — redirect with the 'Not' list from slide 47: it isn't a prompt landfill or a temporary notes file."
 },
 
-{ // Slide 50
+{ // Slide 52
   title: "The fresh-session test",
   kicker: "DAY 2 · ASSIGNMENT 5 · REVIEW",
   subtitle: "A different participant starts a fresh session.",
@@ -834,7 +868,7 @@ window.SLIDES = [
 /* DAY 2 — Part 2: From prompt to reusable skill                          */
 /* ---------------------------------------------------------------------- */
 
-{ // Slide 51
+{ // Slide 53
   title: "Start with a real repeated task",
   kicker: "DAY 2 · PART 2 · PROMPT TO SKILL",
   subtitle: "How do we make those notes useful to the whole squad?",
@@ -849,7 +883,7 @@ window.SLIDES = [
 /* DAY 2 — Assignment 6                                                    */
 /* ---------------------------------------------------------------------- */
 
-{ // Slide 52
+{ // Slide 54
   title: "Assignment 6: Check yesterday's note",
   kicker: "DAY 2 · ASSIGNMENT 6",
   subtitle: "Ask Claude to review your Day 1 learning note.",
@@ -872,7 +906,7 @@ window.SLIDES = [
   notes: "Important: this must be a normal, ad-hoc prompt — not a skill. The gap this creates (inconsistency between people's results) is exactly what motivates building a skill next. Don't let anyone jump ahead to Assignment 8 yet."
 },
 
-{ // Slide 53
+{ // Slide 55
   title: "Compare the results",
   kicker: "DAY 2 · ASSIGNMENT 6 · REVIEW",
   subtitle: "Did Claude preserve the meaning?",
@@ -883,7 +917,7 @@ window.SLIDES = [
   notes: "This discussion creates the need for a shared method — collect two or three genuinely different outcomes from the room out loud before moving to slide 54, the contrast is the point."
 },
 
-{ // Slide 54
+{ // Slide 56
   title: "From individual prompts to a team standard",
   kicker: "DAY 2 · PART 2 · PROMPT TO SKILL",
   subtitle: "A team standard describes what 'good' means before AI generates or reviews the work.",
@@ -899,7 +933,7 @@ window.SLIDES = [
 /* DAY 2 — Assignment 7                                                    */
 /* ---------------------------------------------------------------------- */
 
-{ // Slide 55
+{ // Slide 57
   title: "Assignment 7: Define a useful learning note",
   kicker: "DAY 2 · ASSIGNMENT 7",
   subtitle: "The checklist must cover:",
@@ -919,7 +953,7 @@ window.SLIDES = [
   notes: "This is a facilitator-led group activity, not a solo exercise — run it as a discussion and write the agreed checklist somewhere visible (whiteboard, shared doc, or directly into a file in each participant's repo) before moving on."
 },
 
-{ // Slide 56
+{ // Slide 58
   title: "What is a skill?",
   kicker: "DAY 2 · PART 2 · PROMPT TO SKILL",
   subtitle: "A reusable method that teaches Claude how to perform a recurring task consistently.",
@@ -931,7 +965,7 @@ window.SLIDES = [
   notes: "The six items on the right map directly onto Assignment 8's own structure a few slides from now — say that out loud."
 },
 
-{ // Slide 57
+{ // Slide 59
   title: "When should we create a skill?",
   kicker: "DAY 2 · PART 2 · PROMPT TO SKILL",
   subtitle: "Do not create one simply because Claude can.",
@@ -947,7 +981,7 @@ window.SLIDES = [
 /* DAY 2 — Assignment 8                                                    */
 /* ---------------------------------------------------------------------- */
 
-{ // Slide 58
+{ // Slide 60
   title: "Assignment 8: Package the method",
   kicker: "DAY 2 · ASSIGNMENT 8",
   subtitle: "Create: academy-learning-publisher",
@@ -969,7 +1003,7 @@ window.SLIDES = [
   notes: "This is the room's first time authoring their own skill — expect it to take longer than the slide's implied pace. It's explicitly listed as low infra-risk to prepare in advance since participants build it themselves; your job here is coaching, not demoing a pre-built answer."
 },
 
-{ // Slide 59
+{ // Slide 61
   title: "One input, several outputs",
   kicker: "DAY 2 · PART 2 · PROMPT TO SKILL",
   subtitle: "Checking establishes reliability. Transforming adapts the information for an audience.",
@@ -981,7 +1015,7 @@ window.SLIDES = [
   notes: "This distinction — checking versus transforming — is the exact one Assignment 10's workflow has to respect later today. Flag that connection now."
 },
 
-{ // Slide 60
+{ // Slide 62
   title: "Skill boundaries",
   kicker: "DAY 2 · PART 2 · PROMPT TO SKILL",
   subtitle: "The skill must not:",
@@ -992,7 +1026,7 @@ window.SLIDES = [
   notes: "Every item on this list is a real failure mode someone in the room will hit while building Assignment 8 — use it as a checklist while you circulate and coach."
 },
 
-{ // Slide 61
+{ // Slide 63
   title: "Test the skill",
   kicker: "DAY 2 · ASSIGNMENT 8 · REVIEW",
   subtitle: "A fresh participant uses the skill on another note.",
@@ -1007,7 +1041,7 @@ window.SLIDES = [
 /* DAY 2 — Part 3: Tools and MCP                                          */
 /* ---------------------------------------------------------------------- */
 
-{ // Slide 62
+{ // Slide 64
   title: "An agent needs more than a model",
   kicker: "DAY 2 · PART 3 · TOOLS & MCP",
   subtitle: "What an agent workflow may need.",
@@ -1025,7 +1059,7 @@ window.SLIDES = [
   notes: "Eight items, deliberately dense — don't linger on each one individually, this is a map of the rest of Part 3 and Part 4."
 },
 
-{ // Slide 63
+{ // Slide 65
   title: "What is a tool?",
   kicker: "DAY 2 · PART 3 · TOOLS & MCP",
   subtitle: "A tool allows an AI system to perform or request a specific operation.",
@@ -1037,7 +1071,7 @@ window.SLIDES = [
   notes: "Point out that Claude Code has already been using tools all day (Explore step, running tests) — this isn't a brand-new concept, just a new name for something they've watched happen since slide 17."
 },
 
-{ // Slide 64
+{ // Slide 66
   title: "What is MCP?",
   kicker: "DAY 2 · PART 3 · TOOLS & MCP",
   subtitle: "Connection does not equal permission.",
@@ -1050,7 +1084,7 @@ window.SLIDES = [
   notes: "Say the tagline explicitly and connect it back to slide 28's safe workshop boundaries — being connected to something is not the same as being allowed to change it."
 },
 
-{ // Slide 65
+{ // Slide 67
   title: "MCP in the Academy",
   kicker: "DAY 2 · PART 3 · TOOLS & MCP",
   subtitle: "Human-only actions remain human-only.",
@@ -1066,7 +1100,7 @@ window.SLIDES = [
 /* DAY 2 — Assignment 9                                                    */
 /* ---------------------------------------------------------------------- */
 
-{ // Slide 66
+{ // Slide 68
   title: "Assignment 9: Retrieve the mission",
   kicker: "DAY 2 · ASSIGNMENT 9",
   subtitle: "Use the Academy connection to retrieve context. Do not submit or change anything.",
@@ -1093,7 +1127,7 @@ window.SLIDES = [
 /* DAY 2 — Part 4: Build a bounded agent workflow                         */
 /* ---------------------------------------------------------------------- */
 
-{ // Slide 67
+{ // Slide 69
   title: "Anatomy of an agent workflow",
   kicker: "DAY 2 · PART 4 · BOUNDED AGENT WORKFLOW",
   subtitle: "Ten parts of a designed workflow.",
@@ -1106,7 +1140,7 @@ window.SLIDES = [
   notes: "This is the checklist Assignment 10 has to satisfy — you can literally hold the room to these ten words while reviewing their workflows later."
 },
 
-{ // Slide 68
+{ // Slide 70
   title: "The agent loop",
   kicker: "AGENT LOOP",
   subtitle: "Observe → Decide → Act → Check → Repeat or stop",
@@ -1123,7 +1157,7 @@ window.SLIDES = [
   notes: "All five steps stay, including 'Decide' — this is the confirmed final wording of the reconciled terminology diagram, do not drop it. Nesting to say explicitly: the agent loop happens inside Change+Test of the human-in-the-loop method (slide 19), which itself sits inside Build+Test of the team's six-phase SDLC (Plan, Design, Build, Test, Deploy, Maintain). Close with the tagline exactly as written."
 },
 
-{ // Slide 69
+{ // Slide 71
   title: "Our agent's responsibility",
   kicker: "DAY 2 · PART 4 · BOUNDED AGENT WORKFLOW",
   subtitle: "Turn a raw learning note into reliable, reviewable communication.",
@@ -1153,7 +1187,7 @@ window.SLIDES = [
 /* DAY 2 — Assignment 10                                                   */
 /* ---------------------------------------------------------------------- */
 
-{ // Slide 70
+{ // Slide 72
   title: "Assignment 10: Connect the pieces",
   kicker: "DAY 2 · ASSIGNMENT 10",
   subtitle: "Build the Learning Publisher workflow.",
@@ -1176,7 +1210,7 @@ window.SLIDES = [
   notes: "This is the capstone assignment of the two teaching days — give it the most time of any single assignment. It's explicitly listed as low infra-risk to prepare (participant-authored), so your job is circulating and checking each workflow actually stops for human review rather than running end to end unattended."
 },
 
-{ // Slide 71
+{ // Slide 73
   title: "Required output",
   kicker: "DAY 2 · ASSIGNMENT 10",
   subtitle: "What the workflow must produce.",
@@ -1194,7 +1228,7 @@ window.SLIDES = [
   notes: "Use this as a literal checklist while reviewing each participant's workflow output — eight items, all eight should be visible in what they show you."
 },
 
-{ // Slide 72
+{ // Slide 74
   title: "Agent test scenarios",
   kicker: "DAY 2 · ASSIGNMENT 10 · REVIEW",
   subtitle: "Verify behaviour, including when the agent should stop.",
@@ -1206,7 +1240,7 @@ window.SLIDES = [
   notes: "The sensitive-information and unsupported-claim scenarios are the ones most likely to be skipped under time pressure — if time is short, protect these two over the 'complete note' happy path, which is the least informative test."
 },
 
-{ // Slide 73
+{ // Slide 75
   title: "Human review gate",
   kicker: "DAY 2 · ASSIGNMENT 10 · REVIEW",
   subtitle: "The reviewer decides.",
@@ -1218,7 +1252,7 @@ window.SLIDES = [
   notes: "Same three-way decision as slides 37 and 50 — by now the room should produce it without prompting; if they don't, that's a sign to slow down before the closing slides."
 },
 
-{ // Slide 74
+{ // Slide 76
   title: "Handoff challenge",
   kicker: "DAY 2 · ASSIGNMENT 10 · REVIEW",
   subtitle: "Can a new participant reproduce the result without speaking to the creator?",
@@ -1233,7 +1267,7 @@ window.SLIDES = [
 /* DAY 2 — Closing the two teaching days                                  */
 /* ---------------------------------------------------------------------- */
 
-{ // Slide 75
+{ // Slide 77
   title: "What you have built",
   kicker: "DAY 2 · CLOSING",
   subtitle: "Together, we created:",
@@ -1252,7 +1286,7 @@ window.SLIDES = [
   notes: "Use the reveal button live — click through each item slowly and let the room recognise their own two days of work in the list."
 },
 
-{ // Slide 76
+{ // Slide 78
   title: "What you now understand",
   kicker: "DAY 2 · CLOSING",
   subtitle: "How Claude Code works, and why the boundaries matter.",
@@ -1270,7 +1304,7 @@ window.SLIDES = [
   notes: "This is the understanding checklist, not the artefact checklist (that was slide 75) — the distinction is worth naming out loud."
 },
 
-{ // Slide 77
+{ // Slide 79
   title: "What happens during the support days?",
   kicker: "PREVIEW · SUPPORT DAYS",
   subtitle: "Five days with Ryan, building on everything so far.",
@@ -1285,7 +1319,7 @@ window.SLIDES = [
   notes: "Preview only, matching slides 36 and 40's pattern — this is Ryan's territory starting tomorrow, don't get pulled into detail questions about n8n specifics here."
 },
 
-{ // Slide 78
+{ // Slide 80
   title: "The complete progression",
   kicker: "DAY 2 · CLOSING",
   subtitle: "From your first Claude Code conversation to improving a real team workflow.",
@@ -1302,7 +1336,7 @@ window.SLIDES = [
   notes: "The first four steps are exactly what the room just did across the two teaching days — say that explicitly before pointing at the last two, which belong to the support days."
 },
 
-{ // Slide 79
+{ // Slide 81
   title: "The responsibility remains human",
   kicker: "DAY 2 · CLOSING",
   subtitle: "AI can explore, propose, create, check and transform.",
@@ -1326,7 +1360,7 @@ window.SLIDES = [
   notes: "This is the single sentence to leave the room with above all others — slow down here, don't rush it because it's near the end of a long two days."
 },
 
-{ // Slide 80
+{ // Slide 82
   title: "Final reflection",
   kicker: "DAY 2 · CLOSING",
   subtitle: "Complete these statements.",

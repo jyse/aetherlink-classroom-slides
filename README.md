@@ -1,6 +1,6 @@
 # Aetherlink × Worldline — classroom deck
 
-The 80-slide HTML deck for the two teaching days ("From AI to your first
+The 82-slide HTML deck for the two teaching days ("From AI to your first
 tested change" and "From one-off prompt to reusable agent workflow"). Plain
 static site — HTML, CSS, vanilla JS. No build step, no framework, no
 dependencies to install.
@@ -13,12 +13,19 @@ Slide 68 keeping all five agent-loop steps including "Decide").
 ## Run it
 
 ```
-python3 -m http.server 8080
+python3 serve.py 8080
 ```
 
 Then open `http://localhost:8080/#1`. Stop the server with Ctrl-C. No install,
-no build — that's the whole workflow. (`npx serve` works identically if you
-prefer it.)
+no build — that's the whole workflow.
+
+**Use `serve.py`, not plain `python3 -m http.server`.** Browsers cache
+`index.html`/`slides.js` aggressively, so after editing a slide a normal
+refresh can silently keep showing the *old* content — `serve.py` is a
+tiny wrapper that sends real no-cache HTTP headers so every refresh gets
+what's actually on disk. If you ever do use `python3 -m http.server` or
+`npx serve` instead, do a hard refresh (or open a private window) after
+every edit.
 
 Jump to any slide directly via the URL hash, e.g. `#29` for Assignment 1.
 
@@ -111,7 +118,7 @@ on the `type` field of every slide rather than guessed from its title:
 | `practice` | **amber** (`--amber`, new) | every assignment slide |
 | `review` | violet (`--violet`, Academy's own accent) | gates, debriefs, checkpoints |
 | `recap` | slate blue-grey | closing/summary slides |
-| `pause` | steel blue-grey | breaks (unused by the 80 slides today, kept for completeness) |
+| `pause` | steel blue-grey | breaks (unused by the 82 slides today, kept for completeness) |
 | `context` | deep steel blue-grey | welcome, boundaries, previews |
 
 Amber is a deliberate new addition, not part of the Academy app's base
@@ -159,6 +166,15 @@ becomes
   subtitle: "What's one thing that wastes your team's time every week?",
 ```
 
+**After saving — refresh the browser, don't just reload:** browsers
+aggressively cache `slides.js`, so a normal refresh can silently keep
+showing your *old* content even after you've saved real changes.
+`index.html` and `presenter.html` load it as `slides.js?v=2` for exactly
+this reason — after editing, bump that number by one everywhere it
+appears (`index.html`, `presenter.html` — three tags each: `styles.css`,
+`slides.js`, `app.js`/`presenter.js`) and refresh. If a change still
+doesn't show up, that's the first thing to check.
+
 **Rules that keep the file working:**
 - Every slide is wrapped in `{ ... }` and separated from the next by a comma.
 - Every piece of text is wrapped in matching quote marks (`"..."`). If your
@@ -187,7 +203,7 @@ appears immediately.
 | `index.html` | Page shell for the audience-facing deck |
 | `styles.css` | Academy-matched colours, typography, layout, assignment styling |
 | `app.js` | Rendering, hash navigation, keyboard nav, timers, the "Do this now" panel, the footer progress bar, and presenter-sync broadcasting |
-| `slides.js` | All 80 slides as one JSON-shaped data file — the only file most edits touch |
+| `slides.js` | All 82 slides as one JSON-shaped data file — the only file most edits touch |
 | `presenter.html` / `presenter.js` | The separate presenter window (notes, prompt, next slide, timers), kept live via `BroadcastChannel` |
 | `CURRICULUM.md` | The authoritative slide-by-slide source content (do not need to edit this for day-of tweaks — edit `slides.js`) |
 
@@ -198,8 +214,8 @@ nav, keyboard nav, footer progress bar, per-slide dark variant, the seven
 layout renderers, the "Do this now" exercise panel) but simplifies several
 things that don't apply here:
 
-- **One flat 80-slide array**, not a multi-squad/multi-day picker — this
-  deck is always exactly these 80 slides in this order, so the "Choose
+- **One flat 82-slide array**, not a multi-squad/multi-day picker — this
+  deck is always exactly these 82 slides in this order, so the "Choose
   session" picker, `?day=`/`?squad=` query params, and the framework-mode
   fallback slides were removed rather than adapted.
 - **No mascot** — removed per the brief.
@@ -208,7 +224,7 @@ things that don't apply here:
   3's glossary work happens in the Academy practice repo, not this deck.
 - **Slide type is set explicitly** (a `type` field on every slide) rather
   than guessed from kicker/title text via regex, as the source engine did.
-  With 80 hand-authored slides, explicit typing is more reliable than
+  With 82 hand-authored slides, explicit typing is more reliable than
   pattern-matching against titles that were never designed for it.
 - **The old "Facilitator notes" dialog was removed** in favour of the new
   presenter window. The source engine's notes dialog opened *on the same
@@ -222,9 +238,9 @@ This was checked with an automated browser pass (all 7 layouts, mobile
 width, no console errors, presenter sync confirmed live across two tabs),
 but you should still, on the actual machine and screen you'll teach from:
 
-1. **Click through all 80 slides in order**, start to finish, both days.
+1. **Click through all 82 slides in order**, start to finish, both days.
    Confirm nothing looks broken and the content reads correctly end to end —
-   an automated pass sampled slides, it did not read all 80 for tone/accuracy.
+   an automated pass sampled slides, it did not read all 82 for tone/accuracy.
 2. **Confirm the two content edits read correctly in context**: slide 36
    (mob-programming preview, no "roles rotate" language) and slide 68 (all
    five agent-loop steps present, including "Decide").
