@@ -32,6 +32,14 @@
                  original line breaks) — do not paraphrase these.
      tagline   - a short bold line rendered under the slide's main content.
      notes     - facilitator speaker notes (never shown to participants).
+     visual    - optional illustration, never changes wording:
+                 bot: 'wave'|'think'|'point'|'head' (AetherBOT pose)
+                 place: 'left'|'beside'|'under'|'timeline'
+                 tool: 'map'|'arm'|'toolbox'|'thought' (comes out of his head)
+                 target: CSS selector the tool points at
+                 art: 'timeline' · cardArt: { <cardIndex>: 'route' } · pillarIcons
+                 highlight: [{ in: 'title'|'subtitle'|'card:N', text, tone:
+                              'orange'|'purple'|'mark' }] — text must exist verbatim
    ========================================================================== */
 window.SLIDES = [
 
@@ -44,6 +52,8 @@ window.SLIDES = [
   kicker: "TEACHING DAY 1",
   subtitle: "Working with AI and Claude Code — from AI foundations to your first tested change.",
   type: "context",
+  visual: { bot: 'wave', place: 'left', tool: 'map', target: '.cards .card:nth-child(2)', cardArt: { 1: 'route' },
+    highlight: [{ in: 'subtitle', text: 'first tested change', tone: 'orange' }, { in: 'card:0', text: 'together', tone: 'purple' }] },
   dark: true,
   cards: [
     { title: "What we're doing", body: "Building useful, safe, verifiable and reusable AI-supported workflows together." },
@@ -57,6 +67,8 @@ window.SLIDES = [
   kicker: "DAY 1 · WELCOME",
   subtitle: "Two teaching days establish the foundation. Five support days apply the method to agent workflows and team work.",
   type: "context",
+  visual: { art: 'timeline', bot: 'head', place: 'timeline', tool: 'arm', target: '.tl-arrow',
+    highlight: [{ in: 'subtitle', text: 'foundation', tone: 'purple' }, { in: 'subtitle', text: 'apply', tone: 'orange' }] },
   cards: [
     { title: "Teaching Days 1–2", body: "Understand and practise." },
     { title: "Support Days 1–5", body: "Deepen and apply." }
@@ -69,6 +81,8 @@ window.SLIDES = [
   kicker: "DAY 1 · WELCOME",
   subtitle: "By the end of the programme, participants can help design, build and review an AI-supported workflow that other people can understand and reuse.",
   type: "context",
+  visual: { bot: 'head', place: 'under', tool: 'toolbox', pillarIcons: true,
+    highlight: [{ in: 'subtitle', text: 'understand and reuse', tone: 'orange' }] },
   layout: "pillars",
   items: [
     { label: "Useful" },
@@ -84,6 +98,8 @@ window.SLIDES = [
   kicker: "DAY 1 · WELCOME",
   subtitle: "Which recurring task costs you time or creates unnecessary uncertainty?",
   type: "context",
+  visual: { bot: 'think', place: 'beside', tool: 'thought',
+    highlight: [{ in: 'title', text: 'improve', tone: 'orange' }, { in: 'subtitle', text: 'time', tone: 'mark' }, { in: 'subtitle', text: 'uncertainty', tone: 'purple' }] },
   cards: [
     { title: "Describe the problem", body: "Leave the solution open for now." }
   ],
