@@ -496,28 +496,17 @@ Explain what the application does, how it is structured and how I can verify you
   layout: "exercise",
   timer: 25,
   cards: [
-    { title: "Deliver", body: "application purpose\nproject structure\nrelevant files\nstart and validation commands\nprotected areas\nOPEN questions" }
+    { title: "Deliver", body: "app purpose\nproject structure\nrelevant files\nstart and validate commands\nprotected areas\nOPEN questions" }
   ],
   steps: [
-    "Ask Claude to explore the repository without changing anything.",
-    "Have it explain what the application does.",
-    "Have it map the project structure and identify relevant files.",
-    "Have it find the start and validation commands.",
-    "Have it flag files or areas that require extra care.",
-    "Have it list anything it cannot verify as OPEN."
+    "Explore the repository without changing anything.",
+    "Explain what the app does and how it's structured.",
+    "Find where profiles and glossary data live.",
+    "Find the start and validate commands.",
+    "Flag files that need extra care.",
+    "Mark anything unverifiable as OPEN rather than guessing."
   ],
   expected: "An evidence-based repository map. No code changed, and unknowns are marked OPEN rather than guessed.",
-  prompt: `Explore this repository without changing anything.
-
-Explain:
-- what the application does;
-- how it is structured;
-- where profiles and glossary terms live;
-- how to start it;
-- how to validate a change;
-- which files require extra care.
-
-Support your explanation with evidence from the repository. Mark anything you cannot verify as OPEN.`,
   notes: "First solo assignment of the day — expect questions about basic terminal use in the first five minutes, that's normal. Start the timer visibly. At 5 minutes remaining, give a verbal warning. If someone finishes early, have them dig into one OPEN question rather than move ahead."
 },
 
@@ -540,30 +529,21 @@ Support your explanation with evidence from the repository. Mark anything you ca
 { // Slide 33
   title: "Assignment 2: Participant profile",
   kicker: "DAY 1 · ASSIGNMENT 2 · 30 MIN",
-  subtitle: "Add your profile to the Aether Library.",
+  subtitle: "Add your profile — and the page that shows it.",
   type: "practice",
   layout: "exercise",
   timer: 30,
   cards: [
-    { title: "Include", body: "name\nrole\nrelevant experience\nlearning goal\none task you would like AI to improve" }
+    { title: "Include", body: "name\nrole\nteam\nexperience\nlearning goal\none workflow you'd like AI to improve" }
   ],
   steps: [
-    "Inspect the existing profile structure.",
-    "Propose the content, the files you'd change, and how you'll validate the result.",
-    "Wait for human approval before editing anything.",
-    "Make the change.",
-    "Test that your profile appears correctly.",
-    "Confirm no confidential or unnecessary personal information was included."
+    "Inspect the existing structure first.",
+    "Propose both the profile data and the page that displays it.",
+    "Show the plan before changing anything.",
+    "Leave out confidential or unnecessary personal information.",
+    "Confirm the profile is visible on the Profiles page afterward."
   ],
-  expected: "Your profile appears in the application and passes validation, with the plan approved before any file changed.",
-  prompt: `Inspect the existing profile structure and propose a participant profile for me.
-
-First show:
-- the proposed content;
-- the files you would change;
-- how you will validate the result.
-
-Do not edit anything until I approve the plan. Do not include confidential or unnecessary personal information.`,
+  expected: "Your profile appears on a working Profiles page and passes validation, with the plan approved before any file changed.",
   notes: "Watch for participants who skip straight to editing the file — redirect them back to explore/plan without being heavy-handed about it, this is the first time they'll feel the method in their own hands. Remind them explicitly: no confidential or unnecessary personal information."
 },
 
@@ -605,15 +585,12 @@ Do not edit anything until I approve the plan. Do not include confidential or un
   ],
   steps: [
     "Choose one AI term not already in the glossary.",
-    "Draft a clear, accurate definition.",
-    "Show the draft before editing the repository.",
-    "Add the entry to the glossary.",
-    "Confirm it appears correctly."
+    "Follow the existing glossary structure, written for someone new to agentic AI.",
+    "Show the draft before touching the repository.",
+    "Avoid claims that can't be backed up.",
+    "Build the Glossary page too, if it doesn't already display entries."
   ],
-  expected: "A new basic glossary entry appears in the application, reviewed as a draft before it was added.",
-  prompt: `Help me add the term [TERM] to the glossary.
-
-Write for product managers and developers who are new to agentic AI. Follow the existing glossary structure. Show the draft before editing the repository. Do not add claims that we cannot verify.`,
+  expected: "A new glossary entry appears on a working Glossary page, reviewed as a draft before it was added.",
   notes: "The verification step is the whole point of this assignment — if someone's first draft goes straight in unchecked, stop and ask them to verify it against today's material first."
 },
 
@@ -628,16 +605,13 @@ Write for product managers and developers who are new to agentic AI. Follow the 
     { title: "Include", body: "plain-language explanation\npractical example\ncommon misunderstanding\nessential points\nrelated concepts\nreliable resources" }
   ],
   steps: [
-    "Inspect the existing data structure and application design.",
-    "Propose the card content and the smallest implementation plan.",
-    "Verify the factual explanation and include reliable resources.",
+    "Inspect the existing data structure and application design first.",
+    "Propose the card content and the smallest plan — including the Library page, if it doesn't exist yet.",
+    "Verify the explanation with real, checked sources.",
     "Wait for approval before changing files.",
-    "Run the relevant checks afterwards."
+    "Run the relevant checks afterward."
   ],
-  expected: "One enriched concept card appears in the Aether Library, verified and checked.",
-  prompt: `Turn the glossary entry [TERM] into a complete concept card.
-
-First inspect the existing data structure and application design. Propose the card content and the smallest implementation plan. Verify the factual explanation and include reliable resources. Wait for my approval before changing files. Run the relevant checks afterwards.`,
+  expected: "One enriched concept card appears on a working Library page, verified and checked.",
   notes: "Longest assignment of the morning — the room will feel the jump from a basic glossary entry to a fully sourced card. Circulate and coach on 'verify the factual explanation' specifically; that's the step people are tempted to skip under time pressure."
 },
 
@@ -777,16 +751,12 @@ First inspect the existing data structure and application design. Propose the ca
     { title: "Cover", body: "project purpose\nrelevant structure\nconventions\napproved commands\nprivacy\nvalidation\nhuman approval" }
   ],
   steps: [
-    "Read the repository and its current CLAUDE.md.",
-    "Propose the minimum persistent instructions Claude needs to work safely and consistently here.",
+    "Review the repository and its current CLAUDE.md.",
+    "Propose the minimum persistent instructions needed: purpose, structure, conventions, approved commands, privacy, validation, human approval.",
     "Leave out temporary assignment notes or personal preferences.",
-    "Show the proposed changes before editing.",
-    "Save the file."
+    "Show the proposed changes before editing."
   ],
   expected: "A CLAUDE.md that a stranger's Claude Code session could rely on without you explaining anything out loud.",
-  prompt: `Review this repository and its CLAUDE.md.
-
-Propose the minimum persistent instructions Claude needs to work safely and consistently here. Cover project purpose, relevant structure, conventions, approved commands, privacy, validation and human approval. Do not add temporary assignment notes or personal preferences. Show the proposed changes before editing.`,
   notes: "Watch for participants pasting today's entire to-do list into CLAUDE.md — redirect with slide 45's contents list: it isn't a prompt landfill or a temporary notes file."
 },
 
@@ -841,15 +811,12 @@ Propose the minimum persistent instructions Claude needs to work safely and cons
   ],
   steps: [
     "Choose a second glossary term.",
-    "Ask Claude to turn it into a complete concept card using an ordinary, one-off prompt.",
-    "Show the draft and implementation plan before changing anything.",
-    "Create the card.",
+    "Use the same requirements and validation method as yesterday's approved card — an ordinary, one-off prompt, no skill.",
+    "Show the draft and plan before changing anything.",
+    "Confirm the card renders correctly on the existing Library page.",
     "Note which instructions you had to repeat from scratch."
   ],
   expected: "A second concept card created through another one-off prompt — plus a clear sense of what had to be repeated.",
-  prompt: `Turn the glossary entry [TERM] into a complete concept card.
-
-Use the same requirements and validation method as yesterday's approved card. Show the draft and implementation plan before changing anything.`,
   notes: "Important: this must stay a normal, ad-hoc prompt — not a skill. The inconsistency this creates between people's results is exactly what motivates building a skill next. Don't let anyone jump ahead to Assignment 7 yet."
 },
 
@@ -912,17 +879,14 @@ Use the same requirements and validation method as yesterday's approved card. Sh
     { title: "The skill must cover", body: "required source information\ncard structure\nfactual verification\nmissing information\nvalidation\nhuman approval" }
   ],
   steps: [
-    "Inspect the existing create-concept-card skill and the two approved concept cards.",
-    "Propose improvements that make the method reliable and reusable.",
-    "Make sure the skill uses sources and preserves uncertainty as OPEN.",
-    "Make sure it follows the existing card structure and validates its output.",
-    "Make sure it stops for human approval.",
-    "Show the revised skill before editing it."
+    "Use the approved card(s) as evidence of what \"good\" looks like.",
+    "Create the skill at .claude/skills/create-concept-card/SKILL.md.",
+    "Require real sources before trusting any factual claim.",
+    "Follow the exact existing concept-card structure.",
+    "Keep uncertainty as OPEN rather than inventing content.",
+    "Validate its output, then stop for human approval before writing to data/concept-cards.json."
   ],
-  expected: "A complete create-concept-card skill, tested against the two approved cards.",
-  prompt: `Inspect the existing create-concept-card skill and the two approved concept cards.
-
-Propose improvements that make the method reliable and reusable. The skill must use sources, preserve uncertainty as OPEN, follow the existing card structure, validate its output and stop for human approval. Show the revised skill before editing it.`,
+  expected: "A complete create-concept-card skill, tested against the approved cards.",
   notes: "This is the room's first time authoring their own skill — expect it to take longer than the slide's implied pace. Your job here is coaching, not demoing a pre-built answer; circulate and check each skill still stops for human approval rather than finishing unattended."
 },
 
@@ -964,25 +928,13 @@ Propose improvements that make the method reliable and reusable. The skill must 
     { title: "For each term", body: "read the glossary entry\ncheck sufficiency\ncreate the concept card\nvalidate the required fields\nrecord READY, REVISE or OPEN\ncontinue with the next term" }
   ],
   steps: [
-    "Use the Create Concept Card skill to process every approved glossary term.",
-    "For each term, read the entry and check whether the information and sources are sufficient.",
-    "Create the concept card and validate the required fields.",
+    "Use the create-concept-card skill on every remaining approved glossary term, one at a time.",
+    "For each: read the entry, check whether information and sources are sufficient, create the card, validate required fields.",
     "Record READY, REVISE or OPEN for each one.",
-    "Do not invent missing information. Do not commit anything.",
-    "When all terms are processed, run the project checks and produce a complete report."
+    "Never invent missing information. Never commit anything.",
+    "Show one complete report for human review once every term is processed."
   ],
   expected: "Draft concept cards for all suitable terms, plus a status report ready for human review.",
-  prompt: `Use the Create Concept Card skill to process every approved glossary term.
-
-For each term:
-1. Read the glossary entry.
-2. Check whether the available information and sources are sufficient.
-3. Create the concept card.
-4. Validate the required fields.
-5. Record READY, REVISE or OPEN.
-6. Continue with the next term.
-
-Do not invent missing information. Do not commit anything. When all terms are processed, run the project checks and show me the complete report for human review.`,
   notes: "It's explicitly low infra-risk to prepare since participants build and run it themselves — your job here is circulating and checking each run actually stops to report rather than committing unattended. Watch especially for terms it should have marked OPEN instead of guessing."
 },
 
@@ -1059,35 +1011,21 @@ Do not invent missing information. Do not commit anything. When all terms are pr
 { // Slide 64
   title: "Assignment 9: Learning game",
   kicker: "DAY 2 · ASSIGNMENT 9 · 60 MIN",
-  subtitle: "Complete the Explain It Back game — including real AI feedback from your own Claude Code session.",
+  subtitle: "The game already works. Build checklist.md and the term-checker skill, then use them.",
   type: "practice",
   layout: "exercise",
   timer: 60,
   cards: [
-    { title: "Minimum behaviour", body: "show one term\naccept an explanation\nPOST it to data/latest-submission.json\nreveal the approved concept card\nlet Claude Code check it against checklist.md\nshow feedback via a manual Check feedback button\ncontinue to the next term" }
+    { title: "Part A — a good explanation has", body: "central meaning\nessential points\na practical example\nno incorrect claims\nno missing information\nrelevant resources" }
   ],
   steps: [
-    "Explore the existing game page and concept-card data.",
-    "Propose the smallest implementation: read a term, enter an explanation, reveal the approved card, continue to the next term.",
-    "Wire Submit to POST the explanation to the local server, which writes data/latest-submission.json (a single slot, reset each round).",
-    "Add a manual \"Check feedback\" button that GETs data/latest-feedback.json and displays it — no auto-polling, every step stays human-triggered.",
-    "Tell your own Claude Code session: \"Check my latest submission using the term-checker skill.\"",
-    "Confirm Claude Code reads checklist.md and the submission, then writes data/latest-feedback.json for the button to display."
+    "Part A: propose what a good \"explain this term back\" answer contains, based on the approved concept cards. Write it to checklist.md once approved.",
+    "Part B: create .claude/skills/term-checker/SKILL.md — it reads checklist.md and the latest submission, compares against the matching concept card, and writes structured feedback.",
+    "The skill must read checklist.md generically (never hardcode criteria) and never call an external API or model.",
+    "Part C: say the exact phrase — \"Check my latest submission using the term-checker skill.\""
   ],
-  expected: "A working browser-based learning game where AI feedback comes from the participant's own authenticated Claude Code session — no API credentials, no external model calls, no database.",
-  prompt: `Explore the existing game page and concept-card data.
-
-Propose the smallest implementation that lets a participant read a term, enter an explanation, reveal the approved concept card, reflect on missing elements and continue to the next term. Reuse the existing visual design. Do not add authentication, a database or external AI calls. Show the plan and test cases before implementation.
-
-Then wire up real AI feedback using Claude Code itself — no API credentials required:
-- On Submit, POST the explanation to the local server, which writes it to data/latest-submission.json (a single slot that resets each round — no history needed).
-- Add a manual "Check feedback" button that GETs data/latest-feedback.json and displays it. Do not auto-poll — every step must stay human-triggered.
-
-Once the game is wired up, check your own submission by telling me directly:
-"Check my latest submission using the term-checker skill."
-
-I will then read data/latest-submission.json and checklist.md, apply the term-checker skill, and write structured feedback to data/latest-feedback.json for the "Check feedback" button to display.`,
-  notes: "Longest single assignment of the two days — give it the full 60 minutes and don't rush the wrap-up. Two distinct halves: first the game UI (steps 1-2), then the file-based AI feedback bridge (steps 3-6). The key thing to protect: no API keys, no external model calls, no database — feedback comes entirely from the participant's own already-authenticated Claude Code session reading and writing local files. Watch for people who build the UI and skip the term-checker invocation because time is short; the exact phrase in the prompt panel is what actually exercises Skill #2, so prioritise getting every participant to say it at least once, even if the UI polish is incomplete."
+  expected: "A working game where AI feedback comes entirely from your own authenticated Claude Code session — no API credentials, no external model calls, no database.",
+  notes: "Longest single assignment of the two days — give it the full 60 minutes and don't rush the wrap-up. Do NOT let anyone rebuild the game itself — it already works; the real work is Parts A and B, then actually saying Part C's exact phrase at least once. The key thing to protect: no API keys, no external model calls, no database — feedback comes entirely from the participant's own already-authenticated Claude Code session reading and writing local files. Watch for people who build checklist.md and the skill but skip Part C because time is short."
 },
 
 { // Slide 65
@@ -1173,23 +1111,13 @@ I will then read data/latest-submission.json and checklist.md, apply the term-ch
     { title: "Choose one", body: "one Jira ticket\none GitLab issue or merge request\none Confluence page" }
   ],
   steps: [
-    "Use the approved connection to retrieve one authorised item.",
-    "Use read-only actions only.",
-    "Explain what information was retrieved and which source fields support it.",
+    "Retrieve one authorised item using the approved connection, read-only.",
+    "Explain what information was retrieved and which fields support it.",
     "Note what remains unclear.",
     "List which actions the connection could perform that you did not approve.",
-    "Do not modify the external system."
+    "Do not modify the external system in any way."
   ],
   expected: "No external changes. A sourced, plain-language explanation of one connected item, with unclear points marked OPEN.",
-  prompt: `Use the approved connection to retrieve one authorised [Jira ticket / GitLab item / Confluence page].
-
-Use read-only actions. Explain:
-- what information was retrieved;
-- which source fields support your explanation;
-- what remains unclear;
-- which actions the connection could perform but you did not approve.
-
-Do not modify the external system.`,
   notes: "Highest infra-risk moment of the two days — verify the MCP connection end-to-end yourself before class. Fallback: if a participant's connection fails, have them use the local fixture files instead and explain those — the teaching point (retrieve, explain, do not modify) survives without a live round-trip. Keep a captured example ready to show the room if several people need the fallback at once."
 },
 
