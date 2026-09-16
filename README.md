@@ -115,13 +115,13 @@ with a treatment that's unmistakable from across a room:
 
 Palette copied from the Academy app (`aetherlink-academy-app/src/style.css`)
 so this deck looks visually continuous with the product participants use for
-the rest of the seven days — no purple/orange AetherBOT branding, no mascot
-(that branding is specific to the separate Aether Library practice repo,
-not this presentation).
+the rest of the seven days. On top of that base, an optional **AetherBOT
+visual layer** (see below) adds the AetherMind Canva-style purple/orange
+accents and the AetherBOT assistant, slide by slide.
 
-- **Font:** Inter, with the same system-font fallback stack the Academy app
-  itself uses (no `@font-face`, no external font request — keeps the deck
-  working offline).
+- **Font:** Nunito (600–900), self-hosted in `assets/fonts/` via `@font-face`
+  with Inter/system fallback — still no external font request, so the deck
+  keeps working offline and on restricted networks.
 - **Base look:** dark navy by default (`--bg:#06111e`), matching the Academy
   app's own default. A small number of high-impact statement slides
   (`dark: true` in `slides.js` — currently the cover slide and the live-demo
@@ -150,6 +150,32 @@ assignment" colour separate from cyan and violet — reusing either of those
 would have made assignment slides blend into ordinary concept/review slides.
 Amber reads clearly against the navy background and doesn't collide with any
 existing Academy UI colour.
+
+### AetherBOT visual layer (`visual` field in `slides.js`)
+
+Purely additive: it never changes slide wording (verified by diffing every
+slide's text fields against the previous version — 0 differences). A slide
+without a `visual` field renders exactly as before. Currently used on slides 1–4.
+
+- **Colours** (AetherMind Canva style): purple `#5B3FFF`, orange `#FF7A1A`
+  (`--aether-purple`, `--aether-orange`; `--aether-purple-text` is a lighter
+  tint for text on dark). The presenter button uses a purple→orange gradient.
+- **Highlights:** `highlight: [{ in: 'title'|'subtitle'|'card:N', text, tone:
+  'orange'|'purple'|'mark' }]` wraps an existing word in a span. `text` must
+  occur verbatim.
+- **AetherBOT is an assistant, not decoration.** `bot` picks a pose
+  (`wave`, `think`, `point`, or `head` only), `place` where he stands
+  (`left`, `beside`, `under`, `timeline`), and `tool` what comes out of the
+  hatch in his head to explain the slide: `map` (trail to a card), `arm`
+  (extending arm that taps `target`), `toolbox` (tools fly into the pillars),
+  `thought` (thought cloud). Tool positions are measured at runtime, so they
+  follow the layout and are redrawn on resize.
+- **Motion** is transform/opacity only, plays when a slide is shown (again on
+  revisit), and is switched off entirely by `prefers-reduced-motion`.
+- **Robot images** (`assets/aetherbot/*.webp`, 60–85 KB each) are transparent
+  cut-outs. The chest logo is the AetherLink mark and must never be altered.
+- **Known gap:** the light token set still isn't wired to a toggle, and slides
+  with `dark: true` are unreadable if `data-theme="light"` is forced.
 
 ## How to edit a slide
 
@@ -224,9 +250,11 @@ appears immediately.
 | File | Purpose |
 | --- | --- |
 | `index.html` | Page shell for the audience-facing deck |
-| `styles.css` | Academy-matched colours, typography, layout, assignment styling |
-| `app.js` | Rendering, hash navigation, keyboard nav, timers, the "Do this now" panel, the footer progress bar, and presenter-sync broadcasting |
+| `styles.css` | Academy-matched colours, typography, layout, assignment styling, AetherBOT visual layer |
+| `app.js` | Rendering (incl. `renderVisual` for the AetherBOT layer), hash navigation, keyboard nav, timers, the "Do this now" panel, the footer progress bar, and presenter-sync broadcasting |
 | `slides.js` | All 78 slides as one JSON-shaped data file — the only file most edits touch |
+| `assets/aetherbot/` | AetherBOT cut-outs (wave, think, point, head) used by the visual layer |
+| `assets/fonts/` | Self-hosted Nunito (latin + latin-ext, variable 600–900) |
 | `presenter.html` / `presenter.js` | The separate presenter window (notes, prompt, next slide, timers), kept live via `BroadcastChannel` |
 | `CURRICULUM.md` | The authoritative slide-by-slide source content (do not need to edit this for day-of tweaks — edit `slides.js`) |
 
