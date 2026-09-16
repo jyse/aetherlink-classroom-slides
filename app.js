@@ -112,6 +112,111 @@ function renderLayout(stage, s) {
   if (L === 'exercise') renderTimer(stage, s);
 }
 
+/* ---- AetherBOT + illustrations (slides.js: visual) ----
+   Additive only: never changes slide wording. Highlights wrap existing words
+   in a span; all art is aria-hidden. AetherBOT is an assistant, not decoration:
+   every appearance does something that explains the slide, and his tools come
+   out of the hatch in his head. */
+const SVGNS = 'http://www.w3.org/2000/svg';
+function svg(viewBox, inner, cls) { const e = document.createElementNS(SVGNS, 'svg'); e.setAttribute('viewBox', viewBox); e.setAttribute('aria-hidden', 'true'); e.setAttribute('focusable', 'false'); if (cls) e.setAttribute('class', cls); e.innerHTML = inner; return e; }
+/* hatch = where the lid on top of his head sits, in % of the image box (measured) */
+const BOTS = {
+  wave:  { src: 'assets/aetherbot/aetherbot-wave.webp',  hatch: [58.4, 12.6] },
+  think: { src: 'assets/aetherbot/aetherbot-think.webp', hatch: [51.3, 14.8] },
+  point: { src: 'assets/aetherbot/aetherbot-point.webp', hatch: [32.6, 14.6] },
+  head:  { src: 'assets/aetherbot/aetherbot-head.webp',  hatch: [49.6, 25.8] }
+};
+const PILLAR_ICONS = [
+  '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.3"/>',
+  '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>',
+  '<circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/><path d="M7.5 10.5l2 2 3.5-4"/>',
+  '<path d="M4 12a8 8 0 0 1 14-5l2 2"/><path d="M20 4v5h-5"/><path d="M20 12a8 8 0 0 1-14 5l-2-2"/><path d="M4 20v-5h5"/>'];
+const ART = {
+  route: () => svg('0 0 400 70',
+    '<path class="art-path" d="M35 35H365"/>' +
+    [35, 145, 255, 365].map((x, i) => '<g transform="translate(' + x + ' 35)"><g class="art-stop" style="--i:' + i + '"><circle r="24"/>' + [
+      '<path d="M-6 9h12M-4 14h8M-9 2a10 10 0 1 1 18 0c-2 2-3 4-3 6h-12c0-2-1-4-3-6z"/>',
+      '<rect x="-13" y="-10" width="26" height="20" rx="3"/><path d="M-7 -3l5 4-5 4M1 6h6"/>',
+      '<path d="M-10 0a10 10 0 0 1 17-7l3 3M10 -9v5h-5M10 0a10 10 0 0 1-17 7l-3-3M-10 9v-5h5"/>',
+      '<path d="M-13 11h26M-11 11v-20M-5 11v-16M1 11v-19M7 11l-4-17M11 11v-14"/>'][i] + '</g></g>').join(''), 'art art-route'),
+  timeline: () => svg('0 0 760 96',
+    [0, 1].map(i => '<g class="tl-block tl-teach" style="--i:' + i + '"><rect x="' + (i * 96) + '" y="20" width="84" height="56" rx="12"/><text x="' + (i * 96 + 42) + '" y="56">' + (i + 1) + '</text></g>').join('') +
+    '<path class="tl-arrow" d="M196 48h40m-10-9 10 9-10 9"/>' +
+    [0, 1, 2, 3, 4].map(i => '<g class="tl-block tl-support" style="--i:' + (i + 2) + '"><rect x="' + (256 + i * 101) + '" y="20" width="89" height="56" rx="12"/><text x="' + (256 + i * 101 + 44.5) + '" y="56">' + (i + 1) + '</text></g>').join(''), 'art art-timeline'),
+  thought: () => svg('0 0 260 210',
+    '<circle class="bubble" style="--i:0" cx="22" cy="198" r="7"/><circle class="bubble" style="--i:1" cx="46" cy="174" r="11"/>' +
+    '<g transform="translate(262 0) scale(-1 1)"><path class="cloud" style="--i:2" d="M58 142c-26 0-44-18-44-40 0-20 15-36 34-39 5-24 26-41 51-41 19 0 36 10 45 25 6-3 13-5 21-5 27 0 48 21 48 47 0 2 0 4-1 6 12 6 20 18 20 32 0 20-16 35-36 35z"/></g>' +
+    '<g class="cloud-ico" style="--i:3"><path class="loop" d="M96 60a36 36 0 1 1-26 12"/><path class="loop" d="M62 64l8 8 9-6"/><circle cx="96" cy="94" r="20"/><path d="M96 94V82M96 94h9"/><circle class="clock-dot" cx="96" cy="94" r="2.6"/></g>' +
+    '<text class="cloud-q" x="168" y="120">?</text>', 'gadget gadget-thought')
+};
+const LID = '<svg class="lid" viewBox="0 0 60 24" aria-hidden="true"><defs><linearGradient id="lidg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b5cd6"/><stop offset="1" stop-color="#2b2f6b"/></linearGradient></defs><rect x="2" y="6" width="56" height="14" rx="7" fill="url(#lidg)" stroke="#161d3a" stroke-width="2"/><circle cx="8" cy="13" r="3.4" fill="#FF7A1A"/></svg>';
+
+function highlight(root, s) {
+  (s.visual?.highlight || []).forEach(h => {
+    let host = null;
+    if (h.in === 'title') host = root.querySelector('.heading h1');
+    else if (h.in === 'subtitle') host = root.querySelector('.heading .subtitle');
+    else if (/^card:\d+$/.test(h.in)) host = root.querySelectorAll('.card p')[Number(h.in.split(':')[1])];
+    if (!host) return;
+    const walker = document.createTreeWalker(host, NodeFilter.SHOW_TEXT);
+    for (let t = walker.nextNode(); t; t = walker.nextNode()) {
+      const i = t.nodeValue.indexOf(h.text); if (i < 0) continue;
+      const mid = t.splitText(i); mid.splitText(h.text.length);
+      const span = node('span', 'hl hl-' + h.tone); mid.replaceWith(span); span.append(mid); break;
+    }
+  });
+}
+function rel(el, stage) { const a = el.getBoundingClientRect(), b = stage.getBoundingClientRect(); return { x: a.left - b.left + stage.scrollLeft, y: a.top - b.top, w: a.width, h: a.height }; }
+function renderVisual(stage, body, main, s) {
+  const v = s.visual; if (!v) return;
+  if (v.art === 'timeline') main.prepend(ART.timeline());
+  if (v.cardArt) { const cards = main.querySelectorAll('.card'); Object.entries(v.cardArt).forEach(([i, kind]) => { if (cards[i] && ART[kind]) cards[i].append(ART[kind]()); }); }
+  if (v.pillarIcons) main.querySelectorAll('.pillar').forEach((p, i) => p.prepend(svg('0 0 24 24', PILLAR_ICONS[i % 4], 'pillar-icon')));
+  highlight(stage, s);
+  const bot = BOTS[v.bot]; if (!bot) return;
+  const fig = node('figure', 'bot bot-' + v.bot + ' place-' + v.place); fig.setAttribute('aria-hidden', 'true');
+  const live = node('div', 'bot-live'); const img = document.createElement('img'); img.src = bot.src; img.alt = ''; img.decoding = 'async';
+  const hatch = node('span', 'hatch'); hatch.style.left = bot.hatch[0] + '%'; hatch.style.top = bot.hatch[1] + '%'; hatch.innerHTML = LID;
+  live.append(img, hatch); fig.append(live);
+  if (v.tool === 'thought') fig.append(ART.thought());
+  if (v.place === 'left') { body.prepend(fig); body.classList.add('with-bot', 'bot-left'); }
+  else if (v.place === 'beside') { body.append(fig); body.classList.add('with-bot', 'bot-beside'); }
+  else if (v.place === 'under') { main.append(fig); }
+  else if (v.place === 'timeline') { const tl = main.querySelector('.art-timeline'); const row = node('div', 'tl-row'); tl.replaceWith(row); row.append(tl, fig); }
+  const fx = document.createElementNS(SVGNS, 'svg'); fx.setAttribute('class', 'fx'); fx.setAttribute('aria-hidden', 'true'); stage.append(fx);
+  const draw = () => {
+    fx.replaceChildren(); stage.querySelectorAll('.fly').forEach(f => f.remove());
+    const r = stage.getBoundingClientRect(); fx.setAttribute('viewBox', '0 0 ' + r.width + ' ' + stage.scrollHeight); fx.style.height = stage.scrollHeight + 'px';
+    const h = rel(hatch, stage);
+    const from = { x: h.x, y: h.y };
+    const target = v.target ? stage.querySelector(v.target) : null;
+    if (v.tool === 'map' && target) {
+      const t = rel(target, stage), to = { x: t.x + 70, y: t.y - 8 }, top = Math.min(from.y, to.y) - 110;
+      const d = 'M' + from.x + ' ' + from.y + ' C' + (from.x + 30) + ' ' + top + ' ' + (to.x - 120) + ' ' + top + ' ' + to.x + ' ' + to.y;
+      fx.innerHTML = '<path class="trail" pathLength="1" d="' + d + '"/><g class="map-pop" transform="translate(' + from.x + ' ' + (from.y - 36) + ')"><g class="map-inner"><path d="M-22-14 -8-18 8-12 22-16V14L8 18-8 12-22 16z"/><path class="fold" d="M-8-18V12M8-12V18"/><circle class="pin" cx="14" cy="-2" r="4"/></g></g>';
+    }
+    if (v.tool === 'arm' && target) {
+      const t = rel(target, stage), to = { x: t.x + t.w / 2, y: t.y + t.h / 2 };
+      const d = 'M' + from.x + ' ' + from.y + ' C' + (from.x - 10) + ' ' + (from.y - 150) + ' ' + (to.x + 90) + ' ' + (to.y - 170) + ' ' + to.x + ' ' + (to.y - 30);
+      fx.innerHTML = '<defs><mask id="armmask" maskUnits="userSpaceOnUse"><path class="arm-reveal" pathLength="1" d="' + d + '"/></mask></defs>' +
+        '<g mask="url(#armmask)"><path class="arm-tube" d="' + d + '"/><path class="arm-rings" d="' + d + '"/></g>' +
+        '<g class="arm-tip" transform="translate(' + to.x + ' ' + (to.y - 30) + ')"><circle class="ripple" r="14"/><circle class="ripple r2" r="14"/><path class="claw" d="M-9 -6 -4 10M9 -6 4 10"/><circle class="knuckle" r="9"/></g>';
+      target.classList.add('tapped');
+    }
+    if (v.tool === 'toolbox') {
+      main.querySelectorAll('.pillar-icon').forEach((ic, i) => {
+        const t = rel(ic, stage); const f = node('span', 'fly'); f.style.setProperty('--i', i);
+        f.style.left = from.x + 'px'; f.style.top = from.y + 'px';
+        f.style.setProperty('--dx', (t.x + t.w / 2 - from.x) + 'px'); f.style.setProperty('--dy', (t.y + t.h / 2 - from.y) + 'px');
+        f.append(svg('0 0 24 24', PILLAR_ICONS[i % 4])); stage.append(f);
+      });
+    }
+  };
+  requestAnimationFrame(() => requestAnimationFrame(draw));
+  img.addEventListener('load', () => requestAnimationFrame(draw), { once: true });
+  window.addEventListener('resize', draw, { signal: slideController.signal });
+}
+
 /* ---- slide type -> colour chip, footer segment ---- */
 const TYPE_LABEL = { practice: 'Assignment', concept: 'Concept', review: 'Review', recap: 'Recap', pause: 'Break', context: 'Context' };
 function slideType(s) { return TYPE_LABEL[s.type] ? s.type : (s.layout === 'exercise' ? 'practice' : s.layout === 'recap' ? 'recap' : 'context'); }
@@ -194,6 +299,7 @@ function render() {
   stopTimer();
   renderLayout(main, s);
   renderTagline(main, s);
+  renderVisual(stage, body, main, s);
   const instructions = renderInstructions(s);
   if (instructions) {
     const side = sideBySide(s, instructions);
