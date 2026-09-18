@@ -127,6 +127,7 @@ const BOTS = {
   head:  { src: 'assets/aetherbot/aetherbot-head.webp',  hatch: [49.6, 25.8] },
   // stretch-arm poses: tip = fingertip position in % of the image (used by place: 'pointer')
   stretchLeft:  { src: 'assets/aetherbot/stretch/aetherbot-stretch-links.webp',  tip: [0.1, 48], ratio: 900 / 541 },
+  sleepy:       { src: 'assets/aetherbot/faces/aetherbot-face-slaperig.webp' },
   happy:        { src: 'assets/aetherbot/faces/aetherbot-face-blij.webp' },
   peek:         { src: 'assets/aetherbot/aetherbot-peek.webp' },
   stretchUp:    { src: 'assets/aetherbot/stretch/aetherbot-stretch-omhoog.webp', ratio: 336 / 1100 },
@@ -386,6 +387,21 @@ function renderExtras(stage, main, s, v) {
   if (v.art === 'intake') {                                      // 44: every source of context flows into the model
     main.classList.add('intake'); grid.classList.add('intake-cards'); cards.forEach((c, i) => { c.style.setProperty('--i', i); c.append(node('span', 'intake-arrow')); if (v.tags?.[i]) c.querySelector('.card-head').append(node('span', 'stack-tag', v.tags[i])); });
     x.aside = main;
+  }
+  if (v.mdfile != null && cards[v.mdfile]) {                    // 45/46: the card's lines as a CLAUDE.md file
+    const c = cards[v.mdfile]; const f = node('div', 'mdfile'); const bar = node('div', 'md-bar'); bar.append(node('i'), node('i'), node('i'), node('span', 'md-name', 'CLAUDE.md')); f.append(bar);
+    const body = node('div', 'md-body'); String(s.cards[v.mdfile].body).split('\n').forEach((l, i) => { const r = node('div', 'md-sec'); r.style.setProperty('--i', i); r.append(node('span', 'md-h', '## ' + l), node('span', 'md-l'), node('span', 'md-l short')); body.append(r); });
+    f.append(body); c.querySelector('p')?.replaceWith(f);
+  }
+  if (v.guides) {                                                // 45: guides vs enforces
+    const g = node('div', 'ge'); v.guides.forEach((t, i) => { const b = node('div', 'ge-b ge' + i); b.append(node('span', 'ge-ico', t[0]), node('strong', null, t[1]), node('span', null, t[2])); g.append(b); if (i === 0) g.append(node('span', 'ge-vs', '≠')); });
+    const tg = main.querySelector('.tagline'); (tg || grid).before(g);
+  }
+  if (v.repeatStack != null && cards[v.repeatStack]) {          // 49: the same list, again and again
+    const c = cards[v.repeatStack]; c.classList.add('rep-front'); const wrap = node('div', 'rep-stack'); c.replaceWith(wrap);
+    for (let k = 2; k >= 1; k--) { const ghost = c.cloneNode(true); ghost.classList.remove('rep-front'); ghost.classList.add('rep-ghost', 'rep-g' + k); ghost.setAttribute('aria-hidden', 'true'); wrap.append(ghost); }
+    wrap.append(c); ['card 1', 'card 2', 'card 3 …'].forEach((t, i) => { const tag = node('span', 'rep-tag rep-t' + i, t); wrap.append(tag); });
+    main.classList.add('side-grid'); x.aside = main;
   }
   if (v.checklist != null && cards[v.checklist]) {             // 13: the checklist ticks itself off
     grid.classList.add('one-col'); const c = cards[v.checklist]; const ul = node('ul', 'checklist');

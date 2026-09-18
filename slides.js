@@ -82,6 +82,9 @@
                  dayRoute: [stops] — the shape of the day as a route under the cards
                  art: 'stairs' (+ stepKeys, today: [i]) — levels as a staircase, today's levels tagged
                  art: 'intake' (+ place 'aside', tags) — every card flows into AetherBOT
+                 mdfile: N — card N's lines as sections of a CLAUDE.md file
+                 guides: [[icon, name, verb], …] — two badges "X guides ≠ Y enforces" above the tagline
+                 repeatStack: N — card N repeated as a stack of identical cards (the same method, again)
    stepsHeading (slide field) — heading above the steps; default "Your prompt must ask Claude Code to:"
    ========================================================================== */
 window.SLIDES = [
@@ -839,8 +842,9 @@ Explain what the application does, how it is structured and how I can verify you
 { // Slide 45
   title: "CLAUDE.md",
   kicker: "DAY 2 · PART 1 · CONTEXT & CLAUDE.MD",
-  subtitle: "Persistent project instructions for Claude Code.",
+  subtitle: "The briefing Claude reads at the start of every session.",
   type: "concept",
+  visual: { mdfile: 1, guides: [['🧭', 'CLAUDE.md', 'guides Claude'], ['🔒', 'Permissions', 'enforce access']] },
   cards: [
     { title: "Purpose", body: "CLAUDE.md provides persistent project instructions to Claude Code." },
     { title: "Useful contents", body: "project purpose and structure\nconventions\napproved commands\nprivacy boundaries\nvalidation requirements\nhuman approval points" }
@@ -854,6 +858,7 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 2 · ASSIGNMENT 5 · 30 MIN",
   subtitle: "Review and improve the repository's CLAUDE.md.",
   type: "practice",
+  visual: { mdfile: 0 },
   layout: "exercise",
   timer: 30,
   cards: [
@@ -861,7 +866,7 @@ Explain what the application does, how it is structured and how I can verify you
   ],
   steps: [
     "Review the repository and its current CLAUDE.md.",
-    "Propose the minimum persistent instructions needed: purpose, structure, conventions, approved commands, privacy, validation, human approval.",
+    "Propose the minimum persistent instructions needed: purpose, structure, conventions, approved commands, privacy, validation, human approval — but keep what a stranger needs: data shapes and commands.",
     "Leave out temporary assignment notes or personal preferences.",
     "Show the proposed changes before editing."
   ],
@@ -874,6 +879,8 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 2 · ASSIGNMENT 5 · REVIEW",
   subtitle: "Start a fresh Claude Code session.",
   type: "review",
+  tagline: "Type /clear — your files stay. Your neighbour asks the five questions and decides.",
+  visual: { lineReveal: 0, stamps: ['PASS', 'REVISE', 'OPEN'], swap: true, highlight: [{ in: 'tagline', text: '/clear', tone: 'orange' }] },
   cards: [
     { title: "Can Claude determine", body: "what the project does\nwhere content belongs\nhow to validate changes\nwhich boundaries apply\nwhen human approval is required" }
   ],
@@ -900,8 +907,9 @@ Explain what the application does, how it is structured and how I can verify you
 { // Slide 49
   title: "A repeated method",
   kicker: "DAY 2 · PART 2 · PROMPT TO SKILL",
-  subtitle: "The next card requires the same method.",
+  subtitle: "The same six instructions — every single time.",
   type: "context",
+  visual: { repeatStack: 0, bot: 'sleepy', place: 'aside' },
   cards: [
     { title: "Yesterday, one concept card required instructions for", body: "structure\nsource checking\nexamples\nmissing information\nvalidation\nhuman approval" }
   ],
