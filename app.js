@@ -342,6 +342,11 @@ function renderExtras(stage, main, s, v) {
     String(s.cards[v.badge].body).split('\n').forEach((t, i) => { const r = node('div', 'badge-row'); r.style.setProperty('--i', i); r.append(node('span', 'badge-k', t), node('span', 'badge-line')); rows.append(r); });
     bd.append(av, rows); c.querySelector('p')?.replaceWith(bd);
   }
+  if (v.swap) {                                                  // 34: two AetherBOTs swap their work
+    main.classList.add('has-swap'); const sw = node('div', 'swap'); sw.setAttribute('aria-hidden', 'true');
+    ['sw-a', 'sw-b'].forEach(c => { const im = document.createElement('img'); im.src = BOTS.head.src; im.alt = ''; im.className = c; sw.append(im); });
+    sw.append(node('span', 'pkt pkt-ab'), node('span', 'pkt pkt-ba')); grid.after(sw);
+  }
   if (v.checklist != null && cards[v.checklist]) {             // 13: the checklist ticks itself off
     grid.classList.add('one-col'); const c = cards[v.checklist]; const ul = node('ul', 'checklist');
     String(s.cards[v.checklist].body).split('\n').forEach((t, i) => { const li = node('li'); li.style.setProperty('--i', i); li.append(node('span', 'check-box'), node('span', 'check-text', t)); ul.append(li); });

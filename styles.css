@@ -707,3 +707,25 @@ body.is-assignment #stage{border-color:var(--cyan);box-shadow:0 0 0 8px color-mi
 .stamp-box .stamps{display:grid;grid-template-columns:repeat(3,auto);justify-items:center;gap:1rem 1.2rem;margin:0}
 .stamp-box .stamps-label{grid-column:1/-1;margin:0}
 .stamp-box .place-stamps{grid-column:1/-1;height:clamp(140px,20vh,180px)}
+/* assignment: purple -> orange instead of yellow (Cons, 18 sep) */
+.assignment-banner{background:linear-gradient(105deg,var(--aether-purple),var(--aether-orange));color:#fff;text-shadow:0 1px 1px rgba(0,0,0,.25)}
+[data-type=practice] .type-chip{background:linear-gradient(105deg,var(--aether-purple),var(--aether-orange));color:#fff}
+.timer-face{background:linear-gradient(105deg,var(--aether-purple),var(--aether-orange));-webkit-background-clip:text;background-clip:text;color:transparent}
+.timer-late .timer-face{background:none;color:#ff5a5a}
+/* ---- slide 34: two AetherBOTs swapping data ---- */
+.has-swap{display:grid;grid-template-columns:minmax(0,600px) auto;gap:clamp(1.5rem,4vw,4rem);align-items:center;justify-content:center}
+.has-swap .cards{grid-template-columns:minmax(0,1fr)}
+.has-swap .tagline{grid-column:1/-1}
+.swap{position:relative;width:min(440px,36vw);height:220px}
+.swap img{position:absolute;bottom:0;height:150px;width:auto;filter:drop-shadow(0 12px 18px rgba(0,0,0,.35));animation:peek .8s cubic-bezier(.2,1.4,.4,1) both}
+.swap .sw-a{left:0;animation-delay:.3s}
+.swap .sw-b{right:0;transform:scaleX(-1);animation:peek-flip .8s cubic-bezier(.2,1.4,.4,1) .6s both}
+@keyframes peek-flip{from{opacity:0;transform:scaleX(-1) translateY(60px) scale(.9)}to{opacity:1;transform:scaleX(-1)}}
+.pkt{position:absolute;top:34%;width:40px;height:48px;border-radius:6px;background:#fff;box-shadow:0 6px 14px rgba(0,0,0,.35);opacity:0}
+.pkt::before{content:'';position:absolute;left:8px;right:8px;top:10px;height:3px;border-radius:2px;background:var(--aether-purple);box-shadow:0 8px 0 var(--aether-purple),0 16px 0 var(--aether-orange),0 24px 0 var(--border)}
+.pkt-ab{left:26%;animation:pkt-ab 3.2s ease-in-out 1.6s infinite}
+.pkt-ba{right:26%;animation:pkt-ba 3.2s ease-in-out 3.2s infinite}
+.pkt-ba::before{background:var(--cyan);box-shadow:0 8px 0 var(--cyan),0 16px 0 var(--aether-orange),0 24px 0 var(--border)}
+@keyframes pkt-ab{0%{opacity:0;transform:translate(0,20px) scale(.4)}12%{opacity:1}50%{transform:translate(calc(min(440px,36vw)*.24),-70px) rotate(10deg) scale(1)}88%{opacity:1}100%{opacity:0;transform:translate(calc(min(440px,36vw)*.48),20px) scale(.4)}}
+@keyframes pkt-ba{0%{opacity:0;transform:translate(0,20px) scale(.4)}12%{opacity:1}50%{transform:translate(calc(min(440px,36vw)*-.24),-70px) rotate(-10deg) scale(1)}88%{opacity:1}100%{opacity:0;transform:translate(calc(min(440px,36vw)*-.48),20px) scale(.4)}}
+.swap .sw-a,.swap .sw-b{animation-fill-mode:both}

@@ -74,6 +74,7 @@
                  lineReveal: N — card N's lines as a numbered list that pops in
                  stamps: ['PASS', …] (+ bot, place: 'stamps') — clickable decision stamps that pop out of AetherBOT's head (checkpoint box hidden)
                  badge: N — card N's lines as an empty profile badge
+                 swap: true — two AetherBOT heads passing work to each other (peer review)
    stepsHeading (slide field) — heading above the steps; default "Your prompt must ask Claude Code to:"
    ========================================================================== */
 window.SLIDES = [
@@ -640,7 +641,7 @@ Explain what the application does, how it is structured and how I can verify you
   subtitle: "Check:",
   type: "review",
   tagline: "Swap with your neighbour — 2 minutes each way.",
-  visual: { checklist: 0 },
+  visual: { checklist: 0, swap: true },
   cards: [
     { title: "Peer review", body: "The profile follows the existing structure.\nThe content is appropriate to share.\nThe profile appears correctly.\nNo unrelated files changed.\nThe participant reviewed the diff." }
   ],
