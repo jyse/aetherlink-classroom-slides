@@ -1007,3 +1007,8 @@ body.is-assignment .slide-body.with-side .cards{grid-template-columns:minmax(0,1
 .sentences .nb-lines li::before{content:'✎'}
 .sentences .blank{flex:1;border-bottom:2px dashed #9aa6c3;margin-bottom:.35rem;min-width:4rem}
 .recap-item.won{opacity:0;animation:pop .45s cubic-bezier(.2,1.4,.4,1) both;animation-delay:calc(.5s + var(--i,0)*.45s)}
+/* AetherLink mark left of the brand (Cons, 18 sep) */
+.brand{position:relative;display:inline-block;padding-left:58px}
+.brand-mark{position:absolute;left:0;top:50%;transform:translateY(-50%);width:46px;height:auto}
+.brand{padding-left:66px}
+.brand-mark{width:54px;filter:drop-shadow(0 0 6px color-mix(in srgb,var(--aether-purple) 55%,transparent)) brightness(1.25)}
