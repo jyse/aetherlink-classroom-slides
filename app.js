@@ -127,6 +127,8 @@ const BOTS = {
   head:  { src: 'assets/aetherbot/aetherbot-head.webp',  hatch: [49.6, 25.8] },
   // stretch-arm poses: tip = fingertip position in % of the image (used by place: 'pointer')
   stretchLeft:  { src: 'assets/aetherbot/stretch/aetherbot-stretch-links.webp',  tip: [0.1, 48], ratio: 900 / 541 },
+  happy:        { src: 'assets/aetherbot/faces/aetherbot-face-blij.webp' },
+  peek:         { src: 'assets/aetherbot/aetherbot-peek.webp' },
   stretchUp:    { src: 'assets/aetherbot/stretch/aetherbot-stretch-omhoog.webp', ratio: 336 / 1100 },
   stretchRight: { src: 'assets/aetherbot/stretch/aetherbot-stretch-rechts.webp', tip: [99.7, 48.5], ratio: 900 / 551 }
 };
@@ -363,6 +365,28 @@ function renderExtras(stage, main, s, v) {
     tick(); const iv = setInterval(tick, 1000); slideController.signal.addEventListener('abort', () => clearInterval(iv));
     box.append(node('span', 'quiet-ico', '✍'), face); grid.after(box);
   }
+  if (v.badges) {                                               // 40: achievements unlocking one by one
+    grid.classList.add('badges'); main.classList.add('side-grid');
+    cards.forEach((c, i) => { c.classList.add('badge-tile'); c.style.setProperty('--i', i); const ic = node('span', 'badge-ico', v.badges[i] || '★'); c.prepend(ic); c.querySelector('p')?.remove(); });
+    x.aside = main;
+  }
+  if (v.dayRoute) {                                              // 41: the shape of the day
+    const r = node('div', 'day-route'); v.dayRoute.forEach((t, i) => { const st = node('div', 'dr-stop'); st.style.setProperty('--i', i); st.append(node('span', 'dr-dot', String(i + 1)), node('span', 'dr-label', t)); r.append(st); });
+    (main.querySelector('.tagline') || grid).after(r);
+  }
+  if (v.art === 'stairs' && x.steps) {                           // 43: levels as a staircase
+    const chain = main.querySelector('.steps-chain'); chain.classList.add('nest-hidden'); const st = node('div', 'stairs');
+    (s.items || []).forEach((it, i) => { const b = node('div', 'stair' + ((v.today || []).includes(i) ? ' today' : '')); b.style.setProperty('--i', i);
+      const top = node('div', 'stair-top'); top.append(node('span', 'stair-n', String(i + 1)), node('span', 'stair-label', it.label)); if ((v.today || []).includes(i)) top.append(node('span', 'stair-tag', 'today'));
+      b.append(top, node('span', 'stair-cap', it.caption || '')); b.addEventListener('click', () => x.steps[i].querySelector('button').click()); st.append(b); });
+    chain.after(st); const bl = [...st.children];
+    const sync = () => x.steps.forEach((li, i) => bl[i].classList.toggle('on', li.classList.contains('active')));
+    const mo = new MutationObserver(sync); x.steps.forEach(li => mo.observe(li, { attributes: true, attributeFilter: ['class'] })); slideController.signal.addEventListener('abort', () => mo.disconnect());
+  }
+  if (v.art === 'intake') {                                      // 44: every source of context flows into the model
+    main.classList.add('intake'); grid.classList.add('intake-cards'); cards.forEach((c, i) => { c.style.setProperty('--i', i); c.append(node('span', 'intake-arrow')); if (v.tags?.[i]) c.querySelector('.card-head').append(node('span', 'stack-tag', v.tags[i])); });
+    x.aside = main;
+  }
   if (v.checklist != null && cards[v.checklist]) {             // 13: the checklist ticks itself off
     grid.classList.add('one-col'); const c = cards[v.checklist]; const ul = node('ul', 'checklist');
     String(s.cards[v.checklist].body).split('\n').forEach((t, i) => { const li = node('li'); li.style.setProperty('--i', i); li.append(node('span', 'check-box'), node('span', 'check-text', t)); ul.append(li); });
@@ -431,6 +455,7 @@ function renderVisual(stage, body, main, s) {
   else if (v.place === 'key' && ex.row) { ex.row.prepend(fig); }
   else if (v.place === 'slot' && ex.slot) { ex.slot.append(fig); }
   else if (v.place === 'stamps' && ex.stampRow) { ex.stampRow.querySelector('.stamps-label')?.after(fig); }
+  else if (v.place === 'aside' && ex.aside) { fig.classList.add('place-aside'); const tg = ex.aside.querySelector(':scope > .tagline'); if (tg) tg.before(fig); else ex.aside.append(fig); }
   else if (v.place === 'stack' && ex.slot) { fig.classList.add('place-stack'); ex.slot.append(fig); }
   else if (v.place === 'pointer') {
     const target = main.querySelectorAll('.card')[v.pointAt]; fig.classList.add('pointer-bot'); stage.append(fig);
@@ -483,10 +508,10 @@ function renderVisual(stage, body, main, s) {
   }
   if (v.reveal === 'click') {
     const faces = (v.faces || []).map(f => { const src = 'assets/aetherbot/faces/aetherbot-face-' + f + '.webp'; new Image().src = src; return src; });
-    const bub = node('span', 'react'); if (!faces.length) fig.append(bub);
+    const bub = node('span', 'react'); if (!faces.length && !v.noReact) fig.append(bub);
     ex.react = i => {
       live.classList.remove('jolt'); bub.classList.remove('show'); void live.offsetWidth; live.classList.add('jolt');
-      if (faces.length) img.src = faces[i % faces.length]; else { bub.textContent = REACT[i % REACT.length]; bub.classList.add('show'); }
+      if (faces.length) img.src = faces[i % faces.length]; else if (!v.noReact) { bub.textContent = REACT[i % REACT.length]; bub.classList.add('show'); }
     };
   }
   if (nest) {

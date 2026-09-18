@@ -78,6 +78,10 @@
                  template: N (+ templateRows) — empty card template (term/definition or the card's own lines)
                  notebook: N — card N's lines as a ruled notebook page
                  quietTimer: minutes — quiet countdown (no "Back at") beside the cards
+                 badges: [icons] (+ place 'aside') — title-only cards unlock one by one like achievements
+                 dayRoute: [stops] — the shape of the day as a route under the cards
+                 art: 'stairs' (+ stepKeys, today: [i]) — levels as a staircase, today's levels tagged
+                 art: 'intake' (+ place 'aside', tags) — every card flows into AetherBOT
    stepsHeading (slide field) — heading above the steps; default "Your prompt must ask Claude Code to:"
    ========================================================================== */
 window.SLIDES = [
@@ -746,6 +750,8 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 1 · CLOSING",
   subtitle: "Today you:",
   type: "recap",
+  visual: { badges: ['🧠', '🤖', '🔍', '✅', '🃏', '👤'], bot: 'happy', place: 'aside',
+    highlight: [{ in: 'tagline', text: 'reusable skill', tone: 'orange' }] },
   cards: [
     { title: "Learned the AI foundations", body: "" },
     { title: "Used Claude Code as an agentic tool", body: "" },
@@ -767,6 +773,7 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "TEACHING DAY 2",
   subtitle: "From one concept card to a repeatable method.",
   type: "context",
+  visual: { bot: 'wave', place: 'left', dayRoute: ['Recap', 'Context', 'Skills', 'Bounded work', 'Game', 'MCP', 'Closing'] },
   cards: [
     { title: "What we're doing", body: "Turning yesterday's method into something reusable, bounded and connected." },
     { title: "Today", body: "Skills, bounded agentic work, the learning game, and approved workplace connections." }
@@ -779,12 +786,14 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 2 · RECAP",
   subtitle: "Without looking at yesterday's slides, explain:",
   type: "recap",
+  tagline: "Answer from memory first — no peeking.",
+  visual: { reveal: 'click', bot: 'peek', place: 'slot', noReact: true },
   cards: [
-    { title: "Why is Claude Code agentic?", body: "Answer from memory first." },
-    { title: "What is context?", body: "Answer from memory first." },
-    { title: "What happens during human review?", body: "Answer from memory first." },
-    { title: "What is the difference between a claim and evidence?", body: "Answer from memory first." },
-    { title: "What are the six steps in our working method?", body: "Answer from memory first." }
+    { title: "Why is Claude Code agentic?", body: "" },
+    { title: "What is context?", body: "" },
+    { title: "What happens during human review?", body: "" },
+    { title: "What is the difference between a claim and evidence?", body: "" },
+    { title: "What are the six steps in our working method?", body: "" }
   ],
   notes: "Genuinely make them answer without looking back at Day 1's deck — cold retrieval, not open-book. If the room struggles with the six steps, that's useful signal: slow down Part 1 rather than push ahead."
 },
@@ -792,9 +801,10 @@ Explain what the application does, how it is structured and how I can verify you
 { // Slide 43
   title: "Levels of AI use",
   kicker: "DAY 2 · RECAP",
-  subtitle: "Today focuses on levels 3 and 4.",
+  subtitle: "From asking a model to building an agent.",
   type: "concept",
   layout: "steps",
+  visual: { stepKeys: true, art: 'stairs', today: [2, 3] },
   items: [
     { label: "Ask a model", caption: "Ask a model for a response." },
     { label: "Use Claude Code", caption: "Use Claude Code to work inside a project." },
@@ -815,6 +825,7 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 2 · PART 1 · CONTEXT & CLAUDE.MD",
   subtitle: "Where context can come from.",
   type: "concept",
+  visual: { art: 'intake', bot: 'head', place: 'aside', tags: { 4: 'later today' } },
   cards: [
     { title: "Current conversation", body: "The task requested now." },
     { title: "Project instructions", body: "CLAUDE.md" },
