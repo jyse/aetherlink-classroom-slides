@@ -176,7 +176,7 @@ window.SLIDES = [
   subtitle: "Each one sits inside the one before it.",
   type: "concept",
   layout: "steps",
-  visual: { art: 'nested', bot: 'point', place: 'nest' },
+  visual: { art: 'nested', bot: 'point', place: 'nest', stepKeys: true },
   items: [
     { label: "Artificial intelligence", caption: "The broad field." },
     { label: "Machine learning", caption: "Finds patterns from data." },
