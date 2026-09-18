@@ -454,6 +454,37 @@ function renderExtras(stage, main, s, v) {
   if (v.catChips != null && cards[v.catChips]) {                // 65: rating categories as coloured labels
     const c = cards[v.catChips]; const w = node('div', 'cat-chips'); String(s.cards[v.catChips].body).split('\n').forEach((t, i) => { const k = node('span', 'cat-chip cc' + i, t); k.style.setProperty('--i', i); w.append(k); }); c.querySelector('p')?.replaceWith(w);
   }
+  if (v.runner) {                                                // 66: test cases run one after another
+    const c = cards[0]; const list = node('div', 'runner'); String(s.cards[0].body).split('\n').forEach((t, i) => { const r = node('div', 'run-row'); r.style.setProperty('--i', i);
+      r.append(node('span', 'run-spin'), node('span', 'run-case', t), node('span', 'run-res rr-' + (v.runner[i]?.tone || 'grey'), v.runner[i]?.label || '')); list.append(r); });
+    c.querySelector('p')?.replaceWith(list);
+  }
+  if (v.plugs != null && cards[v.plugs]) {                      // 67: MCP as one standard plug
+    const c = cards[v.plugs]; const m = node('div', 'mcp'); const im = document.createElement('img'); im.src = BOTS.head.src; im.alt = ''; im.className = 'mcp-bot';
+    const srv = node('div', 'mcp-srv'); srv.append(node('strong', null, 'MCP server'));
+    const lines = node('div', 'mcp-plugs'); String(s.cards[v.plugs].body).split('\n').forEach((t, i) => { const pl = node('span', 'mcp-plug', t); pl.style.setProperty('--i', i); lines.append(pl); });
+    m.append(im, lines, srv); c.querySelector('p')?.replaceWith(m);
+  }
+  if (v.zones) {                                                 // 68: local repository vs external systems
+    const cmp = main.querySelector('.compare'); const cols = s.columns || []; const z = node('div', 'zones');
+    const a = node('div', 'zone z-local'); a.append(node('span', 'zone-label', v.zones[0]), node('div', 'zone-icons', '📁 🔧'), node('h3', null, cols[0]?.title || ''), node('p', null, cols[0]?.items?.[0] || ''));
+    const gate = node('div', 'zone-gate'); gate.append(node('span', 'gate-ico', '🔌'), node('span', null, 'MCP'));
+    const b = node('div', 'zone z-ext'); const chips = node('div', 'zone-chips'); v.zones[2].forEach(t => chips.append(node('span', 'zchip', t))); b.append(node('span', 'zone-label', v.zones[1]), chips, node('h3', null, cols[1]?.title || ''), node('p', null, cols[1]?.items?.[0] || ''));
+    z.append(a, gate, b); cmp?.replaceWith(z);
+  }
+  if (v.pending) {                                               // 69: visible placeholder for instructions still to come
+    const p = node('div', 'pending-box'); p.append(node('span', 'pending-ico', '⏳'), node('strong', null, v.pending[0]), node('span', null, v.pending[1])); grid.after(p);
+  }
+  if (v.sourceTiles != null && cards[v.sourceTiles]) {          // 70: pick one source, read-only
+    const c = cards[v.sourceTiles]; const t = node('div', 'src-tiles'); const icons = ['🎫', '🦊', '📘'];
+    String(s.cards[v.sourceTiles].body).split('\n').forEach((l, i) => { const k = node('div', 'src-tile'); k.style.setProperty('--i', i); k.append(node('span', 'src-ico', icons[i] || '•'), node('span', 'src-name', l), node('span', 'src-lock', '🔒 read-only')); t.append(k); });
+    c.querySelector('p')?.replaceWith(t);
+  }
+  if (v.planB && window[v.planB]) {                              // plan B overlay on any slide (key B)
+    const panel = node('div', 'planb'); const head = node('div', 'planb-head'); head.append(node('strong', null, 'Plan B'), node('span', null, ' · ' + (v.planBLabel || 'captured example') + ' · press B to close'));
+    panel.append(head, node('pre', 'planb-body', window[v.planB])); stage.append(panel);
+    const tog = () => panel.classList.toggle('show'); window.__planB = tog; slideController.signal.addEventListener('abort', () => { if (window.__planB === tog) window.__planB = null; });
+  }
   if (v.checklist != null && cards[v.checklist]) {             // 13: the checklist ticks itself off
     grid.classList.add('one-col'); const c = cards[v.checklist]; const ul = node('ul', 'checklist');
     String(s.cards[v.checklist].body).split('\n').forEach((t, i) => { const li = node('li'); li.style.setProperty('--i', i); li.append(node('span', 'check-box'), node('span', 'check-text', t)); ul.append(li); });
@@ -686,7 +717,7 @@ function render() {
   renderLayout(main, s);
   renderTagline(main, s);
   renderVisual(stage, body, main, s);
-  const instructions = (s.visual?.quiz || s.visual?.stamps || s.visual?.perCard) ? null : renderInstructions(s);
+  const instructions = (s.visual?.quiz || s.visual?.stamps || s.visual?.perCard || s.visual?.runner) ? null : renderInstructions(s);
   if (instructions) {
     const side = sideBySide(s, instructions);
     body.classList.toggle('with-side', side);

@@ -98,6 +98,12 @@
                  gameMock: true — mini game screen beside the cards, feedback area empty ("you build this")
                  phrase: '…' — a chat bubble with the exact phrase to say
                  catChips: N — card N's lines as coloured rating labels
+                 runner: [{label, tone}] — card 0's lines as test cases that "run" and show their expected result (checkpoint hidden)
+                 plugs: N — MCP picture: AetherBOT plugged into an MCP server via card N's lines
+                 zones: [left, right, [chips]] — compare layout as 'your laptop' vs 'outside' behind an MCP gate
+                 pending: [title, text] — visible placeholder for content that still has to be added
+                 sourceTiles: N — card N's lines as source tiles with a read-only lock
+                 planB: 'WINDOW_VAR' (+ planBLabel) — B shows a captured example (see demo-fallback.js)
    stepsHeading (slide field) — heading above the steps; default "Your prompt must ask Claude Code to:"
    ========================================================================== */
 window.SLIDES = [
@@ -1198,8 +1204,10 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 2 · ASSIGNMENT 9 · REVIEW",
   subtitle: "Test with:",
   type: "review",
+  tagline: "Goal: useful feedback, without inventing facts, from the participant's own Claude Code session.",
+  visual: { runner: [{ label: 'Strong explanation', tone: 'green' }, { label: 'Partially complete', tone: 'orange' }, { label: 'Review this concept', tone: 'red' }, { label: 'Unable to evaluate', tone: 'grey' }, { label: 'clear empty state — no crash', tone: 'cyan' }] },
   cards: [
-    { title: "Test with", body: "a strong explanation\nan incomplete explanation\nan incorrect explanation\nan empty answer\na Check feedback click before Claude Code has processed the submission" }
+    { title: "Test cases", body: "a strong explanation\nan incomplete explanation\nan incorrect explanation\nan empty answer\na Check feedback click before Claude Code has processed the submission" }
   ],
   check: "Goal: useful feedback, without inventing facts, from the participant's own Claude Code session.",
   notes: "The last test case is the one people forget — clicking Check feedback before ever asking Claude Code to check the submission should show a clear empty state, not a crash or stale data. If it doesn't, that's a real bug worth fixing before calling the assignment done."
@@ -1212,8 +1220,9 @@ Explain what the application does, how it is structured and how I can verify you
 { // Slide 67
   title: "Model Context Protocol",
   kicker: "DAY 2 · PART 5 · MCP & WORKPLACE SYSTEMS",
-  subtitle: "MCP standardises how AI applications connect to approved information and capabilities.",
+  subtitle: "One standard plug for approved connections.",
   type: "concept",
+  visual: { plugs: 1, highlight: [{ in: 'tagline', text: 'does not remove permissions or human responsibility', tone: 'orange' }] },
   cards: [
     { title: "Definition", body: "MCP standardises how AI applications connect to approved information and capabilities." },
     { title: "An MCP server may expose", body: "resources\nreusable prompts\ntools" }
@@ -1225,9 +1234,10 @@ Explain what the application does, how it is structured and how I can verify you
 { // Slide 68
   title: "Repository access and MCP",
   kicker: "DAY 2 · PART 5 · MCP & WORKPLACE SYSTEMS",
-  subtitle: "The repository itself does not require MCP.",
+  subtitle: "Files are local. MCP is for everything outside.",
   type: "concept",
   layout: "compare",
+  visual: { zones: ['your laptop', 'outside', ['Jira', 'GitLab', 'Confluence']] },
   columns: [
     { title: "Local repository", items: [
       "Claude Code uses built-in tools to read files and run project commands."
@@ -1244,8 +1254,9 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 2 · PART 5 · MCP & WORKPLACE SYSTEMS",
   subtitle: "Connect the approved Worldline services.",
   type: "context",
+  visual: { pending: ['Setup steps follow', 'The approved instructions are added after the technical check.'] },
   cards: [
-    { title: "Connect the approved Worldline services", body: "Jira\nGitLab\nConfluence" },
+    { title: "Services", body: "Jira\nGitLab\nConfluence" },
     { title: "Inside Claude Code, use", body: "/mcp" }
   ],
   prompt: "/mcp",
@@ -1257,6 +1268,7 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 2 · ASSIGNMENT 10 · 30 MIN",
   subtitle: "Retrieve one authorised item in read-only mode.",
   type: "practice",
+  visual: { sourceTiles: 0, planB: 'DEMO_FALLBACK_A10', planBLabel: 'fixture fallback: fixtures/jira-EX-142.json (fictional)' },
   layout: "exercise",
   timer: 30,
   cards: [
