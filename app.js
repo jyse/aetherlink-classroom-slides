@@ -127,6 +127,7 @@ const BOTS = {
   head:  { src: 'assets/aetherbot/aetherbot-head.webp',  hatch: [49.6, 25.8] },
   // stretch-arm poses: tip = fingertip position in % of the image (used by place: 'pointer')
   stretchLeft:  { src: 'assets/aetherbot/stretch/aetherbot-stretch-links.webp',  tip: [0.1, 48], ratio: 900 / 541 },
+  stretchUp:    { src: 'assets/aetherbot/stretch/aetherbot-stretch-omhoog.webp', ratio: 336 / 1100 },
   stretchRight: { src: 'assets/aetherbot/stretch/aetherbot-stretch-rechts.webp', tip: [99.7, 48.5], ratio: 900 / 551 }
 };
 const PILLAR_ICONS = [
@@ -260,9 +261,65 @@ function renderExtras(stage, main, s, v) {
       slideController.signal.addEventListener('abort', () => { if (window.__planB === tog) window.__planB = null; });
     }
   }
+  if (v.stepKeys) {                                             // steps without buttons: → activates the next step
+    const items = [...main.querySelectorAll('.step-item')]; const ctrl = main.querySelector('.steps-wrap .widget-controls'); if (ctrl) ctrl.style.display = 'none';
+    if (v.humanStep != null && items[v.humanStep]) { items[v.humanStep].classList.add('human'); items[v.humanStep].querySelector('.step-circle').textContent = '👤'; }
+    const next = () => { const a = items.findIndex(li => li.classList.contains('active')); if (a >= items.length - 1) return false; items[a + 1].querySelector('button').click(); return true; };
+    window.__reveal = next; slideController.signal.addEventListener('abort', () => { if (window.__reveal === next) window.__reveal = null; });
+    x.steps = items;
+  }
+  if (v.reach && x.steps) {                                      // 25: AetherBOT's arm telescopes to the active step
+    const wrap = main.querySelector('.steps-wrap'); wrap.classList.add('has-reach');
+    const r = node('div', 'reach'); r.setAttribute('aria-hidden', 'true');
+    const body = document.createElement('img'); body.src = 'assets/aetherbot/stretch/arm-body.webp'; body.className = 'reach-body'; body.alt = '';
+    const tube = node('span', 'reach-tube'); const hand = document.createElement('img'); hand.src = 'assets/aetherbot/stretch/arm-hand.webp'; hand.className = 'reach-hand'; hand.alt = '';
+    r.append(body, tube, hand); stage.append(r);
+    const H = 200, k = H / 551;
+    const place = () => {
+      const first = rel(x.steps[0].querySelector('.step-circle'), stage);
+      const left = first.x - 300 * k - 26, top = first.y + first.h / 2 - 22 - 280 * k;
+      r.style.left = left + 'px'; r.style.top = top + 'px'; r.style.height = H + 'px';
+      const a = x.steps.findIndex(li => li.classList.contains('active'));
+      const tipX = a < 0 ? left + 300 * k + 10 : rel(x.steps[a].querySelector('.step-circle'), stage).x + 14;
+      const w = Math.max(0, tipX - (left + 300 * k) - 150 * k); tube.style.width = w + 'px'; hand.style.setProperty('--tube', w + 'px');
+    };
+    r.style.setProperty('--k', k); requestAnimationFrame(() => requestAnimationFrame(place));
+    const mo = new MutationObserver(place); x.steps.forEach(li => mo.observe(li, { attributes: true, attributeFilter: ['class'] }));
+    slideController.signal.addEventListener('abort', () => mo.disconnect()); window.addEventListener('resize', place, { signal: slideController.signal });
+  }
+  if (v.art === 'loop' && x.steps) {                             // 26: the agent loop as a circle
+    const chain = main.querySelector('.steps-chain'); chain.classList.add('nest-hidden');
+    const labels = (s.items || []).map(i => i.label); const box = node('div', 'loop');
+    const pos = [[50, 4], [92, 50], [50, 96], [8, 50]];
+    const ring = svg('0 0 400 400', '<defs><marker id="lp-ar" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>' +
+      [[200, 16, 384, 200], [384, 200, 200, 384], [200, 384, 16, 200], [16, 200, 200, 16]].map((p, i) => '<path class="lp-arc lp-arc' + i + '" marker-end="url(#lp-ar)" d="M' + p[0] + ' ' + p[1] + ' A184 184 0 0 1 ' + p[2] + ' ' + p[3] + '"/>').join(''), 'loop-ring');
+    box.append(ring);
+    labels.slice(0, 4).forEach((l, i) => { const n = node('span', 'lp-node', l); n.style.left = pos[i][0] + '%'; n.style.top = pos[i][1] + '%'; n.style.setProperty('--i', i); box.append(n); });
+    const mid = node('div', 'lp-mid'); mid.append(node('span', 'lp-mid-ico', '↻ ■'), node('span', 'lp-mid-label', labels[4] || '')); box.append(mid);
+    const orb = node('div', 'lp-orbit'); const head = document.createElement('img'); head.src = BOTS.head.src; head.alt = ''; orb.append(head); box.append(orb);
+    chain.after(box); const nodes = [...box.querySelectorAll('.lp-node'), mid];
+    const sync = () => x.steps.forEach((li, i) => nodes[i]?.classList.toggle('on', li.classList.contains('active')));
+    const mo = new MutationObserver(sync); x.steps.forEach(li => mo.observe(li, { attributes: true, attributeFilter: ['class'] }));
+    nodes.forEach((n, i) => n.addEventListener('click', () => x.steps[i].querySelector('button').click()));
+    slideController.signal.addEventListener('abort', () => mo.disconnect());
+  }
+  if (v.art === 'boxes') {                                       // 27: SDLC ⊃ working method ⊃ agent loop, zoom in per →
+    const cmp = main.querySelector('.compare'); const cols = s.columns || [];
+    const mk = (c, i) => { const b = node('div', 'nb nb' + i); const h = node('div', 'nb-head'); h.append(node('span', 'nb-title', c.title));
+      const row = node('div', 'nb-items'); c.items.forEach(t => { const it = node('span', 'nb-item', t); if ((v.link?.[i] || []).includes(t)) it.classList.add('nb-link'); row.append(it); }); h.append(row); b.append(h); return b; };
+    const b0 = mk(cols[0], 0), b1 = mk(cols[1], 1), b2 = mk(cols[2], 2); b1.append(b2); b0.append(b1); cmp?.replaceWith(b0);
+    let k = 0; const steps = [() => b1.classList.add('in'), () => b2.classList.add('in'), () => b0.classList.add('linked')];
+    const next = () => { if (k >= steps.length) return false; steps[k++](); return true; };
+    b0.addEventListener('click', next); window.__reveal = next; slideController.signal.addEventListener('abort', () => { if (window.__reveal === next) window.__reveal = null; });
+  }
+  if (v.stack) {                                                 // 29: the library stacks up block by block
+    grid.classList.add('stack'); cards.forEach((c, i) => { if (v.stack[i]) c.querySelector('.card-head').append(node('span', 'stack-tag', v.stack[i])); });
+    x.slot = node('div', 'stack-row'); grid.replaceWith(x.slot); x.slot.append(grid);
+  }
   if (v.checklist != null && cards[v.checklist]) {             // 13: the checklist ticks itself off
     grid.classList.add('one-col'); const c = cards[v.checklist]; const ul = node('ul', 'checklist');
     String(s.cards[v.checklist].body).split('\n').forEach((t, i) => { const li = node('li'); li.style.setProperty('--i', i); li.append(node('span', 'check-box'), node('span', 'check-text', t)); ul.append(li); });
+    if (v.addLine) { const li = node('li', 'check-add'); li.style.setProperty('--i', ul.children.length); const t = node('span', 'check-text', ''); t.contentEditable = 'true'; t.dataset.placeholder = v.addLine; t.addEventListener('keydown', e => e.stopPropagation()); li.append(node('span', 'check-plus', '+'), t); ul.append(li); }
     c.querySelector('p')?.replaceWith(ul);
   }
   return x;
@@ -326,6 +383,7 @@ function renderVisual(stage, body, main, s) {
   else if (v.place === 'nest' && nest) { nest.row.prepend(fig); }
   else if (v.place === 'key' && ex.row) { ex.row.prepend(fig); }
   else if (v.place === 'slot' && ex.slot) { ex.slot.append(fig); }
+  else if (v.place === 'stack' && ex.slot) { fig.classList.add('place-stack'); ex.slot.append(fig); }
   else if (v.place === 'pointer') {
     const target = main.querySelectorAll('.card')[v.pointAt]; fig.classList.add('pointer-bot'); stage.append(fig);
     const H = v.pointH || 230; fig.style.height = H + 'px';

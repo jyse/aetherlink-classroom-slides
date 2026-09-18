@@ -63,6 +63,12 @@
                  term: [{c}|{o}|{ask}] — terminal beside the cards that types commands, output, then an approval question
                  art: 'gate' — route Explore → Plan → approval gate → Change; click / → opens the gate
                  art: 'prompt' (+ promptMarks) — the slide's prompt typed in a terminal; B shows plan B (demo-fallback.js)
+                 stepKeys: true (+ humanStep: N) — steps layout without buttons, → activates the next step
+                 reach: true — (with stepKeys) AetherBOT's arm telescopes to the active step
+                 art: 'loop' — (with stepKeys) steps drawn as a circle: 4 nodes + "repeat or stop" in the middle
+                 art: 'boxes' (+ link) — compare columns drawn as boxes inside boxes; → zooms in, then links items
+                 addLine: 'placeholder' — (with checklist) an empty line the trainer can type into live
+                 stack: [tags] (+ bot 'stretchUp', place 'stack') — cards stack up bottom-first with a tag each
    ========================================================================== */
 window.SLIDES = [
 
@@ -452,9 +458,10 @@ Explain what the application does, how it is structured and how I can verify you
 { // Slide 25
   title: "Human and AI working method",
   kicker: "DAY 1 · PART 3 · WORKING METHOD",
-  subtitle: "Explore → Plan → Create → Test → Human review → Handoff",
+  subtitle: "One method, six steps — the red thread for both days.",
   type: "concept",
   layout: "steps",
+  visual: { stepKeys: true, humanStep: 4, reach: true },
   items: [
     { label: "Explore", caption: "Understand before acting." },
     { label: "Plan", caption: "Agree the intended change." },
@@ -463,7 +470,6 @@ Explain what the application does, how it is structured and how I can verify you
     { label: "Human review", caption: "The human decides." },
     { label: "Handoff", caption: "Someone else can pick this up." }
   ],
-  detail: "This is the red thread reused throughout both teaching days.",
   tagline: "The human owns the goal, boundaries and final decision.",
   notes: "Name it once, precisely: this is the human and AI working method — Explore, Plan, Create, Test, Human review, Handoff. Every later reference to 'the method' or 'human review' points back to this exact slide, so get the wording right here. It's this doc's own label — do not revert to any older 'human in the loop' wording unless asked."
 },
@@ -471,9 +477,10 @@ Explain what the application does, how it is structured and how I can verify you
 { // Slide 26
   title: "Agent loop",
   kicker: "DAY 1 · PART 3 · WORKING METHOD",
-  subtitle: "Observe → Decide → Act → Check → Repeat or stop",
+  subtitle: "A loop, not a line.",
   type: "concept",
   layout: "steps",
+  visual: { stepKeys: true, art: 'loop' },
   items: [
     { label: "Observe" },
     { label: "Decide" },
@@ -488,9 +495,10 @@ Explain what the application does, how it is structured and how I can verify you
 { // Slide 27
   title: "Three views of the same work",
   kicker: "DAY 1 · PART 3 · WORKING METHOD",
-  subtitle: "The agent loop happens inside a task. A task sits inside the team's software lifecycle.",
+  subtitle: "Zoom in: lifecycle → task → loop.",
   type: "concept",
   layout: "compare",
+  visual: { art: 'boxes', link: { 0: ['Build', 'Test'], 1: ['Create', 'Test'] } },
   columns: [
     { title: "SDLC — outer", items: [
       "Plan", "Design", "Build", "Test", "Deploy", "Maintain"
@@ -511,8 +519,9 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 1 · PART 3 · WORKING METHOD",
   subtitle: "During the exercises, Claude must:",
   type: "context",
+  visual: { checklist: 0, addLine: 'add your own…' },
   cards: [
-    { title: "During the exercises", body: "investigate before changing\nshow the plan first\nmake small changes\nrun relevant checks\nshow evidence\nmark uncertainty as OPEN\nwait for human approval before committing" }
+    { title: "Our agreement", body: "investigate before changing\nshow the plan first\nmake small changes\nrun relevant checks\nshow evidence\nmark uncertainty as OPEN\nwait for human approval before committing" }
   ],
   notes: "Frame this as the room's own working agreement with Claude Code, not a rule imposed from outside — ask if anyone wants to add anything before moving into the Aether Library."
 },
@@ -526,6 +535,8 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 1 · PART 4 · AETHER LIBRARY",
   subtitle: "A small AI knowledge library that grows throughout the two teaching days.",
   type: "context",
+  visual: { stack: ['Day 1 · Assignment 2', 'Day 1 · Assignment 3', 'Assignments 4 · 6 · 8', 'Day 2 · Assignment 9'], bot: 'stretchUp', place: 'stack',
+    highlight: [{ in: 'subtitle', text: 'grows', tone: 'orange' }] },
   cards: [
     { title: "Participant profiles", body: "Who is here, and what they're working on." },
     { title: "An AI glossary", body: "Shared definitions the whole group can rely on." },
