@@ -49,6 +49,8 @@
                  art: 'window' — context-window box filling with tokens beside the cards
                  cardArt: { N: 'sliders'|'thermo' } — small illustration inside card N
                  reveal: 'click' (+ place: 'slot') — cards start closed; click / → opens the next
+                 faces: [...] — with reveal: AetherBOT's face per opened card (assets/aetherbot/faces/:
+                        verward · dubbel · eigenwijs · slaperig · betrapt · blij · verrast)
                  checklist: N — card N's lines become a list that ticks itself off
                  highlight 'in' may also be 'tagline'
    ========================================================================== */
@@ -233,7 +235,7 @@ window.SLIDES = [
   kicker: "DAY 1 · PART 1 · AI FOUNDATIONS",
   subtitle: "How does AI get it wrong?",
   type: "concept",
-  visual: { reveal: 'click', bot: 'think', place: 'slot' },
+  visual: { reveal: 'click', bot: 'head', place: 'slot', faces: ['verward', 'dubbel', 'eigenwijs', 'slaperig', 'betrapt'] },
   cards: [
     { title: "Missing context", body: "The model did not have what it needed to answer well." },
     { title: "Ambiguous instructions", body: "The request could reasonably mean more than one thing." },

@@ -302,8 +302,12 @@ function renderVisual(stage, body, main, s) {
     window.addEventListener('resize', aim, { signal: slideController.signal });
   }
   if (v.reveal === 'click') {
-    const bub = node('span', 'react'); fig.append(bub);
-    ex.react = i => { bub.textContent = REACT[i % REACT.length]; live.classList.remove('jolt'); bub.classList.remove('show'); void live.offsetWidth; live.classList.add('jolt'); bub.classList.add('show'); };
+    const faces = (v.faces || []).map(f => { const src = 'assets/aetherbot/faces/aetherbot-face-' + f + '.webp'; new Image().src = src; return src; });
+    const bub = node('span', 'react'); if (!faces.length) fig.append(bub);
+    ex.react = i => {
+      live.classList.remove('jolt'); bub.classList.remove('show'); void live.offsetWidth; live.classList.add('jolt');
+      if (faces.length) img.src = faces[i % faces.length]; else { bub.textContent = REACT[i % REACT.length]; bub.classList.add('show'); }
+    };
   }
   if (nest) {
     const lens = node('span', 'lens'); lens.innerHTML = '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="26" cy="26" r="19" class="lens-glass"/><circle cx="26" cy="26" r="19" class="lens-rim"/><path d="M40 40 58 58" class="lens-handle"/><path d="M16 19a12 12 0 0 1 8-6" class="lens-shine"/></svg>';

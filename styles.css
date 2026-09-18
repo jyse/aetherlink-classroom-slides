@@ -509,3 +509,7 @@ p.subtitle{font-weight:700}
 .with-window .card,.reveal-grid .card{padding:clamp(.85rem,1.3vw,1.15rem) clamp(1rem,1.6vw,1.5rem)}
 .reveal-grid .card p,.with-window .card p{font-size:clamp(1rem,1.3vw,1.15rem)}
 .with-window .cards,.reveal-grid{gap:.7rem}
+.reveal-grid .place-slot{height:clamp(150px,21vh,190px)}
+.reveal-grid .place-slot{height:clamp(150px,19vh,172px)}
+.reveal-controls{margin-top:.6rem}
+.reveal-controls + .tagline{margin-top:.7rem}
