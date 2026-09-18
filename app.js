@@ -234,6 +234,32 @@ function renderExtras(stage, main, s, v) {
     box.append(face, back); if (s.cards?.[0]?.body) box.append(node('p', 'pause-next', s.cards[0].body));
     grid.replaceWith(box);
   }
+  if (v.term) {                                                  // 20: a terminal that types a few commands, then asks
+    main.classList.add('with-window'); const t = node('div', 'term'); const bar = node('div', 'term-bar'); bar.append(node('i'), node('i'), node('i')); t.append(bar);
+    const body = node('div', 'term-body'); v.term.forEach((ln, i) => { const row = node('div', 'term-line ' + (ln.c ? 'cmd' : ln.ask ? 'ask' : 'out')); row.style.setProperty('--i', i);
+      if (ln.c) { row.append(node('span', 'prompt-sign', '$ ')); const ty = node('span', 'typed', ln.c); ty.style.setProperty('--n', ln.c.length); row.append(ty); } else row.textContent = ln.o || ln.ask; body.append(row); });
+    t.append(body); grid.after(t);
+  }
+  if (v.art === 'gate') {                                        // 21: explore -> plan -> (gate) -> change
+    const route = node('div', 'route'); const st = (ico, label, cls) => { const d = node('div', 'station ' + (cls || '')); d.append(node('span', 'st-ico', ico), node('span', 'st-label', label)); return d; };
+    const gate = node('div', 'station gate'); gate.append(node('span', 'bar'), node('span', 'st-label', v.gateLabel || 'your approval'));
+    route.append(st('🔍', 'Explore', 's1'), node('span', 'rt-line l1'), st('📋', 'Plan', 's2'), node('span', 'rt-line l2'), gate, node('span', 'rt-line l3'), st('✏️', 'Change', 's4'));
+    (main.querySelector('.tagline') || grid).before(route); let open = false;
+    const next = () => { if (open) return false; open = true; route.classList.add('open'); return true; };
+    route.addEventListener('click', next); window.__reveal = next; slideController.signal.addEventListener('abort', () => { if (window.__reveal === next) window.__reveal = null; });
+  }
+  if (v.art === 'prompt' && s.prompt) {                          // 22: the demo prompt, typed; B = plan B (captured output)
+    const t = node('div', 'term term-wide'); const bar = node('div', 'term-bar'); bar.append(node('i'), node('i'), node('i'), node('span', 'term-title', 'claude'));
+    const body = node('div', 'term-body'); const pre = node('div', 'term-prompt'); pre.append(node('span', 'prompt-sign', '> '));
+    const txt = node('span', 'tp-text', s.prompt); pre.append(txt); body.append(pre); t.append(bar, body); grid.replaceWith(t);
+    (v.promptMarks || []).forEach(m => { const w = document.createTreeWalker(txt, NodeFilter.SHOW_TEXT); for (let n = w.nextNode(); n; n = w.nextNode()) { const i = n.nodeValue.indexOf(m); if (i < 0) continue; const mid = n.splitText(i); mid.splitText(m.length); const sp = node('span', 'hl hl-orange'); mid.replaceWith(sp); sp.append(mid); break; } });
+    if (window.DEMO_FALLBACK) {
+      const panel = node('div', 'planb'); const head = node('div', 'planb-head'); head.append(node('strong', null, 'Plan B'), node('span', null, ' · captured run of this exact prompt · press B to close'));
+      panel.append(head, node('pre', 'planb-body', window.DEMO_FALLBACK)); stage.append(panel);
+      const tog = () => panel.classList.toggle('show'); window.__planB = tog;
+      slideController.signal.addEventListener('abort', () => { if (window.__planB === tog) window.__planB = null; });
+    }
+  }
   if (v.checklist != null && cards[v.checklist]) {             // 13: the checklist ticks itself off
     grid.classList.add('one-col'); const c = cards[v.checklist]; const ul = node('ul', 'checklist');
     String(s.cards[v.checklist].body).split('\n').forEach((t, i) => { const li = node('li'); li.style.setProperty('--i', i); li.append(node('span', 'check-box'), node('span', 'check-text', t)); ul.append(li); });
@@ -282,7 +308,8 @@ function renderVisual(stage, body, main, s) {
     const src = s.cards[v.popOut]; main.querySelectorAll('.card')[v.popOut]?.remove();
     popRow = node('div', 'pop-row'); const col = node('div', 'pop-col'); const list = node('div', 'pop-chips');
     String(src.body).split('\n').forEach((t, i) => { const c = node('span', 'pop-chip'); const inner = node('span', 'pop-chip-in', t); inner.style.setProperty('--i', i); if (v.chipIcons?.[i]) inner.prepend(node('span', 'chip-ico', v.chipIcons[i])); c.append(inner); list.append(c); });
-    col.append(node('p', 'pop-label', src.title), list); popRow.append(col); main.append(popRow);
+    if (v.chipGrid) list.classList.add('grid' + v.chipGrid);
+    col.append(node('p', 'pop-label', src.title), list); popRow.append(col); const tg = main.querySelector('.tagline'); if (tg) tg.before(popRow); else main.append(popRow);
   }
   highlight(stage, s);
   const bot = BOTS[v.bot]; if (!bot) return;
@@ -493,6 +520,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(current - 1); }
   if (e.key === 'Home') { e.preventDefault(); go(0); }
   if (e.key === 'End') { e.preventDefault(); go(slides.length - 1); }
+  if ((e.key === 'b' || e.key === 'B') && window.__planB) { e.preventDefault(); window.__planB(); return; }
   if (e.key === 's' || e.key === 'S') { e.preventDefault(); openPresenterView(); }
 });
 window.addEventListener('pagehide', () => { slideController?.abort(); stopTimer(); });

@@ -59,6 +59,10 @@
                  countdown: minutes — pause slide: live countdown + real "Back at" clock time
                  chipIcons: [...] — icons in front of popOut chips
                  bot: 'stretchLeft'|'stretchRight' + place: 'pointer' + pointAt: N — stretch arm reaches card N
+                 chipGrid: 3 — popOut chips in a 3-column grid
+                 term: [{c}|{o}|{ask}] — terminal beside the cards that types commands, output, then an approval question
+                 art: 'gate' — route Explore → Plan → approval gate → Change; click / → opens the gate
+                 art: 'prompt' (+ promptMarks) — the slide's prompt typed in a terminal; B shows plan B (demo-fallback.js)
    ========================================================================== */
 window.SLIDES = [
 
@@ -353,8 +357,10 @@ window.SLIDES = [
 { // Slide 19
   title: "Claude Code as an agentic tool",
   kicker: "DAY 1 · PART 2 · CLAUDE & CLAUDE CODE",
-  subtitle: "Using Claude Code means using an existing agentic tool.",
+  subtitle: "You are using an agent — not building one (yet).",
   type: "concept",
+  visual: { popOut: 0, bot: 'head', place: 'popout', chipGrid: 3, chipIcons: ['🔍', '🗺', '✏️', '▶', '👁', '↻'],
+    highlight: [{ in: 'tagline', text: 'existing agentic tool', tone: 'orange' }] },
   cards: [
     { title: "Claude Code can", body: "inspect a repository\nform a plan\nread and edit files\nrun commands and tests\ninspect results\nadjust its approach" }
   ],
@@ -365,8 +371,10 @@ window.SLIDES = [
 { // Slide 20
   title: "The terminal",
   kicker: "DAY 1 · PART 2 · CLAUDE & CLAUDE CODE",
-  subtitle: "Claude Code uses the same project tools developers already use for files, Git, applications and tests.",
+  subtitle: "Where Claude Code does its work.",
   type: "concept",
+  visual: { term: [{ c: 'ls' }, { o: 'README.md  data  public  server.js' }, { c: 'git status' }, { o: 'On branch main · nothing to commit' }, { ask: 'Allow Claude to run npm test? (y/n)' }],
+    highlight: [{ in: 'tagline', text: 'understand what you approve', tone: 'orange' }] },
   cards: [
     { title: "What the terminal gives you", body: "The terminal lets you interact with your computer and project through commands." },
     { title: "Same tools developers use", body: "Claude Code uses the same project tools developers already use for files, Git, applications and tests." }
@@ -378,8 +386,9 @@ window.SLIDES = [
 { // Slide 21
   title: "Permissions and Plan Mode",
   kicker: "DAY 1 · PART 2 · CLAUDE & CLAUDE CODE",
-  subtitle: "Start with exploration. Review the plan before allowing changes.",
+  subtitle: "Look first. Change later.",
   type: "concept",
+  visual: { art: 'gate' },
   cards: [
     { title: "Permissions", body: "Permissions control which actions Claude Code may perform without further approval." },
     { title: "Plan Mode", body: "Plan Mode lets Claude investigate and prepare a plan before implementation." }
@@ -394,6 +403,7 @@ window.SLIDES = [
   subtitle: "Watch Claude Code inspect a small project without changing it.",
   type: "concept",
   dark: true,
+  visual: { art: 'prompt', promptMarks: ['without changing anything', 'evidence', 'OPEN'] },
   cards: [
     { title: "Explore", body: "Explore this repository without changing anything." },
     { title: "Explain", body: "Explain what the application does, how it is structured and how I can verify your explanation." },
@@ -411,6 +421,7 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 1 · PART 2 · DEMO REVIEW",
   subtitle: "Which of these actions would a normal chat interface be unable to perform without access to the project?",
   type: "review",
+  visual: { reveal: 'click' },
   cards: [
     { title: "Read project files", body: "Not a description of the project — the actual files." },
     { title: "Gathered context", body: "Built up what it needed before answering." },
