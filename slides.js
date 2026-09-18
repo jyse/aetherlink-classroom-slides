@@ -436,7 +436,7 @@ Explain what the application does, how it is structured and how I can verify you
 { // Slide 24
   title: "Lunch",
   kicker: "DAY 1 · LUNCH",
-  subtitle: "We continue at 13:00 with the practice repository.",
+  subtitle: "Enjoy your lunch.",
   type: "pause",
   visual: { countdown: 60, bot: 'wave', place: 'beside' },
   cards: [
@@ -961,7 +961,7 @@ Explain what the application does, how it is structured and how I can verify you
 { // Slide 56
   title: "Lunch",
   kicker: "DAY 2 · LUNCH",
-  subtitle: "We continue at 13:00 by applying the skill across the Library.",
+  subtitle: "Enjoy your lunch.",
   type: "pause",
   visual: { countdown: 60, bot: 'wave', place: 'beside' },
   cards: [
