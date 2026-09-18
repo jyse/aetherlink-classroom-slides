@@ -404,3 +404,26 @@ p.subtitle{font-weight:700}
 @keyframes chip-out{0%{opacity:0;transform:translate(var(--dx,0),var(--dy,0)) scale(.15)}25%{opacity:1}100%{opacity:1;transform:none}}
 @media(max-width:900px){.pop-row{flex-direction:column;align-items:center}}
 @media(prefers-reduced-motion:reduce){.stagger-pop .card,.pop-chip-in,.pop-label{animation:none;opacity:1}}
+
+/* ---- slide 7: nested rings + magnifying glass ---- */
+.nest-hidden{display:none!important}
+.nest-row{display:flex;align-items:flex-end;justify-content:center;gap:clamp(.5rem,2vw,2rem);margin-top:.4rem}
+.nest{width:min(620px,100%);height:auto;overflow:visible}
+.ring{cursor:pointer;transform-box:fill-box;transform-origin:50% 100%;animation:ring-in .6s cubic-bezier(.2,1.3,.4,1) both;animation-delay:calc(.25s + var(--i)*.22s)}
+.ring ellipse{fill:color-mix(in srgb,var(--cyan) 7%,var(--surface));stroke:color-mix(in srgb,var(--cyan) 55%,transparent);stroke-width:2.5;transition:fill .35s,stroke .35s,stroke-width .35s}
+.ring:nth-child(2n) ellipse{fill:color-mix(in srgb,var(--aether-purple,#8b5cf6) 12%,var(--surface));stroke:color-mix(in srgb,var(--aether-purple,#8b5cf6) 70%,transparent)}
+.ring-label{fill:var(--text);font-weight:900;font-size:19px;letter-spacing:.06em;text-anchor:middle;text-transform:uppercase;transition:fill .35s,opacity .35s;pointer-events:none}
+.nest.any-on .ring:not(.on) .ring-label{opacity:.45}
+.ring.on ellipse{stroke:var(--amber);stroke-width:4.5;fill:color-mix(in srgb,var(--amber) 16%,var(--surface))}
+.ring.on .ring-label{fill:var(--amber)}
+@keyframes ring-in{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+.place-nest{height:clamp(220px,40vh,380px);flex:none;animation:walk-in .9s cubic-bezier(.2,.9,.25,1.1) both}
+.place-nest .bot-live{animation:bob 3.8s ease-in-out 1.5s infinite;transform-origin:50% 100%}
+.lens{position:absolute;width:64px;height:64px;margin:-26px 0 0 -26px;z-index:5;pointer-events:none;opacity:0;transform:scale(.2);transition:left .7s cubic-bezier(.4,1.3,.5,1),top .7s cubic-bezier(.4,1.3,.5,1),opacity .3s,transform .4s cubic-bezier(.2,1.5,.4,1);filter:drop-shadow(0 6px 10px rgba(0,0,0,.4))}
+.lens.out{opacity:1;transform:none}
+.lens svg{width:100%;height:100%;overflow:visible}
+.lens-glass{fill:rgba(120,220,255,.14)}.lens-rim{fill:none;stroke:#FF7A1A;stroke-width:5}
+.lens-handle{stroke:#2b2f6b;stroke-width:9;stroke-linecap:round}.lens-shine{fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;opacity:.8}
+.nest-row + .nest-hidden + .steps-detail{font-size:clamp(1.1rem,1.6vw,1.35rem);font-weight:800;color:var(--amber)}
+@media(max-width:900px){.place-nest{display:none}.lens{display:none}}
+.ring-label-core{font-size:15px}

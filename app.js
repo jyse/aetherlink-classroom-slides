@@ -166,6 +166,32 @@ function highlight(root, s) {
     }
   });
 }
+// slide 7: the steps become nested rings (each term sits inside the one before it)
+function buildNest(main, s) {
+  const wrap = main.querySelector('.steps-wrap'); const chain = wrap?.querySelector('.steps-chain'); if (!chain) return null;
+  const items = [...chain.querySelectorAll('.step-item')]; chain.classList.add('nest-hidden');
+  const R = [230, 172, 116, 68], CX = 380, B = 470;
+  const g = document.createElementNS(SVGNS, 'svg'); g.setAttribute('viewBox', '0 0 760 480'); g.setAttribute('class', 'nest'); g.setAttribute('role', 'group');
+  const labels = [];
+  (s.items || []).forEach((it, i) => {
+    const r = R[i], cy = B - r, grp = document.createElementNS(SVGNS, 'g'); grp.setAttribute('class', 'ring'); grp.style.setProperty('--i', i);
+    const c = document.createElementNS(SVGNS, 'ellipse'); c.setAttribute('cx', CX); c.setAttribute('cy', cy); c.setAttribute('rx', r * 1.5); c.setAttribute('ry', r);
+    const t = document.createElementNS(SVGNS, 'text'); t.setAttribute('x', CX); t.setAttribute('class', 'ring-label' + (i === R.length - 1 ? ' ring-label-core' : ''));
+    const inner = i === R.length - 1; const words = inner ? it.label.split(' ') : [it.label];
+    const lines = inner && words.length > 2 ? [words.slice(0, -1).join(' '), words.at(-1)] : [it.label];
+    const y0 = inner ? cy - (lines.length - 1) * 11 + 6 : cy - r + 52;
+    lines.forEach((ln, k) => { const ts = document.createElementNS(SVGNS, 'tspan'); ts.setAttribute('x', CX); ts.setAttribute('y', y0 + k * 20); ts.textContent = ln; t.append(ts); });
+    grp.append(c, t); grp.addEventListener('click', () => items[i]?.querySelector('button')?.click());
+    g.append(grp); labels.push(t);
+  });
+  const row = node('div', 'nest-row'); row.append(g); wrap.insertBefore(row, chain);
+  const rings = [...g.querySelectorAll('.ring')];
+  const api = { row, labels, onChange: null, current: () => { const a = items.map(li => li.classList.contains('active')); return a.every(Boolean) ? -1 : a.indexOf(true); } };
+  const sync = () => { items.forEach((li, i) => rings[i].classList.toggle('on', li.classList.contains('active'))); g.classList.toggle('any-on', items.some(li => li.classList.contains('active'))); api.onChange?.(); };
+  const mo = new MutationObserver(sync); items.forEach(li => mo.observe(li, { attributes: true, attributeFilter: ['class'] }));
+  slideController.signal.addEventListener('abort', () => mo.disconnect());
+  return api;
+}
 function rel(el, stage) { const a = el.getBoundingClientRect(), b = stage.getBoundingClientRect(); return { x: a.left - b.left + stage.scrollLeft, y: a.top - b.top, w: a.width, h: a.height }; }
 function renderVisual(stage, body, main, s) {
   const v = s.visual; if (!v) return;
@@ -174,7 +200,8 @@ function renderVisual(stage, body, main, s) {
   if (v.pillarIcons) main.querySelectorAll('.pillar').forEach((p, i) => p.prepend(svg('0 0 24 24', PILLAR_ICONS[i % 4], 'pillar-icon')));
   if (v.stagger) main.classList.add('stagger-' + v.stagger);
   if (v.hero != null) { main.classList.add('has-hero'); main.querySelectorAll('.card')[v.hero]?.classList.add('card-hero'); }
-  let popRow = null;
+  let popRow = null, nest = null;
+  if (v.art === 'nested') nest = buildNest(main, s);
   if (v.popOut != null && s.cards?.[v.popOut]) {
     const src = s.cards[v.popOut]; main.querySelectorAll('.card')[v.popOut]?.remove();
     popRow = node('div', 'pop-row'); const col = node('div', 'pop-col'); const list = node('div', 'pop-chips');
@@ -192,6 +219,7 @@ function renderVisual(stage, body, main, s) {
   else if (v.place === 'beside') { body.append(fig); body.classList.add('with-bot', 'bot-beside'); }
   else if (v.place === 'under') { main.append(fig); }
   else if (v.place === 'popout' && popRow) { popRow.prepend(fig); }
+  else if (v.place === 'nest' && nest) { nest.row.prepend(fig); }
   else if (v.place === 'timeline') { const tl = main.querySelector('.art-timeline'); const row = node('div', 'tl-row'); tl.replaceWith(row); row.append(tl, fig); }
   const fx = document.createElementNS(SVGNS, 'svg'); fx.setAttribute('class', 'fx'); fx.setAttribute('aria-hidden', 'true'); stage.append(fx);
   const draw = () => {
@@ -225,6 +253,20 @@ function renderVisual(stage, body, main, s) {
   requestAnimationFrame(() => requestAnimationFrame(draw));
   img.addEventListener('load', () => requestAnimationFrame(draw), { once: true });
   window.addEventListener('resize', draw, { signal: slideController.signal });
+  if (nest) {
+    const lens = node('span', 'lens'); lens.innerHTML = '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="26" cy="26" r="19" class="lens-glass"/><circle cx="26" cy="26" r="19" class="lens-rim"/><path d="M40 40 58 58" class="lens-handle"/><path d="M16 19a12 12 0 0 1 8-6" class="lens-shine"/></svg>';
+    stage.append(lens);
+    const place = () => {
+      const on = nest.current();
+      let x, y;
+      if (on < 0) { const h = rel(hatch, stage); x = h.x + 18; y = h.y - 46; }
+      else { const t = rel(nest.labels[on], stage); x = t.x - 34; y = t.y + t.h / 2; }
+      lens.style.left = x + 'px'; lens.style.top = y + 'px';
+    };
+    nest.onChange = place; const tm = setTimeout(() => { lens.classList.add('out'); place(); }, 1100);
+    slideController.signal.addEventListener('abort', () => clearTimeout(tm));
+    window.addEventListener('resize', place, { signal: slideController.signal });
+  }
   if (popRow) {
     // chips start inside the hatch; measured after the bot has finished peeking up
     const aim = () => { const h = rel(hatch, stage); popRow.querySelectorAll('.pop-chip').forEach(c => { const t = rel(c, stage); const inner = c.firstChild; inner.style.setProperty('--dx', (h.x - t.x - t.w / 2) + 'px'); inner.style.setProperty('--dy', (h.y - t.y - t.h / 2) + 'px'); }); };

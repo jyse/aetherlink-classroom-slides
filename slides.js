@@ -43,6 +43,7 @@
                  stagger: 'pop' — cards pop in one by one
                  hero: N — card N becomes one big centred statement
                  popOut: N + place: 'popout' — card N's lines pop out of the bot as chips
+                 art: 'nested' + place: 'nest' — steps shown as rings inside each other (+ magnifier)
    ========================================================================== */
 window.SLIDES = [
 
@@ -147,16 +148,16 @@ window.SLIDES = [
 { // Slide 7
   title: "The AI landscape",
   kicker: "DAY 1 · PART 1 · AI FOUNDATIONS",
-  subtitle: "Artificial intelligence → Machine learning → Generative AI → Large language models",
+  subtitle: "Each one sits inside the one before it.",
   type: "concept",
   layout: "steps",
+  visual: { art: 'nested', bot: 'point', place: 'nest' },
   items: [
     { label: "Artificial intelligence", caption: "The broad field." },
     { label: "Machine learning", caption: "Finds patterns from data." },
     { label: "Generative AI", caption: "Creates new content." },
     { label: "Large language models", caption: "Generate and process language." }
   ],
-  detail: "Click through each term for its one-line definition.",
   notes: "Click through the four terms live so the nesting is visible: each term sits inside the one before it. This is scaffolding for slide 8, not a separate lesson."
 },
 
