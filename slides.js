@@ -44,6 +44,13 @@
                  hero: N — card N becomes one big centred statement
                  popOut: N + place: 'popout' — card N's lines pop out of the bot as chips
                  art: 'nested' + place: 'nest' — steps shown as rings inside each other (+ magnifier)
+                 keyLine: N (+ stamp, place: 'key') — card N becomes the big key line, bot stamps it
+                 art: 'flow' + place: 'slot' — cards 1+2 flow through the bot into card 3
+                 art: 'window' — context-window box filling with tokens beside the cards
+                 cardArt: { N: 'sliders'|'thermo' } — small illustration inside card N
+                 reveal: 'click' (+ place: 'slot') — cards start closed; click / → opens the next
+                 checklist: N — card N's lines become a list that ticks itself off
+                 highlight 'in' may also be 'tagline'
    ========================================================================== */
 window.SLIDES = [
 
@@ -164,8 +171,10 @@ window.SLIDES = [
 { // Slide 8
   title: "Large language models",
   kicker: "DAY 1 · PART 1 · AI FOUNDATIONS",
-  subtitle: "An LLM generates a response from patterns learned during training and the context available in the current interaction.",
+  subtitle: "Sounding right is not the same as being right.",
   type: "concept",
+  visual: { keyLine: 1, stamp: 'VERIFY', bot: 'head', place: 'key',
+    highlight: [{ in: 'card:1', text: 'verification', tone: 'mark' }] },
   cards: [
     { title: "Definition", body: "An LLM generates a response from patterns learned during training and the context available in the current interaction." },
     { title: "Key line", body: "A plausible response still requires verification." }
@@ -176,8 +185,10 @@ window.SLIDES = [
 { // Slide 9
   title: "Input, context and output",
   kicker: "DAY 1 · PART 1 · AI FOUNDATIONS",
-  subtitle: "Useful context improves the response. Evidence determines whether you can trust it.",
+  subtitle: "What goes in shapes what comes out.",
   type: "concept",
+  visual: { art: 'flow', bot: 'head', place: 'slot',
+    highlight: [{ in: 'tagline', text: 'Evidence', tone: 'orange' }] },
   cards: [
     { title: "Input", body: "Your instruction, question or goal." },
     { title: "Context", body: "Relevant information available to the model." },
@@ -190,8 +201,10 @@ window.SLIDES = [
 { // Slide 10
   title: "Tokens and context windows",
   kicker: "DAY 1 · PART 1 · AI FOUNDATIONS",
-  subtitle: "Relevant, current and permitted context works best.",
+  subtitle: "The model can only consider so much at once.",
   type: "concept",
+  visual: { art: 'window',
+    highlight: [{ in: 'tagline', text: 'Relevant', tone: 'orange' }, { in: 'tagline', text: 'current', tone: 'purple' }, { in: 'tagline', text: 'permitted', tone: 'mark' }] },
   cards: [
     { title: "Tokens", body: "Models process text as tokens." },
     { title: "Context window", body: "A context window limits how much information the model can consider at once." },
@@ -204,8 +217,10 @@ window.SLIDES = [
 { // Slide 11
   title: "Model choice",
   kicker: "DAY 1 · PART 1 · AI FOUNDATIONS",
-  subtitle: "Different models offer different balances of capability, speed and cost.",
+  subtitle: "Pick the model that fits the task.",
   type: "concept",
+  visual: { cardArt: { 0: 'sliders', 1: 'thermo' },
+    highlight: [{ in: 'card:1', text: 'does not make an answer more truthful', tone: 'orange' }] },
   cards: [
     { title: "Model choice", body: "Different models offer different balances of capability, speed and cost." },
     { title: "Temperature", body: "Temperature influences variation in generated responses. It does not make an answer more truthful." }
@@ -216,8 +231,9 @@ window.SLIDES = [
 { // Slide 12
   title: "AI failure modes",
   kicker: "DAY 1 · PART 1 · AI FOUNDATIONS",
-  subtitle: "Treat AI output as a proposal until you verify it.",
+  subtitle: "How does AI get it wrong?",
   type: "concept",
+  visual: { reveal: 'click', bot: 'think', place: 'slot' },
   cards: [
     { title: "Missing context", body: "The model did not have what it needed to answer well." },
     { title: "Ambiguous instructions", body: "The request could reasonably mean more than one thing." },
@@ -234,8 +250,9 @@ window.SLIDES = [
   kicker: "DAY 1 · PART 1 · AI FOUNDATIONS",
   subtitle: "A useful request gives Claude:",
   type: "concept",
+  visual: { checklist: 0, bot: 'point', place: 'left' },
   cards: [
-    { title: "A useful request gives Claude", body: "the intended outcome\nrelevant context\nconstraints\nsuccess criteria\nthe required output\na validation method" }
+    { title: "Checklist", body: "the intended outcome\nrelevant context\nconstraints\nsuccess criteria\nthe required output\na validation method" }
   ],
   notes: "This is the checklist behind every well-formed prompt panel in the deck — point forward to it as the pattern participants will see repeated in every assignment."
 },

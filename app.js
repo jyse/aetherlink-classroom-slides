@@ -132,6 +132,9 @@ const PILLAR_ICONS = [
   '<circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/><path d="M7.5 10.5l2 2 3.5-4"/>',
   '<path d="M4 12a8 8 0 0 1 14-5l2 2"/><path d="M20 4v5h-5"/><path d="M20 12a8 8 0 0 1-14 5l-2-2"/><path d="M4 20v-5h5"/>'];
 const ART = {
+  sliders: () => svg('0 0 300 96', [0, 1, 2].map(i => '<g class="sl" style="--i:' + i + '"><path class="sl-track" d="M20 ' + (18 + i * 30) + 'H280"/><circle class="sl-knob" cx="' + [210, 120, 70][i] + '" cy="' + (18 + i * 30) + '" r="10"/></g>').join(''), 'art art-sliders'),
+  thermo: () => svg('0 0 300 96', '<rect class="th-tube" x="22" y="10" width="20" height="62" rx="10"/><circle class="th-bulb" cx="32" cy="78" r="14"/><rect class="th-fill" x="27" y="22" width="10" height="56" rx="5"/>' +
+    '<path class="th-wave" d="M70 48c15-26 30 26 45 0s30 26 45 0 30 26 45 0 30 26 45 0"/>', 'art art-thermo'),
   route: () => svg('0 0 400 70',
     '<path class="art-path" d="M35 35H365"/>' +
     [35, 145, 255, 365].map((x, i) => '<g transform="translate(' + x + ' 35)"><g class="art-stop" style="--i:' + i + '"><circle r="24"/>' + [
@@ -156,6 +159,7 @@ function highlight(root, s) {
     let host = null;
     if (h.in === 'title') host = root.querySelector('.heading h1');
     else if (h.in === 'subtitle') host = root.querySelector('.heading .subtitle');
+    else if (h.in === 'tagline') host = root.querySelector('.tagline');
     else if (/^card:\d+$/.test(h.in)) host = root.querySelectorAll('.card p')[Number(h.in.split(':')[1])];
     if (!host) return;
     const walker = document.createTreeWalker(host, NodeFilter.SHOW_TEXT);
@@ -166,6 +170,43 @@ function highlight(root, s) {
     }
   });
 }
+// slides 8-13: extra layouts, all keep the slide text verbatim
+function renderExtras(stage, main, s, v) {
+  const x = { aim: [] }; const cards = [...main.querySelectorAll('.card')]; const grid = main.querySelector('.cards');
+  if (v.keyLine != null && cards[v.keyLine]) {                 // 8: calm lead + key line that gets stamped
+    main.classList.add('has-key'); cards.forEach((c, i) => { if (i !== v.keyLine) c.classList.add('card-lead'); });
+    const key = cards[v.keyLine]; key.classList.add('card-key'); const row = node('div', 'key-row'); key.replaceWith(row); row.append(key);
+    const stamp = node('span', 'stamp'); stamp.append(node('span', 'stamp-in', v.stamp || 'VERIFY')); key.append(stamp); x.aim.push(stamp); x.row = row;
+  }
+  if (v.art === 'flow' && cards.length >= 3) {                  // 9: input + context -> model -> output
+    grid.classList.add('flow'); const left = node('div', 'flow-in'); left.append(cards[0], cards[1]);
+    const slot = node('div', 'flow-bot'); cards[2].classList.add('flow-out');
+    grid.replaceChildren(left, node('span', 'flow-arrow a1'), slot, node('span', 'flow-arrow a2'), cards[2]); x.slot = slot;
+  }
+  if (v.art === 'window') {                                    // 10: the context window fills up, noise distracts
+    main.classList.add('with-window'); const win = node('div', 'ctxwin'); const box = node('div', 'ctxwin-box');
+    const kinds = 'gggggggngnnn'; [...kinds].forEach((k, i) => { const t = node('span', 'tok tok-' + k); t.style.setProperty('--i', i); t.style.gridRow = String(3 - Math.floor(i / 4)); t.style.gridColumn = String(i % 4 + 1); if ([5, 8].includes(i)) t.classList.add('tok-dim'); box.append(t); });
+    const meter = node('div', 'ctxwin-meter'); meter.append(node('span', 'ctxwin-fill'));
+    win.append(box, meter); grid.after(win);
+  }
+  if (v.reveal === 'click') {                                  // 12: cards open one by one, so the room answers first
+    grid.classList.add('reveal-grid'); let reacted = null;
+    const open = i => { const c = cards[i]; if (!c || !c.classList.contains('closed')) return false; c.classList.remove('closed'); c.setAttribute('aria-hidden', 'false'); x.react?.(i); return true; };
+    cards.forEach((c, i) => { c.classList.add('closed'); c.setAttribute('aria-hidden', 'true'); const cover = node('span', 'card-cover', String(i + 1)); c.append(cover); c.addEventListener('click', () => open(i)); });
+    const next = () => open(cards.findIndex(c => c.classList.contains('closed')));
+    const ctrl = node('div', 'widget-controls reveal-controls'); const b1 = node('button', null, 'Reveal next →'); b1.addEventListener('click', next);
+    const b2 = node('button', 'secondary', 'Show all'); b2.addEventListener('click', () => cards.forEach((c, i) => open(i)));
+    ctrl.append(b1, b2); grid.after(ctrl); window.__reveal = next; slideController.signal.addEventListener('abort', () => { if (window.__reveal === next) window.__reveal = null; });
+    x.slot = grid;
+  }
+  if (v.checklist != null && cards[v.checklist]) {             // 13: the checklist ticks itself off
+    grid.classList.add('one-col'); const c = cards[v.checklist]; const ul = node('ul', 'checklist');
+    String(s.cards[v.checklist].body).split('\n').forEach((t, i) => { const li = node('li'); li.style.setProperty('--i', i); li.append(node('span', 'check-box'), node('span', 'check-text', t)); ul.append(li); });
+    c.querySelector('p')?.replaceWith(ul);
+  }
+  return x;
+}
+const REACT = ['?', '⇄', '…?', '⌛', '!!'];
 // slide 7: the steps become nested rings (each term sits inside the one before it)
 function buildNest(main, s) {
   const wrap = main.querySelector('.steps-wrap'); const chain = wrap?.querySelector('.steps-chain'); if (!chain) return null;
@@ -200,7 +241,7 @@ function renderVisual(stage, body, main, s) {
   if (v.pillarIcons) main.querySelectorAll('.pillar').forEach((p, i) => p.prepend(svg('0 0 24 24', PILLAR_ICONS[i % 4], 'pillar-icon')));
   if (v.stagger) main.classList.add('stagger-' + v.stagger);
   if (v.hero != null) { main.classList.add('has-hero'); main.querySelectorAll('.card')[v.hero]?.classList.add('card-hero'); }
-  let popRow = null, nest = null;
+  let popRow = null, nest = null; const ex = renderExtras(stage, main, s, v);
   if (v.art === 'nested') nest = buildNest(main, s);
   if (v.popOut != null && s.cards?.[v.popOut]) {
     const src = s.cards[v.popOut]; main.querySelectorAll('.card')[v.popOut]?.remove();
@@ -220,6 +261,8 @@ function renderVisual(stage, body, main, s) {
   else if (v.place === 'under') { main.append(fig); }
   else if (v.place === 'popout' && popRow) { popRow.prepend(fig); }
   else if (v.place === 'nest' && nest) { nest.row.prepend(fig); }
+  else if (v.place === 'key' && ex.row) { ex.row.prepend(fig); }
+  else if (v.place === 'slot' && ex.slot) { ex.slot.append(fig); }
   else if (v.place === 'timeline') { const tl = main.querySelector('.art-timeline'); const row = node('div', 'tl-row'); tl.replaceWith(row); row.append(tl, fig); }
   const fx = document.createElementNS(SVGNS, 'svg'); fx.setAttribute('class', 'fx'); fx.setAttribute('aria-hidden', 'true'); stage.append(fx);
   const draw = () => {
@@ -253,6 +296,15 @@ function renderVisual(stage, body, main, s) {
   requestAnimationFrame(() => requestAnimationFrame(draw));
   img.addEventListener('load', () => requestAnimationFrame(draw), { once: true });
   window.addEventListener('resize', draw, { signal: slideController.signal });
+  if (ex.aim.length) {
+    const aim = () => { const h = rel(hatch, stage); ex.aim.forEach(el => { const t = rel(el, stage); el.firstChild.style.setProperty('--dx', (h.x - t.x - t.w / 2) + 'px'); el.firstChild.style.setProperty('--dy', (h.y - t.y - t.h / 2) + 'px'); }); };
+    aim(); const tm = setTimeout(aim, 1000); slideController.signal.addEventListener('abort', () => clearTimeout(tm));
+    window.addEventListener('resize', aim, { signal: slideController.signal });
+  }
+  if (v.reveal === 'click') {
+    const bub = node('span', 'react'); fig.append(bub);
+    ex.react = i => { bub.textContent = REACT[i % REACT.length]; live.classList.remove('jolt'); bub.classList.remove('show'); void live.offsetWidth; live.classList.add('jolt'); bub.classList.add('show'); };
+  }
   if (nest) {
     const lens = node('span', 'lens'); lens.innerHTML = '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="26" cy="26" r="19" class="lens-glass"/><circle cx="26" cy="26" r="19" class="lens-rim"/><path d="M40 40 58 58" class="lens-handle"/><path d="M16 19a12 12 0 0 1 8-6" class="lens-shine"/></svg>';
     stage.append(lens);
@@ -386,7 +438,7 @@ $('fullscreen').addEventListener('click', async () => { try { if (document.fulls
 document.addEventListener('fullscreenchange', () => $('fullscreen').setAttribute('aria-label', document.fullscreenElement ? 'Exit fullscreen' : 'Enter fullscreen'));
 document.addEventListener('keydown', e => {
   if (panel.open || e.altKey || e.ctrlKey || e.metaKey || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName) || e.target.closest('[role=tablist]')) return;
-  if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); go(current + 1); }
+  if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); if (window.__reveal?.()) return; go(current + 1); }
   if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(current - 1); }
   if (e.key === 'Home') { e.preventDefault(); go(0); }
   if (e.key === 'End') { e.preventDefault(); go(slides.length - 1); }
