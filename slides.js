@@ -90,6 +90,9 @@
                  diff: [{title, rows:[{k, miss, odd, note}]}] — two mini cards side by side, differences circled
                  lifespan: [{kind:'now'|'always'|'recurring', icon, label}] — per card a small "how long it lives" track
                  tree: N — card N's path as a folder tree ending in an empty file
+                 fence: N — card N's lines as signs on a fence around a bouncing AetherBOT (bounded autonomy)
+                 conveyor: N — card N becomes a belt: terms go into AetherBOT, READY/REVISE/OPEN cards come out
+                 loopCaptions: true — (with art 'loop') show the active step's caption under the loop
    stepsHeading (slide field) — heading above the steps; default "Your prompt must ask Claude Code to:"
    ========================================================================== */
 window.SLIDES = [
@@ -1001,8 +1004,9 @@ Explain what the application does, how it is structured and how I can verify you
 { // Slide 55
   title: "Assignment 7: Teach Claude the method",
   kicker: "DAY 2 · ASSIGNMENT 7 · 45 MIN",
-  subtitle: "Improve the Create Concept Card skill.",
+  subtitle: "Build the Create Concept Card skill.",
   type: "practice",
+  visual: { mdfile: 0, mdName: 'SKILL.md' },
   layout: "exercise",
   timer: 45,
   cards: [
@@ -1014,7 +1018,8 @@ Explain what the application does, how it is structured and how I can verify you
     "Require real sources before trusting any factual claim.",
     "Follow the exact existing concept-card structure.",
     "Keep uncertainty as OPEN rather than inventing content.",
-    "Validate its output, then stop for human approval before writing to data/concept-cards.json."
+    "Validate its output, then stop for human approval before writing to data/concept-cards.json.",
+    "Only ever write to data/concept-cards.json — never touch glossary or profiles."
   ],
   expected: "A complete create-concept-card skill, tested against the approved cards.",
   notes: "This is the room's first time authoring their own skill — expect it to take longer than the slide's implied pace. Your job here is coaching, not demoing a pre-built answer; circulate and check each skill still stops for human approval rather than finishing unattended."
@@ -1039,8 +1044,9 @@ Explain what the application does, how it is structured and how I can verify you
 { // Slide 57
   title: "Bounded autonomy",
   kicker: "DAY 2 · PART 3 · BOUNDED AGENTIC WORK",
-  subtitle: "Claude Code can perform several steps after receiving one goal.",
+  subtitle: "One goal, many steps — inside a fence.",
   type: "concept",
+  visual: { fence: 1 },
   cards: [
     { title: "Definition", body: "Claude Code can perform several steps after receiving one goal." },
     { title: "Boundaries define", body: "what it may read\nwhat it may change\nwhich checks it must run\nwhen it must stop\nwhich decisions remain human" }
@@ -1053,17 +1059,19 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 2 · ASSIGNMENT 8 · 45 MIN",
   subtitle: "Use one instruction to process every approved glossary term.",
   type: "practice",
+  visual: { conveyor: 0 },
   layout: "exercise",
   timer: 45,
   cards: [
     { title: "For each term", body: "read the glossary entry\ncheck sufficiency\ncreate the concept card\nvalidate the required fields\nrecord READY, REVISE or OPEN\ncontinue with the next term" }
   ],
   steps: [
+    "First add 4 new terms to the glossary — definitions only, no cards.",
     "Use the create-concept-card skill on every remaining approved glossary term, one at a time.",
     "For each: read the entry, check whether information and sources are sufficient, create the card, validate required fields.",
     "Record READY, REVISE or OPEN for each one.",
     "Never invent missing information. Never commit anything.",
-    "Show one complete report for human review once every term is processed."
+    "Approve each card as it comes — then ask for one summary with READY, REVISE or OPEN per term."
   ],
   expected: "Draft concept cards for all suitable terms, plus a status report ready for human review.",
   notes: "It's explicitly low infra-risk to prepare since participants build and run it themselves — your job here is circulating and checking each run actually stops to report rather than committing unattended. Watch especially for terms it should have marked OPEN instead of guessing."
@@ -1075,6 +1083,7 @@ Explain what the application does, how it is structured and how I can verify you
   subtitle: "The agent loop inside Assignment 8.",
   type: "concept",
   layout: "steps",
+  visual: { stepKeys: true, art: 'loop', loopCaptions: true },
   items: [
     { label: "Observe", caption: "Read the next term and source." },
     { label: "Decide", caption: "Determine whether the information is sufficient." },

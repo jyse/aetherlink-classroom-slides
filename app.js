@@ -300,7 +300,7 @@ function renderExtras(stage, main, s, v) {
     labels.slice(0, 4).forEach((l, i) => { const n = node('span', 'lp-node', l); n.style.left = pos[i][0] + '%'; n.style.top = pos[i][1] + '%'; n.style.setProperty('--i', i); box.append(n); });
     const mid = node('div', 'lp-mid'); mid.append(node('span', 'lp-mid-ico', '↻ ■'), node('span', 'lp-mid-label', labels[4] || '')); box.append(mid);
     const orb = node('div', 'lp-orbit'); const head = document.createElement('img'); head.src = BOTS.head.src; head.alt = ''; orb.append(head); box.append(orb);
-    chain.after(box); const nodes = [...box.querySelectorAll('.lp-node'), mid];
+    if (v.loopCaptions) box.classList.add('show-cap'); chain.after(box); const nodes = [...box.querySelectorAll('.lp-node'), mid];
     const sync = () => x.steps.forEach((li, i) => nodes[i]?.classList.toggle('on', li.classList.contains('active')));
     const mo = new MutationObserver(sync); x.steps.forEach(li => mo.observe(li, { attributes: true, attributeFilter: ['class'] }));
     nodes.forEach((n, i) => n.addEventListener('click', () => x.steps[i].querySelector('button').click()));
@@ -421,6 +421,18 @@ function renderExtras(stage, main, s, v) {
     parts.forEach((p, i) => { const r = node('div', 'ft-row' + (i === parts.length - 1 ? ' ft-file' : '')); r.style.setProperty('--d', i); r.style.setProperty('--i', i);
       r.append(node('span', 'ft-ico', i === parts.length - 1 ? '📄' : '📁'), node('span', 'ft-name', p + (i < parts.length - 1 ? '/' : ''))); if (i === parts.length - 1) r.append(node('span', 'ft-empty', 'empty — you write it'), node('span', 'ft-cursor')); t.append(r); });
     c.querySelector('p')?.replaceWith(t);
+  }
+  if (v.fence != null && cards[v.fence]) {                      // 57: bounded autonomy — a bot inside a fence
+    const c = cards[v.fence]; const f = node('div', 'fence'); const yard = node('div', 'yard'); const im = document.createElement('img'); im.src = BOTS.head.src; im.alt = ''; im.className = 'yard-bot'; yard.append(im); f.append(yard);
+    String(s.cards[v.fence].body).split('\n').forEach((t, i) => { const sg = node('span', 'fence-sign fs' + i, t); sg.style.setProperty('--i', i); f.append(sg); });
+    c.querySelector('p')?.replaceWith(f); c.classList.add('fence-card');
+  }
+  if (v.conveyor != null && cards[v.conveyor]) {                // 58: terms on a belt, stamped cards come out
+    const c = cards[v.conveyor]; const b = node('div', 'belt-wrap'); const belt = node('div', 'belt');
+    ['term', 'term', 'term', 'term'].forEach((t, i) => { const k = node('span', 'belt-term', t); k.style.setProperty('--i', i); belt.append(k); });
+    const im = document.createElement('img'); im.src = BOTS.head.src; im.alt = ''; im.className = 'belt-bot';
+    const out = node('div', 'belt-out'); ['READY', 'REVISE', 'OPEN'].forEach((t, i) => { const o = node('span', 'belt-card st-' + t.toLowerCase(), t); o.style.setProperty('--i', i); out.append(o); });
+    b.append(belt, im, out); c.querySelector('p')?.replaceWith(b);
   }
   if (v.checklist != null && cards[v.checklist]) {             // 13: the checklist ticks itself off
     grid.classList.add('one-col'); const c = cards[v.checklist]; const ul = node('ul', 'checklist');
