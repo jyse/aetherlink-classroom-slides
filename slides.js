@@ -48,7 +48,7 @@
                  art: 'flow' + place: 'slot' — cards 1+2 flow through the bot into card 3
                  art: 'window' — context-window box filling with tokens beside the cards
                  cardArt: { N: 'sliders'|'thermo' } — small illustration inside card N
-                 reveal: 'click' (+ place: 'slot') — cards start closed; click / → opens the next
+                 reveal: 'click' (+ place: 'slot') — cards start closed; click / → opens the next (buttons: true shows buttons)
                  faces: [...] — with reveal: AetherBOT's face per opened card (assets/aetherbot/faces/:
                         verward · dubbel · eigenwijs · slaperig · betrapt · blij · verrast)
                  checklist: N — card N's lines become a list that ticks itself off

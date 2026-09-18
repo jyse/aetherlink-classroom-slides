@@ -196,7 +196,7 @@ function renderExtras(stage, main, s, v) {
     const next = () => open(cards.findIndex(c => c.classList.contains('closed')));
     const ctrl = node('div', 'widget-controls reveal-controls'); const b1 = node('button', null, 'Reveal next →'); b1.addEventListener('click', next);
     const b2 = node('button', 'secondary', 'Show all'); b2.addEventListener('click', () => cards.forEach((c, i) => open(i)));
-    ctrl.append(b1, b2); grid.after(ctrl); window.__reveal = next; slideController.signal.addEventListener('abort', () => { if (window.__reveal === next) window.__reveal = null; });
+    ctrl.append(b1, b2); if (v.buttons) grid.after(ctrl); window.__reveal = next; slideController.signal.addEventListener('abort', () => { if (window.__reveal === next) window.__reveal = null; });
     x.slot = grid;
   }
   if (v.checklist != null && cards[v.checklist]) {             // 13: the checklist ticks itself off

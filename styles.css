@@ -513,3 +513,6 @@ p.subtitle{font-weight:700}
 .reveal-grid .place-slot{height:clamp(150px,19vh,172px)}
 .reveal-controls{margin-top:.6rem}
 .reveal-controls + .tagline{margin-top:.7rem}
+/* widget buttons: AetherLink purple -> orange (Cons, 18 sep) */
+.widget-controls button{background:linear-gradient(105deg,var(--aether-purple),var(--aether-orange));border-color:transparent;color:#fff;text-shadow:0 1px 1px rgba(0,0,0,.25)}
+.widget-controls button.secondary{background:transparent;color:var(--text);border:1px solid transparent;background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(105deg,var(--aether-purple),var(--aether-orange)) border-box}
