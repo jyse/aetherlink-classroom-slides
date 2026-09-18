@@ -1006,3 +1006,4 @@ body.is-assignment .slide-body.with-side .cards{grid-template-columns:minmax(0,1
 .sentences .nb-lines li{display:flex;align-items:flex-end;gap:.6rem}
 .sentences .nb-lines li::before{content:'✎'}
 .sentences .blank{flex:1;border-bottom:2px dashed #9aa6c3;margin-bottom:.35rem;min-width:4rem}
+.recap-item.won{opacity:0;animation:pop .45s cubic-bezier(.2,1.4,.4,1) both;animation-delay:calc(.5s + var(--i,0)*.45s)}

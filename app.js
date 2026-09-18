@@ -496,9 +496,7 @@ function renderExtras(stage, main, s, v) {
   }
   if (v.recapKeys) {                                             // 73: → reveals the next item, no buttons
     const list = main.querySelector('.recap-list'); const ctrl = main.querySelector('.widget-controls'); if (ctrl) ctrl.style.display = 'none';
-    const lis = [...(list?.children || [])]; lis.forEach(li => li.querySelector('.recap-check').textContent = '🏆');
-    let k = 0; const next = () => { if (k >= lis.length) return false; const li = lis[k++]; li.classList.remove('hidden-item'); li.classList.add('won'); li.removeAttribute('aria-hidden'); return true; };
-    window.__reveal = next; slideController.signal.addEventListener('abort', () => { if (window.__reveal === next) window.__reveal = null; });
+    [...(list?.children || [])].forEach((li, i) => { li.querySelector('.recap-check').textContent = '🏆'; li.classList.remove('hidden-item'); li.classList.add('won'); li.removeAttribute('aria-hidden'); li.style.setProperty('--i', i); });
     main.classList.add('side-grid'); x.aside = main;
   }
   if (v.levelUp) {                                               // 74: every item ticks, a progress bar fills

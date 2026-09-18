@@ -106,7 +106,7 @@
                  planB: 'WINDOW_VAR' (+ planBLabel) — B shows a captured example (see demo-fallback.js)
                  menu: N — card N's lines as clickable chips (pick one)
                  pipes: true (+ same: [k]) — compare columns 'A → B → C → D' as two aligned pipelines; same stages glow
-                 recapKeys: true — recap items appear one per → with a trophy (no buttons)
+                 recapKeys: true — recap items pop in one by one with a trophy (no buttons, no clicking)
                  levelUp: true — recap items tick off with a progress bar filling up
                  supportDays: true — (with art 'timeline') the two teaching days marked done
                  doneSteps: N — (with stepKeys) first N steps done ✓, the next one pulses
