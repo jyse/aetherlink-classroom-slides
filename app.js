@@ -398,9 +398,9 @@ function renderExtras(stage, main, s, v) {
     const tg = main.querySelector('.tagline'); (tg || grid).before(g);
   }
   if (v.repeatStack != null && cards[v.repeatStack]) {          // 49: the same list, again and again
-    const c = cards[v.repeatStack]; c.classList.add('rep-front'); const wrap = node('div', 'rep-stack'); c.replaceWith(wrap);
-    for (let k = 2; k >= 1; k--) { const ghost = c.cloneNode(true); ghost.classList.remove('rep-front'); ghost.classList.add('rep-ghost', 'rep-g' + k); ghost.setAttribute('aria-hidden', 'true'); wrap.append(ghost); }
-    wrap.append(c); ['card 1', 'card 2', 'card 3 …'].forEach((t, i) => { const tag = node('span', 'rep-tag rep-t' + i, t); wrap.append(tag); });
+    const c = cards[v.repeatStack]; const wrap = node('div', 'rep-hand'); c.replaceWith(wrap);
+    ['card 1', 'card 2', 'card 3 …'].forEach((t, i) => { const k = i === 2 ? c : c.cloneNode(true); k.classList.add('rep-card', 'rep-c' + i); if (i < 2) k.setAttribute('aria-hidden', 'true');
+      k.style.setProperty('--i', i); k.append(node('span', 'rep-tag', t)); wrap.append(k); });
     main.classList.add('side-grid'); x.aside = main;
   }
   if (v.checklist != null && cards[v.checklist]) {             // 13: the checklist ticks itself off

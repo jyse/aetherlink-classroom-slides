@@ -822,3 +822,12 @@ body.is-assignment #stage{border-color:var(--cyan);box-shadow:0 0 0 8px color-mi
 .rep-ghost > *{visibility:hidden}
 .rep-stack{margin:0 auto}
 .side-grid > .rep-stack{justify-self:end;width:min(560px,100%)}
+/* ---- 49: three identical cards fly in, then fan out like a hand of cards ---- */
+.rep-hand{position:relative;width:min(470px,100%);justify-self:center;margin:1.2rem auto 0}
+.rep-card{position:absolute !important;inset:0;transform-origin:50% 125%;animation:fly-fan .9s cubic-bezier(.2,1.1,.35,1) both !important;animation-delay:calc(.3s + var(--i)*.55s) !important;box-shadow:0 14px 34px rgba(0,0,0,.45)}
+.rep-card.rep-c2{position:relative !important}
+.rep-c0{--r:-11deg;--x:-58px}.rep-c1{--r:-4deg;--x:-18px}.rep-c2{--r:4deg;--x:24px}
+@keyframes fly-fan{0%{opacity:0;transform:translate(75vw,-40px) rotate(30deg)}55%{opacity:1;transform:translate(0,0) rotate(0)}100%{opacity:1;transform:translate(var(--x),0) rotate(var(--r))}}
+.rep-card .rep-tag{position:absolute;top:-.7rem;right:1rem;left:auto;padding:.12rem .6rem;border-radius:999px;font-size:.72rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:linear-gradient(105deg,var(--aether-purple),var(--aether-orange))}
+.side-grid > .rep-hand{justify-self:center}
+.rep-hand{margin-left:90px}
