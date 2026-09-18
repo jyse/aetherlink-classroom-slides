@@ -434,6 +434,26 @@ function renderExtras(stage, main, s, v) {
     const out = node('div', 'belt-out'); ['READY', 'REVISE', 'OPEN'].forEach((t, i) => { const o = node('span', 'belt-card st-' + t.toLowerCase(), t); o.style.setProperty('--i', i); out.append(o); });
     b.append(belt, im, out); c.querySelector('p')?.replaceWith(b);
   }
+  if (v.perCard) {                                               // 60: every card gets its own decision
+    main.classList.add('side-grid'); const row = node('div', 'percard');
+    v.perCard.forEach((st, i) => { const m = node('div', 'pc-card'); m.style.setProperty('--i', i); m.append(node('span', 'pc-t', 'card ' + (i + 1)), node('span', 'pc-l'), node('span', 'pc-l short'), node('span', 'pc-stamp st-' + st.toLowerCase(), st)); row.append(m); });
+    grid.after(row);
+  }
+  if (v.gameFlow) {                                              // 62: one round of the game
+    grid.classList.add('gameflow'); cards.forEach((c, i) => { c.style.setProperty('--i', i); if (i < cards.length - 1) c.append(node('span', 'gf-arrow', '→')); });
+    const back = node('div', 'gf-back'); back.append(node('span', 'gf-back-line'), node('span', 'gf-back-label', '↺ next round')); grid.after(back);
+  }
+  if (v.gameMock) {                                              // 63: the game screen — only feedback is missing
+    main.classList.add('side-grid'); const g = node('div', 'gmock'); const bar = node('div', 'md-bar'); bar.append(node('i'), node('i'), node('i'), node('span', 'md-name', 'Game · Explain It Back')); g.append(bar);
+    const b = node('div', 'gm-body'); b.append(node('span', 'gm-term', 'Context window'), node('span', 'gm-field'), node('span', 'gm-btn', 'Submit'));
+    const fb = node('div', 'gm-feedback'); fb.append(node('strong', null, 'Feedback'), node('span', null, 'you build this — Assignment 9')); b.append(fb); g.append(b); grid.after(g);
+  }
+  if (v.phrase) {                                                // 64: the exact phrase to say
+    const bub = node('div', 'phrase'); bub.append(node('span', 'phrase-who', 'You'), node('span', 'phrase-text', '“' + v.phrase + '”')); grid.after(bub);
+  }
+  if (v.catChips != null && cards[v.catChips]) {                // 65: rating categories as coloured labels
+    const c = cards[v.catChips]; const w = node('div', 'cat-chips'); String(s.cards[v.catChips].body).split('\n').forEach((t, i) => { const k = node('span', 'cat-chip cc' + i, t); k.style.setProperty('--i', i); w.append(k); }); c.querySelector('p')?.replaceWith(w);
+  }
   if (v.checklist != null && cards[v.checklist]) {             // 13: the checklist ticks itself off
     grid.classList.add('one-col'); const c = cards[v.checklist]; const ul = node('ul', 'checklist');
     String(s.cards[v.checklist].body).split('\n').forEach((t, i) => { const li = node('li'); li.style.setProperty('--i', i); li.append(node('span', 'check-box'), node('span', 'check-text', t)); ul.append(li); });
@@ -666,7 +686,7 @@ function render() {
   renderLayout(main, s);
   renderTagline(main, s);
   renderVisual(stage, body, main, s);
-  const instructions = (s.visual?.quiz || s.visual?.stamps) ? null : renderInstructions(s);
+  const instructions = (s.visual?.quiz || s.visual?.stamps || s.visual?.perCard) ? null : renderInstructions(s);
   if (instructions) {
     const side = sideBySide(s, instructions);
     body.classList.toggle('with-side', side);

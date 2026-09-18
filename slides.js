@@ -93,6 +93,11 @@
                  fence: N — card N's lines as signs on a fence around a bouncing AetherBOT (bounded autonomy)
                  conveyor: N — card N becomes a belt: terms go into AetherBOT, READY/REVISE/OPEN cards come out
                  loopCaptions: true — (with art 'loop') show the active step's caption under the loop
+                 perCard: [stamps] — row of mini cards, each with its own decision stamp (checkpoint hidden)
+                 gameFlow: true — cards as one round of the game with a loop-back arrow
+                 gameMock: true — mini game screen beside the cards, feedback area empty ("you build this")
+                 phrase: '…' — a chat bubble with the exact phrase to say
+                 catChips: N — card N's lines as coloured rating labels
    stepsHeading (slide field) — heading above the steps; default "Your prompt must ask Claude Code to:"
    ========================================================================== */
 window.SLIDES = [
@@ -1099,8 +1104,10 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 2 · ASSIGNMENT 8 · REVIEW",
   subtitle: "Review the batch before accepting it.",
   type: "review",
+  tagline: "Human decision: accept, revise or reject each card.",
+  visual: { lineReveal: 0, perCard: ['ACCEPT', 'REVISE', 'ACCEPT', 'REJECT'], highlight: [{ in: 'tagline', text: 'each card', tone: 'orange' }] },
   cards: [
-    { title: "Review the batch before accepting it", body: "Did the skill apply consistently?\nWhich cards lack reliable sources?\nWhich claims require correction?\nDid Claude report actual test results?\nWhich items remain OPEN?" }
+    { title: "Check each card", body: "Did the skill apply consistently?\nWhich cards lack reliable sources?\nWhich claims require correction?\nDid Claude report actual test results?\nWhich items remain OPEN?" }
   ],
   check: "Human decision: accept, revise or reject each card.",
   notes: "This is a per-card decision, not one decision for the whole batch — make that explicit before the room starts reviewing."
@@ -1127,6 +1134,7 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 2 · PART 4 · LEARNING GAME",
   subtitle: "The Library now contains enough structured knowledge to support a learning game.",
   type: "concept",
+  visual: { gameFlow: true },
   cards: [
     { title: "One AI term", body: "Shown from the approved concept cards." },
     { title: "An answer field", body: "The participant types their own explanation." },
@@ -1140,8 +1148,9 @@ Explain what the application does, how it is structured and how I can verify you
 { // Slide 63
   title: "Game starter state",
   kicker: "DAY 2 · PART 4 · LEARNING GAME",
-  subtitle: "Participants complete the behaviour.",
+  subtitle: "The game works — only the feedback is missing.",
   type: "concept",
+  visual: { checklist: 0, gameMock: true },
   cards: [
     { title: "Already available", body: "game page and visual design\nterm card\nanswer field\nSubmit button\nempty feedback area\napproved concept-card data" }
   ],
@@ -1149,37 +1158,39 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "Point out explicitly what's missing: the game doesn't yet do anything when Submit is clicked. That gap is exactly what Assignment 9 fills."
 },
 
-{ // Slide 64
-  title: "Assignment 9: Learning game",
-  kicker: "DAY 2 · ASSIGNMENT 9 · 60 MIN",
-  subtitle: "The game already works. Build checklist.md and the term-checker skill, then use them.",
-  type: "practice",
-  layout: "exercise",
-  timer: 60,
-  cards: [
-    { title: "Part A — a good explanation has", body: "central meaning\nessential points\na practical example\nno incorrect claims\nno missing information\nrelevant resources" }
-  ],
-  steps: [
-    "Part A: propose what a good \"explain this term back\" answer contains, based on the approved concept cards. Write it to checklist.md once approved.",
-    "Part B: create .claude/skills/term-checker/SKILL.md — it reads checklist.md and the latest submission, compares against the matching concept card, and writes structured feedback.",
-    "The skill must read checklist.md generically (never hardcode criteria) and never call an external API or model.",
-    "Part C: say the exact phrase — \"Check my latest submission using the term-checker skill.\""
-  ],
-  expected: "A working game where AI feedback comes entirely from your own authenticated Claude Code session — no API credentials, no external model calls, no database.",
-  notes: "Longest single assignment of the two days — give it the full 60 minutes and don't rush the wrap-up. Do NOT let anyone rebuild the game itself — it already works; the real work is Parts A and B, then actually saying Part C's exact phrase at least once. The key thing to protect: no API keys, no external model calls, no database — feedback comes entirely from the participant's own already-authenticated Claude Code session reading and writing local files. Watch for people who build checklist.md and the skill but skip Part C because time is short."
-},
-
-{ // Slide 65
+{ // Slide 65 (shown before 64: explains checklist.md + categories first)
   title: "checklist.md and the term-checker skill",
   kicker: "DAY 2 · PART 4 · LEARNING GAME",
   subtitle: "What a good explanation must contain — and how Claude Code checks it.",
   type: "concept",
+  visual: { mdfile: 0, mdName: 'checklist.md', catChips: 1 },
   cards: [
     { title: "checklist.md checks", body: "central meaning\nimportant elements\npractical example\nincorrect claims\nmissing information\nrecommended resources" },
     { title: "Feedback categories", body: "Strong explanation\nPartially complete\nReview this concept\nUnable to evaluate" },
     { title: "Skill #2: term-checker", body: "Reads checklist.md and the latest submission, compares them, and writes structured feedback. The criteria live in checklist.md, not hardcoded in the skill." }
   ],
   notes: "checklist.md lives at the repo root, separate from the skill file — it's participant- and class-authored, and people may edit or extend it. This is deliberately the same pattern as create-concept-card (Skill #1): the reusable method stays generic, the specific criteria live in their own file. Say explicitly that this is required behaviour for Assignment 9, not an optional extra — there is no separate 'AI Concept Coach' assignment; this is it."
+},
+
+{ // Slide 64 (now after 65)
+  title: "Assignment 9: Learning game",
+  kicker: "DAY 2 · ASSIGNMENT 9 · 60 MIN",
+  subtitle: "The game already works. Build checklist.md and the term-checker skill, then use them.",
+  type: "practice",
+  visual: { mdfile: 0, mdName: 'checklist.md', phrase: 'Check my latest submission using the term-checker skill.' },
+  layout: "exercise",
+  timer: 60,
+  cards: [
+    { title: "Part A — a good explanation has", body: "central meaning\nessential points\na practical example\nno incorrect claims\nno missing information\nrelevant resources" }
+  ],
+  steps: [
+    "Part A: propose what a good \"explain this term back\" answer contains, based on the approved concept cards — including the four rating categories: Strong explanation · Partially complete · Review this concept · Unable to evaluate. Write it to checklist.md once approved.",
+    "Part B: create .claude/skills/term-checker/SKILL.md — it reads checklist.md and the latest submission, compares against the matching concept card, and writes structured feedback.",
+    "The skill must read checklist.md generically (never hardcode criteria) and never call an external API or model.",
+    "Part C: say the exact phrase — \"Check my latest submission using the term-checker skill.\""
+  ],
+  expected: "A working game where AI feedback comes entirely from your own authenticated Claude Code session — no API credentials, no external model calls, no database.",
+  notes: "Longest single assignment of the two days — give it the full 60 minutes and don't rush the wrap-up. Do NOT let anyone rebuild the game itself — it already works; the real work is Parts A and B, then actually saying Part C's exact phrase at least once. The key thing to protect: no API keys, no external model calls, no database — feedback comes entirely from the participant's own already-authenticated Claude Code session reading and writing local files. Watch for people who build checklist.md and the skill but skip Part C because time is short."
 },
 
 { // Slide 66

@@ -893,3 +893,39 @@ body.is-assignment .slide-body.with-side .cards{grid-template-columns:minmax(0,1
 .belt-card{left:10%;animation:out-one 3s ease-out infinite}
 @keyframes out-one{0%{opacity:0;transform:translateX(-10px) rotate(-6deg) scale(.7)}6%{opacity:1;transform:rotate(-6deg) scale(1)}30%{opacity:1}34%{opacity:0}100%{opacity:0}}
 .belt-card{animation-delay:calc(var(--i)*1s)}
+/* ---- 60: per-card decisions ---- */
+.percard{display:grid;grid-template-columns:repeat(2,150px);gap:1rem}
+.pc-card{position:relative;display:grid;gap:.4rem;padding:.8rem;border-radius:10px;background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--cyan);opacity:0;animation:enter .4s both;animation-delay:calc(.5s + var(--i)*.2s)}
+.pc-t{font-size:.72rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--muted,#9aa6c3)}
+.pc-l{height:5px;border-radius:3px;background:#2a3350}.pc-l.short{width:60%}
+.pc-stamp{justify-self:center;margin-top:.3rem;padding:.1rem .5rem;border:3px solid;border-radius:8px;font-weight:900;font-size:.8rem;letter-spacing:.12em;transform:rotate(-8deg);opacity:0;animation:stamp-hit .5s cubic-bezier(.2,1.5,.4,1) both;animation-delay:calc(2s + var(--i)*.5s)}
+.pc-stamp.st-accept{color:#22c55e;border-color:#22c55e}.pc-stamp.st-revise{color:var(--aether-orange);border-color:var(--aether-orange)}.pc-stamp.st-reject{color:#ff5a5a;border-color:#ff5a5a}
+@keyframes stamp-hit{0%{opacity:0;transform:rotate(-20deg) scale(2)}100%{opacity:1;transform:rotate(-8deg) scale(1)}}
+/* ---- 62: game round ---- */
+.cards.gameflow{grid-template-columns:repeat(5,minmax(0,1fr));gap:1.4rem}
+.gameflow .card{position:relative;padding:1rem .9rem;animation-delay:calc(.2s + var(--i)*.3s)}
+.gameflow .card p{font-size:clamp(.9rem,1.15vw,1.02rem)}
+.gf-arrow{position:absolute;right:-1.25rem;top:50%;transform:translateY(-50%);font-size:1.3rem;font-weight:900;color:var(--aether-orange)}
+.gf-back{position:relative;margin:.8rem 10% 0;height:34px}
+.gf-back-line{position:absolute;inset:0 0 auto 0;height:18px;border:3px dashed var(--aether-orange);border-top:0;border-radius:0 0 18px 18px;opacity:0;animation:fade-in .5s both 2s}
+.gf-back-label{position:absolute;left:50%;top:10px;transform:translateX(-50%);background:var(--bg,#06111e);padding:0 .6rem;font-weight:900;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--aether-orange);opacity:0;animation:fade-in .5s both 2.2s}
+/* ---- 63: game mock ---- */
+.gmock{width:340px;border:1px solid #2a3350;border-radius:12px;overflow:hidden;background:#0b0f19;animation:enter .5s both .6s}
+.gm-body{display:grid;gap:.6rem;padding:.9rem}
+.gm-term{justify-self:start;padding:.25rem .7rem;border-radius:8px;background:var(--cyan);color:#06111e;font-weight:900}
+.gm-field{height:54px;border-radius:8px;border:1px solid #2a3350;background:#141a2b}
+.gm-btn{justify-self:start;padding:.25rem .8rem;border-radius:8px;background:linear-gradient(105deg,var(--aether-purple),var(--aether-orange));color:#fff;font-weight:800;font-size:.85rem}
+.gm-feedback{display:grid;gap:.2rem;padding:.7rem;border:3px dashed var(--aether-orange);border-radius:10px;color:var(--aether-orange);animation:pulse-o 1.8s ease-in-out 2s infinite}
+.gm-feedback span{font-size:.8rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+@keyframes pulse-o{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--aether-orange) 18%,transparent)}}
+/* ---- 64: phrase bubble ---- */
+.phrase{position:relative;display:grid;gap:.2rem;margin-top:.8rem;padding:.7rem 1rem;border-radius:16px 16px 16px 4px;background:linear-gradient(105deg,var(--aether-purple),var(--aether-orange));color:#fff;animation:pop .5s cubic-bezier(.2,1.4,.4,1) both .8s}
+.phrase-who{font-size:.7rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;opacity:.85}
+.phrase-text{font-weight:800;font-size:clamp(.95rem,1.25vw,1.1rem)}
+/* ---- 65: rating labels ---- */
+.cat-chips{display:flex;flex-direction:column;align-items:flex-start;gap:.5rem;margin-top:.5rem}
+.cat-chip{padding:.3rem .8rem;border-radius:999px;font-weight:900;font-size:clamp(.9rem,1.2vw,1.05rem);border:2px solid;opacity:0;animation:pop .4s cubic-bezier(.2,1.4,.4,1) both;animation-delay:calc(.6s + var(--i)*.25s)}
+.cc0{color:#22c55e;border-color:#22c55e}.cc1{color:var(--aether-orange);border-color:var(--aether-orange)}.cc2{color:#ff5a5a;border-color:#ff5a5a}.cc3{color:var(--muted,#9aa6c3);border-color:var(--border)}
+.is-assignment .md-l{display:none}
+.is-assignment .md-body{gap:.12rem;padding:.4rem .8rem}
+.is-assignment .phrase{margin-top:.6rem;padding:.5rem .9rem}
