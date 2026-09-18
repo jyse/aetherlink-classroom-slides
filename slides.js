@@ -84,7 +84,12 @@
                  art: 'intake' (+ place 'aside', tags) — every card flows into AetherBOT
                  mdfile: N — card N's lines as sections of a CLAUDE.md file
                  guides: [[icon, name, verb], …] — two badges "X guides ≠ Y enforces" above the tagline
-                 repeatStack: N — card N repeated as a stack of identical cards (the same method, again)
+                 repeatStack: N — card N repeated as three cards that fly in and fan out like a hand of cards
+                 mdName — file name shown on mdfile (default CLAUDE.md)
+                 noSkill: N — card N's body becomes a "No skill yet" badge
+                 diff: [{title, rows:[{k, miss, odd, note}]}] — two mini cards side by side, differences circled
+                 lifespan: [{kind:'now'|'always'|'recurring', icon, label}] — per card a small "how long it lives" track
+                 tree: N — card N's path as a folder tree ending in an empty file
    stepsHeading (slide field) — heading above the steps; default "Your prompt must ask Claude Code to:"
    ========================================================================== */
 window.SLIDES = [
@@ -922,13 +927,14 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 2 · ASSIGNMENT 6 · 25 MIN",
   subtitle: "Create a second concept card with an ordinary prompt. Do not use a skill yet.",
   type: "practice",
+  visual: { noSkill: 0 },
   layout: "exercise",
   timer: 25,
   cards: [
     { title: "Do this with a plain prompt", body: "Use the same requirements and validation method as yesterday's approved card." }
   ],
   steps: [
-    "Choose a second glossary term.",
+    "Choose a second term — add it to the glossary first if it isn't there yet.",
     "Use the same requirements and validation method as yesterday's approved card — an ordinary, one-off prompt, no skill.",
     "Show the draft and plan before changing anything.",
     "Confirm the card renders correctly on the existing Library page.",
@@ -943,6 +949,9 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 2 · ASSIGNMENT 6 · REVIEW",
   subtitle: "Which parts should become a shared method?",
   type: "review",
+  visual: { lineReveal: 0, diff: [
+    { title: 'Run 1 · yesterday', rows: [{ k: 'Explanation' }, { k: 'Example' }, { k: 'Misunderstanding' }, { k: 'Key points' }, { k: 'Related' }, { k: 'Sources', note: '3' }] },
+    { title: 'Run 2 · today', rows: [{ k: 'Explanation' }, { k: 'Example', odd: true, note: 'longer' }, { k: 'Misunderstanding', miss: true, note: 'missing' }, { k: 'Key points' }, { k: 'Related', miss: true, note: 'missing' }, { k: 'Sources', odd: true, note: '1' }] }] },
   cards: [
     { title: "Compare", body: "Which instructions did you repeat?\nDid the cards follow the same structure?\nDid Claude perform the same checks?\nWhich parts should become a shared method?\nWhat must still require human judgement?" }
   ],
@@ -952,8 +961,9 @@ Explain what the application does, how it is structured and how I can verify you
 { // Slide 52
   title: "Claude Code skills",
   kicker: "DAY 2 · PART 2 · PROMPT TO SKILL",
-  subtitle: "A skill packages a reusable method for a recurring task.",
+  subtitle: "Teach Claude a method once — reuse it every time.",
   type: "concept",
+  visual: { mdfile: 1, mdName: 'SKILL.md', highlight: [{ in: 'tagline', text: 'does not start Claude Code or run continuously', tone: 'orange' }] },
   cards: [
     { title: "Definition", body: "A skill packages a reusable method for a recurring task." },
     { title: "A skill can define", body: "when it applies\nrequired input\nprocedure\noutput format\nboundaries\nstop conditions" }
@@ -967,6 +977,7 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 2 · PART 2 · PROMPT TO SKILL",
   subtitle: "Three different mechanisms, three different jobs.",
   type: "concept",
+  visual: { lifespan: [{ kind: 'now', icon: '💬', label: 'now' }, { kind: 'always', icon: '📄', label: 'every session' }, { kind: 'recurring', icon: '🧰', label: 'whenever that task comes up' }] },
   cards: [
     { title: "Prompt", body: "The task Claude should perform now." },
     { title: "CLAUDE.md", body: "Project instructions that apply across sessions." },
@@ -978,10 +989,11 @@ Explain what the application does, how it is structured and how I can verify you
 { // Slide 54
   title: "Create Concept Card skill",
   kicker: "DAY 2 · PART 2 · PROMPT TO SKILL",
-  subtitle: "The repository contains an intentionally incomplete skill.",
+  subtitle: "You build this skill from nothing — this is where it lives.",
   type: "context",
+  visual: { tree: 0 },
   cards: [
-    { title: "Inspect, improve and test", body: ".claude/skills/create-concept-card/SKILL.md" }
+    { title: "Create, test and improve", body: ".claude/skills/create-concept-card/SKILL.md" }
   ],
   notes: "Preparing an incomplete skill is safer and clearer than asking every participant to invent the structure from nothing. Point out where the file lives before Assignment 7 starts so nobody spends their first five minutes just finding it."
 },

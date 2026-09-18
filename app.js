@@ -389,7 +389,7 @@ function renderExtras(stage, main, s, v) {
     x.aside = main;
   }
   if (v.mdfile != null && cards[v.mdfile]) {                    // 45/46: the card's lines as a CLAUDE.md file
-    const c = cards[v.mdfile]; const f = node('div', 'mdfile'); const bar = node('div', 'md-bar'); bar.append(node('i'), node('i'), node('i'), node('span', 'md-name', 'CLAUDE.md')); f.append(bar);
+    const c = cards[v.mdfile]; const f = node('div', 'mdfile'); const bar = node('div', 'md-bar'); bar.append(node('i'), node('i'), node('i'), node('span', 'md-name', v.mdName || 'CLAUDE.md')); f.append(bar);
     const body = node('div', 'md-body'); String(s.cards[v.mdfile].body).split('\n').forEach((l, i) => { const r = node('div', 'md-sec'); r.style.setProperty('--i', i); r.append(node('span', 'md-h', '## ' + l), node('span', 'md-l'), node('span', 'md-l short')); body.append(r); });
     f.append(body); c.querySelector('p')?.replaceWith(f);
   }
@@ -402,6 +402,25 @@ function renderExtras(stage, main, s, v) {
     ['card 1', 'card 2', 'card 3 …'].forEach((t, i) => { const k = i === 2 ? c : c.cloneNode(true); k.classList.add('rep-card', 'rep-c' + i); if (i < 2) k.setAttribute('aria-hidden', 'true');
       k.style.setProperty('--i', i); k.append(node('span', 'rep-tag', t)); wrap.append(k); });
     main.classList.add('side-grid'); x.aside = main;
+  }
+  if (v.noSkill != null && cards[v.noSkill]) {                  // 50: plain prompt, no skill
+    const c = cards[v.noSkill]; const b = node('div', 'noskill'); b.append(node('span', 'ns-ico', '🧰'), node('strong', null, 'No skill yet')); c.querySelector('p')?.replaceWith(b);
+  }
+  if (v.diff) {                                                  // 51: two runs of the same card, not quite the same
+    main.classList.add('side-grid'); const d = node('div', 'diff');
+    v.diff.forEach((run, ri) => { const m = node('div', 'mini-card'); m.style.setProperty('--i', ri); m.append(node('span', 'mini-title', run.title));
+      run.rows.forEach(r => { const row = node('div', 'mini-row' + (r.miss ? ' miss' : '') + (r.odd ? ' odd' : '')); row.append(node('span', 'mini-k', r.k), node('span', 'mini-l')); if (r.note) row.append(node('span', 'mini-note', r.note)); m.append(row); }); d.append(m); });
+    grid.after(d);
+  }
+  if (v.lifespan) {                                              // 53: how long each mechanism "lives"
+    cards.forEach((c, i) => { const L = v.lifespan[i]; if (!L) return; const box = node('div', 'life life-' + L.kind); box.append(node('span', 'life-ico', L.icon));
+      const track = node('div', 'life-track'); for (let k = 0; k < 12; k++) { const t = node('span', 'life-tick'); t.style.setProperty('--k', k); track.append(t); } box.append(track, node('span', 'life-label', L.label)); c.append(box); });
+  }
+  if (v.tree != null && cards[v.tree]) {                        // 54: where the skill lives — an empty file
+    const c = cards[v.tree]; const parts = String(s.cards[v.tree].body).split('/'); const t = node('div', 'ftree');
+    parts.forEach((p, i) => { const r = node('div', 'ft-row' + (i === parts.length - 1 ? ' ft-file' : '')); r.style.setProperty('--d', i); r.style.setProperty('--i', i);
+      r.append(node('span', 'ft-ico', i === parts.length - 1 ? '📄' : '📁'), node('span', 'ft-name', p + (i < parts.length - 1 ? '/' : ''))); if (i === parts.length - 1) r.append(node('span', 'ft-empty', 'empty — you write it'), node('span', 'ft-cursor')); t.append(r); });
+    c.querySelector('p')?.replaceWith(t);
   }
   if (v.checklist != null && cards[v.checklist]) {             // 13: the checklist ticks itself off
     grid.classList.add('one-col'); const c = cards[v.checklist]; const ul = node('ul', 'checklist');
