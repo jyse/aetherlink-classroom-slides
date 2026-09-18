@@ -647,3 +647,44 @@ p.subtitle{font-weight:700}
 .loop ~ .steps-detail{display:none}
 .cards.stack{flex-direction:column}
 .cards.stack .card{animation:pop .55s cubic-bezier(.2,1.4,.4,1) both;animation-delay:calc(.35s + var(--i)*.5s)}
+/* ---- slide 30: terminal cards + mini browser ---- */
+.cmd-card .cmd-lines{margin-top:.5rem;background:#0b0f19;border:1px solid #2a3350;border-radius:10px;padding:.6rem .8rem;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:clamp(.78rem,1vw,.92rem);line-height:1.65}
+.cmd-l,.cmd-note{opacity:0;animation:fade-in .25s both;animation-delay:var(--d)}
+.cmd-l{white-space:pre;overflow:hidden;text-overflow:ellipsis;color:#d7dcef}
+.cmd-note{color:#8b93b0;font-family:inherit}
+.mini-browser{margin-top:.7rem;border:1px solid #2a3350;border-radius:10px;overflow:hidden;background:#0b0f19;animation:enter .5s both 2.6s}
+.mb-bar{display:flex;align-items:center;gap:5px;padding:.35rem .6rem;background:#141a2b}
+.mb-bar i{width:9px;height:9px;border-radius:50%;background:#ff5f57}.mb-bar i:nth-child(2){background:#febc2e}.mb-bar i:nth-child(3){background:#28c840}
+.mb-url{margin-left:.5rem;font-size:.75rem;color:#8b93b0;font-family:ui-monospace,monospace}
+.mb-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:.5rem}
+.mb-tab{display:flex;flex-direction:column;gap:4px;font-size:.72rem;font-weight:800;color:#8b93b0}
+.mb-body{height:34px;border-radius:6px;border:1px dashed #3a4466}
+.mb-tab.live{color:#22c55e}.mb-tab.live .mb-body{border:1px solid #22c55e;background:repeating-linear-gradient(0deg,color-mix(in srgb,#22c55e 25%,transparent) 0 4px,transparent 4px 9px)}
+/* ---- slide 32: questions + stamps ---- */
+.q-list{margin:.5rem 0 0;padding-left:1.4rem;display:grid;gap:.5rem;font-weight:700;font-size:clamp(1.05rem,1.5vw,1.3rem)}
+.q-list li{transition:opacity .4s,transform .4s}.q-list li.pending{opacity:0;transform:translateX(-14px)}
+.stamps{display:flex;align-items:center;justify-content:center;gap:1rem;margin-top:1.2rem;flex-wrap:wrap}
+.stamps-label{font-weight:900;letter-spacing:.14em;text-transform:uppercase;font-size:.8rem;color:var(--muted,#9aa6c3);margin-right:.4rem}
+.stamp-btn{font:inherit;font-weight:900;letter-spacing:.18em;font-size:clamp(1rem,1.5vw,1.3rem);padding:.45rem 1.1rem;border-radius:10px;background:transparent;cursor:pointer;border:4px solid;transform:rotate(-4deg);transition:transform .3s cubic-bezier(.2,1.5,.4,1),opacity .3s}
+.st-pass{color:#22c55e;border-color:#22c55e}.st-revise{color:var(--aether-orange);border-color:var(--aether-orange)}.st-open{color:var(--aether-purple);border-color:var(--aether-purple)}
+.stamps.has-pick .stamp-btn:not(.picked){opacity:.3}
+.stamp-btn.picked{transform:rotate(-8deg) scale(1.25);background:color-mix(in srgb,currentColor 12%,transparent)}
+/* ---- slide 33: profile badge ---- */
+.badge{display:flex;gap:1rem;align-items:flex-start;margin-top:.5rem}
+.badge-av{flex:none;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-size:1.6rem;font-weight:900;color:#fff;background:linear-gradient(135deg,var(--aether-purple),var(--aether-orange))}
+.badge-rows{flex:1;display:grid;gap:.35rem}
+.badge-row{display:grid;grid-template-columns:auto 1fr;gap:.6rem;align-items:end;opacity:0;animation:enter .35s both;animation-delay:calc(.4s + var(--i)*.15s)}
+.badge-k{font-weight:800;font-size:clamp(.9rem,1.15vw,1.02rem)}
+.badge-line{height:0;border-bottom:2px dashed var(--border);margin-bottom:.35rem}
+/* assignment slides: a little tighter so 6 steps fit */
+.is-assignment .do-item label{padding-top:.45rem;padding-bottom:.45rem}
+.do-head h2{font-size:.82rem;letter-spacing:.1em;line-height:1.3}
+.do-count{white-space:nowrap;flex:none}
+.is-assignment .do-item label{padding-top:.32rem;padding-bottom:.32rem}
+.is-assignment .do-text{font-size:clamp(.88rem,1.05vw,.98rem);line-height:1.4}
+.is-assignment .expected{margin-top:.6rem;font-size:.92rem}
+.cmd-l{white-space:pre-wrap;word-break:break-all;text-overflow:clip}
+.cmd-card .cmd-lines{font-size:clamp(.74rem,.95vw,.86rem);line-height:1.55}
+.compact .card{padding:clamp(.85rem,1.3vw,1.2rem) clamp(1rem,1.6vw,1.5rem)}
+.compact .cards{gap:.7rem}
+.compact .card p{font-size:clamp(1rem,1.35vw,1.2rem)}

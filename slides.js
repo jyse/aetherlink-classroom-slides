@@ -69,6 +69,12 @@
                  art: 'boxes' (+ link) — compare columns drawn as boxes inside boxes; → zooms in, then links items
                  addLine: 'placeholder' — (with checklist) an empty line the trainer can type into live
                  stack: [tags] — cards pop in top to bottom, one by one, each with a tag
+                 cmdCards: [N..] — card bodies shown as typing terminal lines (lines ending in ':' or '.' are notes)
+                 browser: N — mini browser with the four app pages in card N (Game live, rest empty)
+                 lineReveal: N — card N's lines appear one per click / →
+                 stamps: ['PASS', …] — clickable decision stamps (checkpoint box hidden)
+                 badge: N — card N's lines as an empty profile badge
+   stepsHeading (slide field) — heading above the steps; default "Your prompt must ask Claude Code to:"
    ========================================================================== */
 window.SLIDES = [
 
@@ -551,13 +557,14 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 1 · PART 4 · AETHER LIBRARY",
   subtitle: "Every participant works solo, in their own local copy.",
   type: "context",
+  visual: { cmdCards: [0, 2], browser: 3 },
   cards: [
-    { title: "1 · Clone and run", body: "git clone https://github.com/jyse/aetherlink-classroom-practice.git\ncd aetherlink-classroom-practice\nnpm install\nnpm start" },
+    { title: "1 · Clone and run", body: "git clone https://github.com/jyse/aetherlink-classroom-starter.git\ncd aetherlink-classroom-starter\nnpm install\nnpm start" },
     { title: "2 · Open it", body: "Open http://localhost:3000." },
     { title: "3 · Start Claude Code", body: "In a second terminal, run:\nclaude" },
-    { title: "Expected starting state", body: "Profiles and Glossary pages containing sample data." }
+    { title: "Expected starting state", body: "Profiles, Glossary and Library are empty — only the Game works." }
   ],
-  prompt: "Clone https://github.com/jyse/aetherlink-classroom-practice.git, then run npm install and npm start. Open http://localhost:3000 — you should see Profiles and Glossary pages with sample data. Then open a second terminal in the same folder and run claude. Put a checkmark in chat once both are running.",
+  prompt: "Clone https://github.com/jyse/aetherlink-classroom-starter.git, then run npm install and npm start. Open http://localhost:3000 — Profiles, Glossary and Library are empty; only the Game works. Then open a second terminal in the same folder and run claude. Put a checkmark in chat once both are running.",
   notes: "Facilitator-led step, not self-paced — walk the room through it together and watch chat for stragglers before moving on. The GitHub repo name stays aetherlink-classroom-practice; only the product's on-screen branding is Aether Library, so don't be thrown if the clone URL doesn't match the name on screen. If someone's npm install hangs, pair them with a neighbour to keep pace rather than debugging live for everyone."
 },
 
@@ -580,7 +587,7 @@ Explain what the application does, how it is structured and how I can verify you
     "Explain what the app does and how it's structured.",
     "Find where profiles and glossary data live.",
     "Find the start and validate commands.",
-    "Flag files that need extra care.",
+    "Flag files that could break something if changed carelessly.",
     "Mark anything unverifiable as OPEN rather than guessing."
   ],
   expected: "An evidence-based repository map. No code changed, and unknowns are marked OPEN rather than guessed.",
@@ -592,6 +599,7 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 1 · ASSIGNMENT 1 · REVIEW",
   subtitle: "Compare Claude's explanation with the repository.",
   type: "review",
+  visual: { lineReveal: 0, stamps: ['PASS', 'REVISE', 'OPEN'] },
   cards: [
     { title: "Compare", body: "Which claims came from actual files?\nWhich claims were assumptions?\nDid Claude change anything?\nDid it find the correct commands?\nWhat remains OPEN?" }
   ],
@@ -608,6 +616,7 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 1 · ASSIGNMENT 2 · 30 MIN",
   subtitle: "Add your profile — and the page that shows it.",
   type: "practice",
+  visual: { badge: 0 },
   layout: "exercise",
   timer: 30,
   cards: [
@@ -615,6 +624,7 @@ Explain what the application does, how it is structured and how I can verify you
   ],
   steps: [
     "Inspect the existing structure first.",
+    "Ask you for anything it doesn't know — no invented details.",
     "Propose both the profile data and the page that displays it.",
     "Show the plan before changing anything.",
     "Leave out confidential or unnecessary personal information.",
@@ -629,8 +639,10 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 1 · ASSIGNMENT 2 · REVIEW",
   subtitle: "Check:",
   type: "review",
+  tagline: "Swap with your neighbour — 2 minutes each way.",
+  visual: { checklist: 0 },
   cards: [
-    { title: "Check", body: "The profile follows the existing structure.\nThe content is appropriate to share.\nThe profile appears correctly.\nNo unrelated files changed.\nThe participant reviewed the diff." }
+    { title: "Peer review", body: "The profile follows the existing structure.\nThe content is appropriate to share.\nThe profile appears correctly.\nNo unrelated files changed.\nThe participant reviewed the diff." }
   ],
   notes: "Pair participants up briefly for the peer-review line item — two minutes each way is enough, this is a light touch, not a formal code review."
 },

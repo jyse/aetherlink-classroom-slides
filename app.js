@@ -316,6 +316,33 @@ function renderExtras(stage, main, s, v) {
     grid.classList.add('stack'); cards.forEach((c, i) => { if (v.stack[i]) c.querySelector('.card-head').append(node('span', 'stack-tag', v.stack[i])); });
     x.slot = node('div', 'stack-row'); grid.replaceWith(x.slot); x.slot.append(grid);
   }
+  if (v.cmdCards) { main.classList.add('compact');               // 30: command cards look and type like a terminal
+    v.cmdCards.forEach(ci => { const c = cards[ci]; if (!c) return; c.classList.add('cmd-card'); const p = c.querySelector('p'); const box = node('div', 'cmd-lines');
+      String(s.cards[ci].body).split('\n').forEach((ln, i) => { const isCmd = !/[:.]$/.test(ln.trim()) || /^https?:/.test(ln.trim()); const row = node('div', isCmd ? 'cmd-l' : 'cmd-note');
+        row.style.setProperty('--d', (0.5 + ci * 0.9 + i * 0.35) + 's'); if (isCmd) row.append(node('span', 'prompt-sign', '$ '), node('span', null, ln)); else row.textContent = ln; box.append(row); });
+      p?.replaceWith(box); });
+  }
+  if (v.browser != null && cards[v.browser]) {                  // 30: a tiny browser with the starting state
+    const b = node('div', 'mini-browser'); const bar = node('div', 'mb-bar'); bar.append(node('i'), node('i'), node('i'), node('span', 'mb-url', 'localhost:3000'));
+    const tabs = node('div', 'mb-tabs'); ['Profiles', 'Glossary', 'Library', 'Game'].forEach((t, i) => { const d = node('div', 'mb-tab' + (i === 3 ? ' live' : '')); d.append(node('span', 'mb-name', t), node('span', 'mb-body')); tabs.append(d); });
+    b.append(bar, tabs); cards[v.browser].append(b);
+  }
+  if (v.lineReveal != null && cards[v.lineReveal]) {            // 32: review questions one per →
+    const c = cards[v.lineReveal]; const ul = node('ol', 'q-list'); const lis = String(s.cards[v.lineReveal].body).split('\n').map(t => { const li = node('li', 'pending', t); ul.append(li); return li; });
+    c.querySelector('p')?.replaceWith(ul); let k = 0;
+    const next = () => { if (k >= lis.length) return false; lis[k++].classList.remove('pending'); return true; };
+    window.__reveal = next; slideController.signal.addEventListener('abort', () => { if (window.__reveal === next) window.__reveal = null; });
+  }
+  if (v.stamps) {                                                // 32: decision stamps, click one
+    const row = node('div', 'stamps'); row.append(node('span', 'stamps-label', 'Decision'));
+    v.stamps.forEach(w => { const b = node('button', 'stamp-btn st-' + w.toLowerCase(), w); b.addEventListener('click', () => { row.querySelectorAll('.stamp-btn').forEach(x => x.classList.toggle('picked', x === b)); row.classList.add('has-pick'); }); row.append(b); });
+    grid.after(row);
+  }
+  if (v.badge != null && cards[v.badge]) {                      // 33: "Include" as an empty profile badge
+    const c = cards[v.badge]; c.classList.add('badge-card'); const bd = node('div', 'badge'); const av = node('div', 'badge-av', '?'); const rows = node('div', 'badge-rows');
+    String(s.cards[v.badge].body).split('\n').forEach((t, i) => { const r = node('div', 'badge-row'); r.style.setProperty('--i', i); r.append(node('span', 'badge-k', t), node('span', 'badge-line')); rows.append(r); });
+    bd.append(av, rows); c.querySelector('p')?.replaceWith(bd);
+  }
   if (v.checklist != null && cards[v.checklist]) {             // 13: the checklist ticks itself off
     grid.classList.add('one-col'); const c = cards[v.checklist]; const ul = node('ul', 'checklist');
     String(s.cards[v.checklist].body).split('\n').forEach((t, i) => { const li = node('li'); li.style.setProperty('--i', i); li.append(node('span', 'check-box'), node('span', 'check-text', t)); ul.append(li); });
@@ -474,7 +501,7 @@ function saveState(st) { try { sessionStorage.setItem(stateKey(), JSON.stringify
 function renderInstructions(s) {
   const box = node('section', 'exercise-instructions'); const st = loadState(); const steps = s.steps || [];
   if (steps.length) {
-    const head = node('div', 'do-head'); head.append(node('h2', null, 'Do this now')); const count = node('span', 'do-count'); head.append(count); box.append(head);
+    const head = node('div', 'do-head'); head.append(node('h2', null, s.stepsHeading || 'Your prompt must ask Claude Code to:')); const count = node('span', 'do-count'); head.append(count); box.append(head);
     const list = node('ol', 'do-list'); const done = Array.isArray(st.done) ? st.done.slice(0, steps.length) : [];
     steps.forEach((step, i) => {
       const li = node('li', 'do-item'); const label = node('label'); const cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = !!done[i];
@@ -546,7 +573,7 @@ function render() {
   renderLayout(main, s);
   renderTagline(main, s);
   renderVisual(stage, body, main, s);
-  const instructions = s.visual?.quiz ? null : renderInstructions(s);
+  const instructions = (s.visual?.quiz || s.visual?.stamps) ? null : renderInstructions(s);
   if (instructions) {
     const side = sideBySide(s, instructions);
     body.classList.toggle('with-side', side);
