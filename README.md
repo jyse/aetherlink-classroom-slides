@@ -61,6 +61,12 @@ Jump to any slide directly via the URL hash, e.g. `#31` for Assignment 1.
 - The footer progress bar has one coloured segment per slide (colour = slide
   type — see "Visual system" below) and doubles as a scrubber: click any
   segment to jump there.
+- **→ also drives reveals.** On slides with closed cards, steps, a quiz or row
+  pairs, `→` first reveals the next item; only after the last reveal does it
+  go to the next slide. There are no "Reveal next / Show all" buttons any more.
+- **B = plan B.** On slide 22 (live demo) and 70 (Assignment 10) `B` toggles a
+  captured run of the exact prompt (`demo-fallback.js`), for when the live
+  version fails.
 
 ## Presenter view (the main new feature)
 
@@ -155,7 +161,10 @@ existing Academy UI colour.
 
 Purely additive: it never changes slide wording (verified by diffing every
 slide's text fields against the previous version — 0 differences). A slide
-without a `visual` field renders exactly as before. Currently used on slides 1–4.
+without a `visual` field renders exactly as before. Now used across the whole
+deck (18 Sep 2026). The full option list lives in the comment block at the top
+of `slides.js`; wording changes made at the same time are logged per slide in
+`CURSUS-TEKSTWIJZIGINGEN.md` (sent to Jessy separately).
 
 - **Colours** (AetherMind Canva style): purple `#5B3FFF`, orange `#FF7A1A`
   (`--aether-purple`, `--aether-orange`; `--aether-purple-text` is a lighter
@@ -174,6 +183,16 @@ without a `visual` field renders exactly as before. Currently used on slides 1�
   revisit), and is switched off entirely by `prefers-reduced-motion`.
 - **Robot images** (`assets/aetherbot/*.webp`, 60–85 KB each) are transparent
   cut-outs. The chest logo is the AetherLink mark and must never be altered.
+- **More poses** (all generated with fal.ai, chest logo restored from the
+  original afterwards): `assets/aetherbot/faces/` (7 expressions, used per
+  card on slide 12), `assets/aetherbot/stretch/` (7 telescopic-arm poses +
+  arm parts used by the growing arm on slide 25), `aetherbot-peek.webp`
+  (hands over eyes, slide 42).
+- **Pauses** show a live countdown plus the real "Back at HH:MM" clock time
+  (`visual.countdown`); assignment timers, banners and chips use the
+  purple→orange gradient, frames are light blue.
+- **Header:** the AetherLink network mark (`assets/aetherlink-mark.png`) sits
+  left of the brand on every slide.
 - **Known gap:** the light token set still isn't wired to a toggle, and slides
   with `dark: true` are unreadable if `data-theme="light"` is forced.
 
@@ -251,9 +270,11 @@ appears immediately.
 | --- | --- |
 | `index.html` | Page shell for the audience-facing deck |
 | `styles.css` | Academy-matched colours, typography, layout, assignment styling, AetherBOT visual layer |
-| `app.js` | Rendering (incl. `renderVisual` for the AetherBOT layer), hash navigation, keyboard nav, timers, the "Do this now" panel, the footer progress bar, and presenter-sync broadcasting |
+| `app.js` | Rendering (incl. `renderVisual` + `renderExtras` for the visual layer), hash navigation, keyboard nav (→ reveals, B plan B), timers, the "Your prompt must ask Claude Code to" panel, the footer progress bar, and presenter-sync broadcasting |
 | `slides.js` | All 78 slides as one JSON-shaped data file — the only file most edits touch |
-| `assets/aetherbot/` | AetherBOT cut-outs (wave, think, point, head) used by the visual layer |
+| `assets/aetherbot/` | AetherBOT cut-outs (wave, think, point, head, peek) + `faces/` and `stretch/` pose sets |
+| `demo-fallback.js` | Plan B texts: captured demo run (slide 22) and Assignment 10 fixture run (slide 70) |
+| `assets/aetherlink-mark.png` | AetherLink network mark in the header |
 | `assets/fonts/` | Self-hosted Nunito (latin + latin-ext, variable 600–900) |
 | `presenter.html` / `presenter.js` | The separate presenter window (notes, prompt, next slide, timers), kept live via `BroadcastChannel` |
 | `CURRICULUM.md` | The authoritative slide-by-slide source content (do not need to edit this for day-of tweaks — edit `slides.js`) |
