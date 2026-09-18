@@ -40,6 +40,9 @@
                  art: 'timeline' · cardArt: { <cardIndex>: 'route' } · pillarIcons
                  highlight: [{ in: 'title'|'subtitle'|'card:N', text, tone:
                               'orange'|'purple'|'mark' }] — text must exist verbatim
+                 stagger: 'pop' — cards pop in one by one
+                 hero: N — card N becomes one big centred statement
+                 popOut: N + place: 'popout' — card N's lines pop out of the bot as chips
    ========================================================================== */
 window.SLIDES = [
 
@@ -112,6 +115,7 @@ window.SLIDES = [
   kicker: "DAY 1 · WELCOME",
   subtitle: "By 16:00, you can use Claude Code to:",
   type: "context",
+  visual: { stagger: 'pop' },
   cards: [
     { title: "Explore", body: "understand an existing project" },
     { title: "Plan", body: "make a plan for a small change" },
@@ -131,6 +135,8 @@ window.SLIDES = [
   kicker: "DAY 1 · PART 1 · AI FOUNDATIONS",
   subtitle: "The broad field of building systems that perform tasks associated with human intelligence.",
   type: "concept",
+  visual: { hero: 0, popOut: 1, bot: 'head', place: 'popout',
+    highlight: [{ in: 'card:0', text: 'broad field', tone: 'purple' }, { in: 'card:0', text: 'human intelligence', tone: 'orange' }] },
   cards: [
     { title: "Definition", body: "Artificial intelligence is the broad field of building systems that perform tasks associated with human intelligence." },
     { title: "Examples", body: "recognising patterns\nmaking predictions\ngenerating content\nselecting actions" }

@@ -172,6 +172,15 @@ function renderVisual(stage, body, main, s) {
   if (v.art === 'timeline') main.prepend(ART.timeline());
   if (v.cardArt) { const cards = main.querySelectorAll('.card'); Object.entries(v.cardArt).forEach(([i, kind]) => { if (cards[i] && ART[kind]) cards[i].append(ART[kind]()); }); }
   if (v.pillarIcons) main.querySelectorAll('.pillar').forEach((p, i) => p.prepend(svg('0 0 24 24', PILLAR_ICONS[i % 4], 'pillar-icon')));
+  if (v.stagger) main.classList.add('stagger-' + v.stagger);
+  if (v.hero != null) { main.classList.add('has-hero'); main.querySelectorAll('.card')[v.hero]?.classList.add('card-hero'); }
+  let popRow = null;
+  if (v.popOut != null && s.cards?.[v.popOut]) {
+    const src = s.cards[v.popOut]; main.querySelectorAll('.card')[v.popOut]?.remove();
+    popRow = node('div', 'pop-row'); const col = node('div', 'pop-col'); const list = node('div', 'pop-chips');
+    String(src.body).split('\n').forEach((t, i) => { const c = node('span', 'pop-chip'); const inner = node('span', 'pop-chip-in', t); inner.style.setProperty('--i', i); c.append(inner); list.append(c); });
+    col.append(node('p', 'pop-label', src.title), list); popRow.append(col); main.append(popRow);
+  }
   highlight(stage, s);
   const bot = BOTS[v.bot]; if (!bot) return;
   const fig = node('figure', 'bot bot-' + v.bot + ' place-' + v.place); fig.setAttribute('aria-hidden', 'true');
@@ -182,6 +191,7 @@ function renderVisual(stage, body, main, s) {
   if (v.place === 'left') { body.prepend(fig); body.classList.add('with-bot', 'bot-left'); }
   else if (v.place === 'beside') { body.append(fig); body.classList.add('with-bot', 'bot-beside'); }
   else if (v.place === 'under') { main.append(fig); }
+  else if (v.place === 'popout' && popRow) { popRow.prepend(fig); }
   else if (v.place === 'timeline') { const tl = main.querySelector('.art-timeline'); const row = node('div', 'tl-row'); tl.replaceWith(row); row.append(tl, fig); }
   const fx = document.createElementNS(SVGNS, 'svg'); fx.setAttribute('class', 'fx'); fx.setAttribute('aria-hidden', 'true'); stage.append(fx);
   const draw = () => {
@@ -215,6 +225,12 @@ function renderVisual(stage, body, main, s) {
   requestAnimationFrame(() => requestAnimationFrame(draw));
   img.addEventListener('load', () => requestAnimationFrame(draw), { once: true });
   window.addEventListener('resize', draw, { signal: slideController.signal });
+  if (popRow) {
+    // chips start inside the hatch; measured after the bot has finished peeking up
+    const aim = () => { const h = rel(hatch, stage); popRow.querySelectorAll('.pop-chip').forEach(c => { const t = rel(c, stage); const inner = c.firstChild; inner.style.setProperty('--dx', (h.x - t.x - t.w / 2) + 'px'); inner.style.setProperty('--dy', (h.y - t.y - t.h / 2) + 'px'); }); };
+    aim(); const tm = setTimeout(aim, 1000); slideController.signal.addEventListener('abort', () => clearTimeout(tm));
+    window.addEventListener('resize', aim, { signal: slideController.signal });
+  }
 }
 
 /* ---- slide type -> colour chip, footer segment ---- */
