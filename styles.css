@@ -688,3 +688,22 @@ p.subtitle{font-weight:700}
 .compact .card{padding:clamp(.85rem,1.3vw,1.2rem) clamp(1rem,1.6vw,1.5rem)}
 .compact .cards{gap:.7rem}
 .compact .card p{font-size:clamp(1rem,1.35vw,1.2rem)}
+/* assignment slides: calm light-blue lines instead of amber (Cons, 18 sep) */
+body.is-assignment #stage{border-color:var(--cyan);box-shadow:0 0 0 8px color-mix(in srgb,var(--cyan) 10%,transparent),0 20px 60px rgba(0,0,0,.4)}
+.timer{border-color:var(--cyan);box-shadow:0 0 0 4px color-mix(in srgb,var(--cyan) 12%,transparent),0 12px 30px rgba(0,0,0,.3)}
+.exercise-instructions{border-left-color:var(--cyan)}
+/* slide 32: questions visible in the card, stamps pop out of AetherBOT */
+.q-list li{animation:enter .4s both;animation-delay:calc(.3s + var(--i)*.25s)}
+.stamps{justify-content:flex-start;align-items:flex-end;gap:1.2rem}
+.stamp-wrap{display:inline-block}
+.stamp-wrap .stamp-btn{opacity:0;animation:stamp-out .8s cubic-bezier(.2,1.3,.4,1) both;animation-delay:calc(2.4s + var(--i)*.45s)}
+@keyframes stamp-out{0%{opacity:0;transform:translate(var(--dx,0),var(--dy,0)) scale(.2) rotate(-40deg)}30%{opacity:1}100%{opacity:1;transform:rotate(-4deg)}}
+.stamp-wrap .stamp-btn.picked{animation:none;opacity:1;transform:rotate(-8deg) scale(1.25)}
+.stamps.has-pick .stamp-wrap .stamp-btn:not(.picked){animation:none;opacity:.3;transform:rotate(-4deg)}
+.place-stamps{height:clamp(120px,17vh,160px);flex:none;animation:peek .8s cubic-bezier(.2,1.4,.4,1) 1.4s both}
+.place-stamps .bot-live{animation:tilt 3.4s ease-in-out 4s infinite;transform-origin:50% 90%}
+.has-stamps{display:grid;grid-template-columns:minmax(0,620px) auto;gap:clamp(1.5rem,4vw,4rem);align-items:center;justify-content:center}
+.has-stamps .cards{grid-template-columns:minmax(0,1fr)}
+.stamp-box .stamps{display:grid;grid-template-columns:repeat(3,auto);justify-items:center;gap:1rem 1.2rem;margin:0}
+.stamp-box .stamps-label{grid-column:1/-1;margin:0}
+.stamp-box .place-stamps{grid-column:1/-1;height:clamp(140px,20vh,180px)}

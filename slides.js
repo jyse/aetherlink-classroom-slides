@@ -71,8 +71,8 @@
                  stack: [tags] — cards pop in top to bottom, one by one, each with a tag
                  cmdCards: [N..] — card bodies shown as typing terminal lines (lines ending in ':' or '.' are notes)
                  browser: N — mini browser with the four app pages in card N (Game live, rest empty)
-                 lineReveal: N — card N's lines appear one per click / →
-                 stamps: ['PASS', …] — clickable decision stamps (checkpoint box hidden)
+                 lineReveal: N — card N's lines as a numbered list that pops in
+                 stamps: ['PASS', …] (+ bot, place: 'stamps') — clickable decision stamps that pop out of AetherBOT's head (checkpoint box hidden)
                  badge: N — card N's lines as an empty profile badge
    stepsHeading (slide field) — heading above the steps; default "Your prompt must ask Claude Code to:"
    ========================================================================== */
@@ -599,7 +599,7 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 1 · ASSIGNMENT 1 · REVIEW",
   subtitle: "Compare Claude's explanation with the repository.",
   type: "review",
-  visual: { lineReveal: 0, stamps: ['PASS', 'REVISE', 'OPEN'] },
+  visual: { lineReveal: 0, stamps: ['PASS', 'REVISE', 'OPEN'], bot: 'head', place: 'stamps' },
   cards: [
     { title: "Compare", body: "Which claims came from actual files?\nWhich claims were assumptions?\nDid Claude change anything?\nDid it find the correct commands?\nWhat remains OPEN?" }
   ],

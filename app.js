@@ -328,15 +328,14 @@ function renderExtras(stage, main, s, v) {
     b.append(bar, tabs); cards[v.browser].append(b);
   }
   if (v.lineReveal != null && cards[v.lineReveal]) {            // 32: review questions one per →
-    const c = cards[v.lineReveal]; const ul = node('ol', 'q-list'); const lis = String(s.cards[v.lineReveal].body).split('\n').map(t => { const li = node('li', 'pending', t); ul.append(li); return li; });
-    c.querySelector('p')?.replaceWith(ul); let k = 0;
-    const next = () => { if (k >= lis.length) return false; lis[k++].classList.remove('pending'); return true; };
-    window.__reveal = next; slideController.signal.addEventListener('abort', () => { if (window.__reveal === next) window.__reveal = null; });
+    const c = cards[v.lineReveal]; const ul = node('ol', 'q-list'); String(s.cards[v.lineReveal].body).split('\n').forEach((t, i) => { const li = node('li', null, t); li.style.setProperty('--i', i); ul.append(li); });
+    c.querySelector('p')?.replaceWith(ul);
   }
   if (v.stamps) {                                                // 32: decision stamps, click one
     const row = node('div', 'stamps'); row.append(node('span', 'stamps-label', 'Decision'));
-    v.stamps.forEach(w => { const b = node('button', 'stamp-btn st-' + w.toLowerCase(), w); b.addEventListener('click', () => { row.querySelectorAll('.stamp-btn').forEach(x => x.classList.toggle('picked', x === b)); row.classList.add('has-pick'); }); row.append(b); });
-    grid.after(row);
+    v.stamps.forEach((w, i) => { const wrap = node('span', 'stamp-wrap'); const b = node('button', 'stamp-btn st-' + w.toLowerCase(), w); b.style.setProperty('--i', i);
+      b.addEventListener('click', () => { row.querySelectorAll('.stamp-btn').forEach(x => x.classList.toggle('picked', x === b)); row.classList.add('has-pick'); }); wrap.append(b); row.append(wrap); x.aim.push(wrap); });
+    grid.after(row); x.stampRow = row; main.classList.add('has-stamps'); const stampBox = node('div', 'stamp-box'); row.before(stampBox); stampBox.append(row);
   }
   if (v.badge != null && cards[v.badge]) {                      // 33: "Include" as an empty profile badge
     const c = cards[v.badge]; c.classList.add('badge-card'); const bd = node('div', 'badge'); const av = node('div', 'badge-av', '?'); const rows = node('div', 'badge-rows');
@@ -410,6 +409,7 @@ function renderVisual(stage, body, main, s) {
   else if (v.place === 'nest' && nest) { nest.row.prepend(fig); }
   else if (v.place === 'key' && ex.row) { ex.row.prepend(fig); }
   else if (v.place === 'slot' && ex.slot) { ex.slot.append(fig); }
+  else if (v.place === 'stamps' && ex.stampRow) { ex.stampRow.querySelector('.stamps-label')?.after(fig); }
   else if (v.place === 'stack' && ex.slot) { fig.classList.add('place-stack'); ex.slot.append(fig); }
   else if (v.place === 'pointer') {
     const target = main.querySelectorAll('.card')[v.pointAt]; fig.classList.add('pointer-bot'); stage.append(fig);
