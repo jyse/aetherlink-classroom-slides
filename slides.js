@@ -104,6 +104,14 @@
                  pending: [title, text] — visible placeholder for content that still has to be added
                  sourceTiles: N — card N's lines as source tiles with a read-only lock
                  planB: 'WINDOW_VAR' (+ planBLabel) — B shows a captured example (see demo-fallback.js)
+                 menu: N — card N's lines as clickable chips (pick one)
+                 pipes: true (+ same: [k]) — compare columns 'A → B → C → D' as two aligned pipelines; same stages glow
+                 recapKeys: true — recap items appear one per → with a trophy (no buttons)
+                 levelUp: true — recap items tick off with a progress bar filling up
+                 supportDays: true — (with art 'timeline') the two teaching days marked done
+                 doneSteps: N — (with stepKeys) first N steps done ✓, the next one pulses
+                 handover: 'text' — compare: AetherBOT on the AI side, 👤 on the people side, then a big closing line
+                 sentences: true — cards as open sentences on a notebook page
    stepsHeading (slide field) — heading above the steps; default "Your prompt must ask Claude Code to:"
    ========================================================================== */
 window.SLIDES = [
@@ -1290,6 +1298,7 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 2 · ASSIGNMENT 10 · REVIEW",
   subtitle: "For the item you retrieved, decide:",
   type: "review",
+  visual: { menu: 1 },
   cards: [
     { title: "Decide", body: "1. What is the trusted source?\n2. What output would help your work?\n3. What reusable method could create it?\n4. What should Claude verify?\n5. Which action requires human approval?" },
     { title: "Possible outputs", body: "ticket brief\nfeature explanation\ntechnical guide\nmerge-request summary\nacceptance-criteria review\nonboarding article" }
@@ -1300,9 +1309,10 @@ Explain what the application does, how it is structured and how I can verify you
 { // Slide 72
   title: "The same pattern across systems",
   kicker: "DAY 2 · PART 5 · MCP & WORKPLACE SYSTEMS",
-  subtitle: "The source and output change. The design questions remain the same.",
+  subtitle: "Two systems, one method.",
   type: "concept",
   layout: "compare",
+  visual: { pipes: true, same: [2, 3] },
   columns: [
     { title: "Aether Library", items: [
       "Glossary source → concept card → validation → human approval"
@@ -1325,6 +1335,7 @@ Explain what the application does, how it is structured and how I can verify you
   subtitle: "Together, we created:",
   type: "recap",
   layout: "recap",
+  visual: { recapKeys: true, bot: 'happy', place: 'aside' },
   items: [
     { label: "Participant profile" },
     { label: "AI glossary contribution" },
@@ -1344,6 +1355,7 @@ Explain what the application does, how it is structured and how I can verify you
   subtitle: "How Claude Code works, and why the boundaries matter.",
   type: "recap",
   layout: "recap",
+  visual: { levelUp: true },
   items: [
     { label: "Use Claude Code inside a repository." },
     { label: "Provide context and boundaries." },
@@ -1361,12 +1373,14 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "PREVIEW · SUPPORT DAYS",
   subtitle: "The support programme builds on this foundation.",
   type: "context",
+  tagline: "Preview only — the support days go deeper.",
+  visual: { art: 'timeline', supportDays: true },
   cards: [
-    { title: "1 · AI-native SDLC foundations", body: "Preview only." },
-    { title: "2 · Planning, testing, review and handoff", body: "Preview only." },
-    { title: "3 · Agent workflow in n8n", body: "Preview only." },
-    { title: "4 · Agent workflow in Claude Code with deeper controls", body: "Preview only." },
-    { title: "5 · Application to a small team issue", body: "Preview only." }
+    { title: "1 · AI-native SDLC foundations", body: "" },
+    { title: "2 · Planning, testing, review and handoff", body: "" },
+    { title: "3 · Agent workflow in n8n", body: "" },
+    { title: "4 · Agent workflow in Claude Code with deeper controls", body: "" },
+    { title: "5 · Application to a small team issue", body: "" }
   ],
   notes: "Preview only, matching slide 40's pattern — this is a different facilitator's territory starting next time, don't get pulled into detail questions here."
 },
@@ -1377,6 +1391,7 @@ Explain what the application does, how it is structured and how I can verify you
   subtitle: "From your first Claude Code conversation to applying the method during the support days.",
   type: "recap",
   layout: "steps",
+  visual: { stepKeys: true, doneSteps: 6 },
   items: [
     { label: "Understand", caption: "Understand AI and Claude Code." },
     { label: "One change", caption: "Make one safe, tested change." },
@@ -1395,6 +1410,7 @@ Explain what the application does, how it is structured and how I can verify you
   subtitle: "AI can inspect, propose, create, transform and check.",
   type: "context",
   layout: "compare",
+  visual: { handover: 'People remain responsible.' },
   columns: [
     { title: "AI can", items: [
       "inspect",
@@ -1419,12 +1435,14 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 2 · CLOSING",
   subtitle: "Complete these statements.",
   type: "recap",
+  tagline: "Complete each statement for yourself.",
+  visual: { sentences: true, quietTimer: 3 },
   cards: [
-    { title: "I can now…", body: "Complete this statement for yourself." },
-    { title: "I still need help with…", body: "Complete this statement for yourself." },
-    { title: "One workflow I want to investigate is…", body: "Complete this statement for yourself." },
-    { title: "The source of truth would be…", body: "Complete this statement for yourself." },
-    { title: "The human decision must remain…", body: "Complete this statement for yourself." }
+    { title: "I can now…", body: "" },
+    { title: "I still need help with…", body: "" },
+    { title: "One workflow I want to investigate is…", body: "" },
+    { title: "The source of truth would be…", body: "" },
+    { title: "The human decision must remain…", body: "" }
   ],
   notes: "End here, in silence for a minute if the room will tolerate it, before any closing announcements — let people actually write their five sentences rather than rushing to logistics."
 }

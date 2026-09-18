@@ -485,6 +485,41 @@ function renderExtras(stage, main, s, v) {
     panel.append(head, node('pre', 'planb-body', window[v.planB])); stage.append(panel);
     const tog = () => panel.classList.toggle('show'); window.__planB = tog; slideController.signal.addEventListener('abort', () => { if (window.__planB === tog) window.__planB = null; });
   }
+  if (v.menu != null && cards[v.menu]) {                        // 71: possible outputs as a menu to pick from
+    const c = cards[v.menu]; const m = node('div', 'menu'); String(s.cards[v.menu].body).split('\n').forEach((t, i) => { const b = node('button', 'menu-chip', t); b.style.setProperty('--i', i); b.addEventListener('click', () => { m.querySelectorAll('.menu-chip').forEach(x => x.classList.toggle('picked', x === b)); m.classList.add('has-pick'); }); m.append(b); });
+    c.querySelector('p')?.replaceWith(m);
+  }
+  if (v.pipes) {                                                 // 72: the same pipeline, two systems
+    const cmp = main.querySelector('.compare'); const cols = s.columns || []; const g = node('div', 'pipes');
+    cols.forEach((c, r) => { g.append(node('span', 'pipe-label pl' + r, c.title)); String(c.items?.[0] || '').split(/\s*→\s*/).forEach((st, k) => { const cell = node('span', 'pipe-st' + ((v.same || []).includes(k) ? ' same' : ''), st); cell.style.setProperty('--d', (r * 4 + k) * 0.18 + 's'); g.append(cell); }); });
+    cmp?.replaceWith(g);
+  }
+  if (v.recapKeys) {                                             // 73: → reveals the next item, no buttons
+    const list = main.querySelector('.recap-list'); const ctrl = main.querySelector('.widget-controls'); if (ctrl) ctrl.style.display = 'none';
+    const lis = [...(list?.children || [])]; lis.forEach(li => li.querySelector('.recap-check').textContent = '🏆');
+    let k = 0; const next = () => { if (k >= lis.length) return false; const li = lis[k++]; li.classList.remove('hidden-item'); li.classList.add('won'); li.removeAttribute('aria-hidden'); return true; };
+    window.__reveal = next; slideController.signal.addEventListener('abort', () => { if (window.__reveal === next) window.__reveal = null; });
+    main.classList.add('side-grid'); x.aside = main;
+  }
+  if (v.levelUp) {                                               // 74: every item ticks, a progress bar fills
+    const list = main.querySelector('.recap-list'); const ctrl = main.querySelector('.widget-controls'); if (ctrl) ctrl.style.display = 'none';
+    list?.classList.add('levelup'); [...(list?.children || [])].forEach((li, i) => { li.classList.remove('hidden-item'); li.removeAttribute('aria-hidden'); li.style.setProperty('--i', i); li.querySelector('.recap-check').textContent = '✓'; });
+    const bar = node('div', 'lv-bar'); const fill = node('span', 'lv-fill'); fill.style.setProperty('--n', list?.children.length || 1); bar.append(fill, node('span', 'lv-label', 'LEVEL UP')); list?.after(bar);
+  }
+  if (v.supportDays) main.querySelector('.art-timeline')?.classList.add('teach-done');
+  if (v.doneSteps && x.steps) {                                  // 76: the first N steps are done, the next one pulses
+    x.steps.forEach((li, i) => { li.classList.toggle('done-step', i < v.doneSteps); li.classList.toggle('next-step', i === v.doneSteps); if (i < v.doneSteps) li.querySelector('.step-circle').textContent = '✓'; });
+  }
+  if (v.handover) {                                              // 77: AI can … people remain responsible
+    const cols = main.querySelectorAll('.compare-col'); if (cols[0]) { const im = document.createElement('img'); im.src = BOTS.head.src; im.alt = ''; im.className = 'ho-bot'; cols[0].prepend(im); }
+    if (cols[1]) { cols[1].classList.add('ho-people'); cols[1].prepend(node('span', 'ho-person', '👤')); }
+    main.append(node('p', 'ho-line', v.handover));
+  }
+  if (v.sentences) {                                             // 78: five open sentences on a notebook page
+    const nb = node('article', 'card notebook sentences'); const ul = node('ul', 'nb-lines');
+    cards.forEach((c, i) => { const li = node('li'); li.style.setProperty('--i', i); li.append(node('span', null, s.cards[i].title), node('span', 'blank')); ul.append(li); });
+    nb.append(ul); grid.replaceWith(nb);
+  }
   if (v.checklist != null && cards[v.checklist]) {             // 13: the checklist ticks itself off
     grid.classList.add('one-col'); const c = cards[v.checklist]; const ul = node('ul', 'checklist');
     String(s.cards[v.checklist].body).split('\n').forEach((t, i) => { const li = node('li'); li.style.setProperty('--i', i); li.append(node('span', 'check-box'), node('span', 'check-text', t)); ul.append(li); });
