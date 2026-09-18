@@ -516,3 +516,36 @@ p.subtitle{font-weight:700}
 /* widget buttons: AetherLink purple -> orange (Cons, 18 sep) */
 .widget-controls button{background:linear-gradient(105deg,var(--aether-purple),var(--aether-orange));border-color:transparent;color:#fff;text-shadow:0 1px 1px rgba(0,0,0,.25)}
 .widget-controls button.secondary{background:transparent;color:var(--text);border:1px solid transparent;background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(105deg,var(--aether-purple),var(--aether-orange)) border-box}
+/* ---- pointer bot (stretch arm reaches a card) ---- */
+.pointer-bot{position:absolute;z-index:6;margin:0;pointer-events:none;opacity:0;transform:translateX(60px);transition:opacity .5s,transform .7s cubic-bezier(.2,1.3,.4,1)}
+.pointer-bot.show{opacity:1;transform:none}
+.pointer-bot .bot-live{height:100%}
+.narrow .cards{max-width:860px}
+/* ---- slide 14: quiz ---- */
+.card.quiz-out{opacity:.35;filter:grayscale(.7);transition:opacity .4s,filter .4s}
+.card.quiz-out p{text-decoration:line-through;text-decoration-thickness:3px;text-decoration-color:#ff5a5a}
+.card.quiz-right{border-color:#22c55e;border-top-color:#22c55e;box-shadow:0 0 0 3px color-mix(in srgb,#22c55e 45%,transparent),0 10px 30px rgba(0,0,0,.35);animation:quiz-pop .5s cubic-bezier(.2,1.5,.4,1) both}
+@keyframes quiz-pop{0%{transform:scale(1)}40%{transform:scale(1.05)}100%{transform:none}}
+/* ---- slide 16: spotlight ---- */
+.spot .card{transition:opacity .5s 1.4s,filter .5s 1.4s,transform .5s 1.4s,box-shadow .5s 1.4s}
+.spot .card:not(.spot-on){opacity:.4;filter:grayscale(.6)}
+.spot .card.spot-on{border-top-color:var(--aether-orange);transform:scale(1.04);box-shadow:0 0 0 3px color-mix(in srgb,var(--aether-orange) 55%,transparent),0 14px 34px rgba(0,0,0,.4)}
+/* ---- slide 17: row pairs ---- */
+.pairs{display:grid;grid-template-columns:minmax(0,1fr) clamp(40px,6vw,90px) minmax(0,1fr);gap:.7rem 0;align-items:stretch;cursor:pointer}
+.pair-head{margin:0 0 .3rem;font-size:clamp(1.2rem,1.8vw,1.6rem);font-weight:900;padding:.2rem 1.1rem;border-bottom:3px solid var(--cyan)}
+.pair-head:nth-child(3){border-bottom-color:var(--aether-orange)}
+.pair-l,.pair-r{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:.8rem 1.1rem;font-weight:700;font-size:clamp(1rem,1.35vw,1.2rem);display:flex;align-items:center;transition:opacity .45s,transform .45s}
+.pair-l{border-left:4px solid var(--cyan)}.pair-r{border-left:4px solid var(--aether-orange)}
+.pair-link{align-self:center;height:4px;margin:0 6px;border-radius:2px;background:linear-gradient(90deg,var(--cyan),var(--aether-orange));transform-origin:left;transition:transform .45s .15s,opacity .3s .15s}
+.pairs .pending{opacity:0}.pair-l.pending{transform:translateX(-24px)}.pair-r.pending{transform:translateX(24px)}.pair-link.pending{transform:scaleX(0)}
+/* ---- pauses: countdown ---- */
+.pause-box{text-align:center;padding:clamp(1.2rem,3vh,2rem) 1rem;background:var(--surface);border:1px solid var(--border);border-top:4px solid transparent;border-image:linear-gradient(90deg,var(--aether-purple),var(--aether-orange)) 1;border-radius:0 0 18px 18px;animation:enter .5s both .2s}
+.pause-clock{font-size:clamp(4rem,11vw,8.5rem);font-weight:900;line-height:1;letter-spacing:.02em;font-variant-numeric:tabular-nums;background:linear-gradient(105deg,var(--aether-purple),var(--aether-orange));-webkit-background-clip:text;background-clip:text;color:transparent}
+.pause-back{margin:.6rem 0 0;font-size:clamp(1.2rem,2vw,1.7rem);font-weight:700;color:var(--text)}
+.pause-back strong{color:var(--aether-orange)}
+.pause-next{margin:.8rem 0 0;color:var(--muted,#9aa6c3);font-size:clamp(1rem,1.4vw,1.2rem)}
+.pause-box.late .pause-clock{animation:late-pulse 1s ease-in-out infinite}
+@keyframes late-pulse{50%{opacity:.55}}
+.pause-box.done .pause-clock{animation:none;opacity:1}
+/* ---- slide 18: icon chips ---- */
+.chip-ico{display:inline-grid;place-items:center;width:1.7em;height:1.7em;margin-right:.55em;border-radius:50%;background:linear-gradient(135deg,var(--aether-purple),var(--aether-orange));color:#fff;font-size:.85em}

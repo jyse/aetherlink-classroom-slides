@@ -53,6 +53,12 @@
                         verward · dubbel · eigenwijs · slaperig · betrapt · blij · verrast)
                  checklist: N — card N's lines become a list that ticks itself off
                  highlight 'in' may also be 'tagline'
+                 quiz: { answer: N } — → strikes the wrong cards one by one, then marks N (checkpoint hidden)
+                 spotlight: N — card N lights up, the others dim
+                 pairs: true — compare layout shown as row pairs, one per click / →
+                 countdown: minutes — pause slide: live countdown + real "Back at" clock time
+                 chipIcons: [...] — icons in front of popOut chips
+                 bot: 'stretchLeft'|'stretchRight' + place: 'pointer' + pointAt: N — stretch arm reaches card N
    ========================================================================== */
 window.SLIDES = [
 
@@ -264,6 +270,7 @@ window.SLIDES = [
   kicker: "DAY 1 · PART 1 · KNOWLEDGE CHECK",
   subtitle: "Which statement is most accurate?",
   type: "review",
+  visual: { quiz: { answer: 1 }, bot: 'stretchLeft', place: 'pointer', pointAt: 1 },
   cards: [
     { title: "A", body: "An LLM retrieves a guaranteed correct answer." },
     { title: "B", body: "An LLM generates a response that still needs verification." },
@@ -279,6 +286,7 @@ window.SLIDES = [
   kicker: "DAY 1 · BREAK",
   subtitle: "Return in 15 minutes.",
   type: "pause",
+  visual: { countdown: 15, bot: 'wave', place: 'beside' },
   cards: [
     { title: "Return in 15 minutes", body: "We continue with Part 2 — Claude and Claude Code." }
   ],
@@ -294,6 +302,7 @@ window.SLIDES = [
   kicker: "DAY 1 · PART 2 · CLAUDE & CLAUDE CODE",
   subtitle: "Four ways to work with Claude.",
   type: "concept",
+  visual: { spotlight: 1, bot: 'stretchLeft', place: 'pointer', pointAt: 1 },
   cards: [
     { title: "Claude chat", body: "Conversation, thinking and content." },
     { title: "Claude Code", body: "Agentic work inside technical projects." },
@@ -309,6 +318,7 @@ window.SLIDES = [
   subtitle: "Claude Code works inside your project, not just in conversation with you.",
   type: "concept",
   layout: "compare",
+  visual: { pairs: true, highlight: [{ in: 'subtitle', text: 'inside your project', tone: 'orange' }] },
   columns: [
     { title: "Claude chat", items: [
       "Works mainly through conversation",
@@ -329,8 +339,10 @@ window.SLIDES = [
 { // Slide 18
   title: "AI agents",
   kicker: "DAY 1 · PART 2 · CLAUDE & CLAUDE CODE",
-  subtitle: "An AI agent works toward a goal by gathering context, choosing actions, using tools and checking results.",
+  subtitle: "Not just answering — acting toward a goal.",
   type: "concept",
+  visual: { hero: 0, popOut: 1, chipIcons: ['▶', '↻', '■', '✋'],
+    highlight: [{ in: 'card:0', text: 'works toward a goal', tone: 'orange' }] },
   cards: [
     { title: "Definition", body: "An AI agent works toward a goal by gathering context, choosing actions, using tools and checking results." },
     { title: "It can", body: "continue\nadjust\nstop\nask for human input" }
@@ -415,6 +427,7 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 1 · LUNCH",
   subtitle: "We continue at 13:00 with the practice repository.",
   type: "pause",
+  visual: { countdown: 60, bot: 'wave', place: 'beside' },
   cards: [
     { title: "Back at 13:00", body: "We continue with the working method and the Aether Library." }
   ],
@@ -605,6 +618,7 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 1 · BREAK",
   subtitle: "Return in 15 minutes.",
   type: "pause",
+  visual: { countdown: 15, bot: 'wave', place: 'beside' },
   cards: [
     { title: "Return in 15 minutes", body: "We continue with the glossary contribution." }
   ],
@@ -819,6 +833,7 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 2 · BREAK",
   subtitle: "Return in 15 minutes.",
   type: "pause",
+  visual: { countdown: 15, bot: 'wave', place: 'beside' },
   cards: [
     { title: "Return in 15 minutes", body: "We continue with turning a repeated method into a skill." }
   ],
@@ -937,6 +952,7 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 2 · LUNCH",
   subtitle: "We continue at 13:00 by applying the skill across the Library.",
   type: "pause",
+  visual: { countdown: 60, bot: 'wave', place: 'beside' },
   cards: [
     { title: "Back at 13:00", body: "We continue with bounded agentic work — using the skill across every term at once." }
   ],
@@ -1013,6 +1029,7 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 2 · BREAK",
   subtitle: "Return in 15 minutes.",
   type: "pause",
+  visual: { countdown: 15, bot: 'wave', place: 'beside' },
   cards: [
     { title: "Return in 15 minutes", body: "We continue with the Explain It Back learning game." }
   ],

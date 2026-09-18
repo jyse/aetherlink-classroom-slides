@@ -124,7 +124,10 @@ const BOTS = {
   wave:  { src: 'assets/aetherbot/aetherbot-wave.webp',  hatch: [58.4, 12.6] },
   think: { src: 'assets/aetherbot/aetherbot-think.webp', hatch: [51.3, 14.8] },
   point: { src: 'assets/aetherbot/aetherbot-point.webp', hatch: [32.6, 14.6] },
-  head:  { src: 'assets/aetherbot/aetherbot-head.webp',  hatch: [49.6, 25.8] }
+  head:  { src: 'assets/aetherbot/aetherbot-head.webp',  hatch: [49.6, 25.8] },
+  // stretch-arm poses: tip = fingertip position in % of the image (used by place: 'pointer')
+  stretchLeft:  { src: 'assets/aetherbot/stretch/aetherbot-stretch-links.webp',  tip: [0.1, 48], ratio: 900 / 541 },
+  stretchRight: { src: 'assets/aetherbot/stretch/aetherbot-stretch-rechts.webp', tip: [99.7, 48.5], ratio: 900 / 551 }
 };
 const PILLAR_ICONS = [
   '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.3"/>',
@@ -199,6 +202,38 @@ function renderExtras(stage, main, s, v) {
     ctrl.append(b1, b2); if (v.buttons) grid.after(ctrl); window.__reveal = next; slideController.signal.addEventListener('abort', () => { if (window.__reveal === next) window.__reveal = null; });
     x.slot = grid;
   }
+  if (v.quiz) {                                                  // 14: vote first, then wrong answers drop out
+    main.classList.add('narrow'); const order = cards.map((c, i) => i).filter(i => i !== v.quiz.answer); let k = 0;
+    const next = () => {
+      if (k < order.length) { cards[order[k++]].classList.add('quiz-out'); return true; }
+      if (k === order.length) { k++; cards[v.quiz.answer].classList.add('quiz-right'); x.pointer?.classList.add('show'); return true; }
+      return false;
+    };
+    cards.forEach(c => c.addEventListener('click', next)); window.__reveal = next;
+    slideController.signal.addEventListener('abort', () => { if (window.__reveal === next) window.__reveal = null; });
+  }
+  if (v.spotlight != null && cards[v.spotlight]) {               // 16: land on one card
+    main.classList.add('narrow', 'spot'); cards[v.spotlight].classList.add('spot-on');
+  }
+  if (v.pairs) {                                                 // 17: rows come in as pairs, one per click / →
+    const cmp = main.querySelector('.compare'); const cols = s.columns || [];
+    const g = node('div', 'pairs'); g.append(node('h2', 'pair-head', cols[0]?.title || ''), node('span'), node('h2', 'pair-head', cols[1]?.title || ''));
+    const rows = []; const n = Math.max(cols[0]?.items.length || 0, cols[1]?.items.length || 0);
+    for (let i = 0; i < n; i++) { const l = node('div', 'pair-l', cols[0].items[i] || ''), m = node('span', 'pair-link'), r = node('div', 'pair-r', cols[1].items[i] || ''); [l, m, r].forEach(e => e.classList.add('pending')); g.append(l, m, r); rows.push([l, m, r]); }
+    cmp?.replaceWith(g); let k = 0;
+    const next = () => { if (k >= rows.length) return false; rows[k++].forEach(e => e.classList.remove('pending')); return true; };
+    g.addEventListener('click', next); window.__reveal = next;
+    slideController.signal.addEventListener('abort', () => { if (window.__reveal === next) window.__reveal = null; });
+  }
+  if (v.countdown) {                                             // pauses: live countdown + real clock time
+    const box = node('div', 'pause-box'); const face = node('div', 'pause-clock'); const back = node('p', 'pause-back');
+    const end = Date.now() + v.countdown * 60000; const hhmm = new Date(end).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    back.append(document.createTextNode('Back at '), node('strong', null, hhmm));
+    const tick = () => { const left = Math.max(0, Math.round((end - Date.now()) / 1000)); face.textContent = String(Math.floor(left / 60)).padStart(2, '0') + ':' + String(left % 60).padStart(2, '0'); box.classList.toggle('late', left <= 60); box.classList.toggle('done', left === 0); };
+    tick(); const iv = setInterval(tick, 1000); slideController.signal.addEventListener('abort', () => clearInterval(iv));
+    box.append(face, back); if (s.cards?.[0]?.body) box.append(node('p', 'pause-next', s.cards[0].body));
+    grid.replaceWith(box);
+  }
   if (v.checklist != null && cards[v.checklist]) {             // 13: the checklist ticks itself off
     grid.classList.add('one-col'); const c = cards[v.checklist]; const ul = node('ul', 'checklist');
     String(s.cards[v.checklist].body).split('\n').forEach((t, i) => { const li = node('li'); li.style.setProperty('--i', i); li.append(node('span', 'check-box'), node('span', 'check-text', t)); ul.append(li); });
@@ -246,15 +281,16 @@ function renderVisual(stage, body, main, s) {
   if (v.popOut != null && s.cards?.[v.popOut]) {
     const src = s.cards[v.popOut]; main.querySelectorAll('.card')[v.popOut]?.remove();
     popRow = node('div', 'pop-row'); const col = node('div', 'pop-col'); const list = node('div', 'pop-chips');
-    String(src.body).split('\n').forEach((t, i) => { const c = node('span', 'pop-chip'); const inner = node('span', 'pop-chip-in', t); inner.style.setProperty('--i', i); c.append(inner); list.append(c); });
+    String(src.body).split('\n').forEach((t, i) => { const c = node('span', 'pop-chip'); const inner = node('span', 'pop-chip-in', t); inner.style.setProperty('--i', i); if (v.chipIcons?.[i]) inner.prepend(node('span', 'chip-ico', v.chipIcons[i])); c.append(inner); list.append(c); });
     col.append(node('p', 'pop-label', src.title), list); popRow.append(col); main.append(popRow);
   }
   highlight(stage, s);
   const bot = BOTS[v.bot]; if (!bot) return;
   const fig = node('figure', 'bot bot-' + v.bot + ' place-' + v.place); fig.setAttribute('aria-hidden', 'true');
   const live = node('div', 'bot-live'); const img = document.createElement('img'); img.src = bot.src; img.alt = ''; img.decoding = 'async';
-  const hatch = node('span', 'hatch'); hatch.style.left = bot.hatch[0] + '%'; hatch.style.top = bot.hatch[1] + '%'; hatch.innerHTML = LID;
-  live.append(img, hatch); fig.append(live);
+  const hatch = node('span', 'hatch'); hatch.innerHTML = LID;
+  if (bot.hatch) { hatch.style.left = bot.hatch[0] + '%'; hatch.style.top = bot.hatch[1] + '%'; live.append(img, hatch); } else live.append(img);
+  fig.append(live);
   if (v.tool === 'thought') fig.append(ART.thought());
   if (v.place === 'left') { body.prepend(fig); body.classList.add('with-bot', 'bot-left'); }
   else if (v.place === 'beside') { body.append(fig); body.classList.add('with-bot', 'bot-beside'); }
@@ -263,6 +299,17 @@ function renderVisual(stage, body, main, s) {
   else if (v.place === 'nest' && nest) { nest.row.prepend(fig); }
   else if (v.place === 'key' && ex.row) { ex.row.prepend(fig); }
   else if (v.place === 'slot' && ex.slot) { ex.slot.append(fig); }
+  else if (v.place === 'pointer') {
+    const target = main.querySelectorAll('.card')[v.pointAt]; fig.classList.add('pointer-bot'); stage.append(fig);
+    const H = v.pointH || 230; fig.style.height = H + 'px';
+    const put = () => { if (!target) return; const t = rel(target, stage); const W = H * bot.ratio;
+      const tipX = W * bot.tip[0] / 100, tipY = H * bot.tip[1] / 100;
+      fig.style.left = (bot.tip[0] < 50 ? t.x + t.w - 18 - tipX : t.x + 18 - tipX) + 'px';
+      fig.style.top = (t.y + t.h / 2 - tipY) + 'px'; };
+    requestAnimationFrame(() => requestAnimationFrame(put)); window.addEventListener('resize', put, { signal: slideController.signal });
+    ex.pointer = fig;
+    if (v.spotlight != null) { const tm = setTimeout(() => fig.classList.add('show'), 1600); slideController.signal.addEventListener('abort', () => clearTimeout(tm)); }
+  }
   else if (v.place === 'timeline') { const tl = main.querySelector('.art-timeline'); const row = node('div', 'tl-row'); tl.replaceWith(row); row.append(tl, fig); }
   const fx = document.createElementNS(SVGNS, 'svg'); fx.setAttribute('class', 'fx'); fx.setAttribute('aria-hidden', 'true'); stage.append(fx);
   const draw = () => {
@@ -414,7 +461,7 @@ function render() {
   renderLayout(main, s);
   renderTagline(main, s);
   renderVisual(stage, body, main, s);
-  const instructions = renderInstructions(s);
+  const instructions = s.visual?.quiz ? null : renderInstructions(s);
   if (instructions) {
     const side = sideBySide(s, instructions);
     body.classList.toggle('with-side', side);
