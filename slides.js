@@ -68,7 +68,7 @@
                  art: 'loop' — (with stepKeys) steps drawn as a circle: 4 nodes + "repeat or stop" in the middle
                  art: 'boxes' (+ link) — compare columns drawn as boxes inside boxes; → zooms in, then links items
                  addLine: 'placeholder' — (with checklist) an empty line the trainer can type into live
-                 stack: [tags] (+ bot 'stretchUp', place 'stack') — cards stack up bottom-first with a tag each
+                 stack: [tags] — cards pop in top to bottom, one by one, each with a tag
    ========================================================================== */
 window.SLIDES = [
 
@@ -535,7 +535,7 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 1 · PART 4 · AETHER LIBRARY",
   subtitle: "A small AI knowledge library that grows throughout the two teaching days.",
   type: "context",
-  visual: { stack: ['Day 1 · Assignment 2', 'Day 1 · Assignment 3', 'Assignments 4 · 6 · 8', 'Day 2 · Assignment 9'], bot: 'stretchUp', place: 'stack',
+  visual: { stack: ['Day 1 · Assignment 2', 'Day 1 · Assignment 3', 'Day 1–2 · Assignments 4, 6, 7, 8', 'Day 2 · Assignment 9 · AI feedback'],
     highlight: [{ in: 'subtitle', text: 'grows', tone: 'orange' }] },
   cards: [
     { title: "Participant profiles", body: "Who is here, and what they're working on." },

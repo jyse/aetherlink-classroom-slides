@@ -645,3 +645,5 @@ p.subtitle{font-weight:700}
 .steps-wrap.has-reach{padding-left:clamp(110px,10vw,150px)}
 .loop{width:min(380px,60vw)}
 .loop ~ .steps-detail{display:none}
+.cards.stack{flex-direction:column}
+.cards.stack .card{animation:pop .55s cubic-bezier(.2,1.4,.4,1) both;animation-delay:calc(.35s + var(--i)*.5s)}
