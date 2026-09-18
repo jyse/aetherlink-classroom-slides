@@ -133,7 +133,7 @@ window.SLIDES = [
 { // Slide 6
   title: "Artificial intelligence",
   kicker: "DAY 1 · PART 1 · AI FOUNDATIONS",
-  subtitle: "The broad field of building systems that perform tasks associated with human intelligence.",
+  subtitle: "Not one technology — a broad field.",
   type: "concept",
   visual: { hero: 0, popOut: 1, bot: 'head', place: 'popout',
     highlight: [{ in: 'card:0', text: 'broad field', tone: 'purple' }, { in: 'card:0', text: 'human intelligence', tone: 'orange' }] },
