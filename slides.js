@@ -288,7 +288,7 @@ window.SLIDES = [
   type: "pause",
   visual: { countdown: 15, bot: 'wave', place: 'beside' },
   cards: [
-    { title: "Return in 15 minutes", body: "We continue with Part 2 — Claude and Claude Code." }
+    { title: "Return in 15 minutes", body: "Continuing with: Claude chat and Claude Code." }
   ],
   notes: "State the actual clock time you'll resume, out loud and (if possible) on screen — 'return in 15 minutes' only works if people know what time that is. Use the break to check your own Claude Code auth is working before the live demo in Part 2."
 },
