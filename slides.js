@@ -74,7 +74,10 @@
                  lineReveal: N — card N's lines as a numbered list that pops in
                  stamps: ['PASS', …] (+ bot, place: 'stamps') — clickable decision stamps that pop out of AetherBOT's head (checkpoint box hidden)
                  badge: N — card N's lines as an empty profile badge
-                 swap: true — two AetherBOT heads passing work to each other (peer review)
+                 swap: true — two AetherBOT heads passing work to each other (peer review); with stamps: stamps pop between them
+                 template: N (+ templateRows) — empty card template (term/definition or the card's own lines)
+                 notebook: N — card N's lines as a ruled notebook page
+                 quietTimer: minutes — quiet countdown (no "Back at") beside the cards
    stepsHeading (slide field) — heading above the steps; default "Your prompt must ask Claude Code to:"
    ========================================================================== */
 window.SLIDES = [
@@ -669,10 +672,11 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 1 · ASSIGNMENT 3 · 30 MIN",
   subtitle: "Choose one AI term and add it to the glossary.",
   type: "practice",
+  visual: { template: 0, templateRows: ['Term', 'Definition'] },
   layout: "exercise",
   timer: 30,
   cards: [
-    { title: "Add", body: "a short, plain-language definition" }
+    { title: "Add", body: "a plain-language definition — 1–2 sentences, in English" }
   ],
   steps: [
     "Choose one AI term not already in the glossary.",
@@ -690,15 +694,16 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 1 · ASSIGNMENT 4 · 45 MIN",
   subtitle: "Turn one glossary term into a complete concept card.",
   type: "practice",
+  visual: { template: 0 },
   layout: "exercise",
   timer: 45,
   cards: [
-    { title: "Include", body: "plain-language explanation\npractical example\ncommon misunderstanding\nessential points\nrelated concepts\nreliable resources" }
+    { title: "Include", body: "plain-language explanation\npractical example\ncommon misunderstanding\nessential points\nrelated concepts\nreliable resources (official docs or research)" }
   ],
   steps: [
     "Inspect the existing data structure and application design first.",
     "Propose the card content and the smallest plan — including the Library page, if it doesn't exist yet.",
-    "Verify the explanation with real, checked sources.",
+    "Open and read each source — a search result is not a check.",
     "Wait for approval before changing files.",
     "Run the relevant checks afterward."
   ],
@@ -711,8 +716,9 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 1 · ASSIGNMENT 4 · REVIEW",
   subtitle: "Review the card with another participant:",
   type: "review",
+  visual: { lineReveal: 0, stamps: ['PASS', 'REVISE', 'OPEN'], swap: true },
   cards: [
-    { title: "Review with another participant", body: "Is the definition accurate?\nDoes the example make the concept clearer?\nAre the sources appropriate?\nDid Claude invent anything?\nDoes the card follow the required structure?" }
+    { title: "Check together", body: "Is the definition accurate?\nDoes the example make the concept clearer?\nAre the sources appropriate?\nWhich sentence comes from which source?\nDid Claude invent anything?\nDoes the card follow the required structure?" }
   ],
   check: "Decision: PASS, REVISE or OPEN",
   notes: "Same three-way decision as slide 32 — by now the room should start producing it without prompting."
@@ -725,8 +731,9 @@ Explain what the application does, how it is structured and how I can verify you
 { // Slide 39
   title: "Day 1 learning note",
   kicker: "DAY 1 · CLOSING",
-  subtitle: "Write the note yourself. Preserve uncertainty as OPEN.",
+  subtitle: "Five quiet minutes — in your own words.",
   type: "recap",
+  visual: { notebook: 0, quietTimer: 5, highlight: [{ in: 'tagline', text: 'OPEN', tone: 'orange' }] },
   cards: [
     { title: "Record", body: "what you created\nhow you used Claude Code\nwhat you tested\nwhat you learned\nwhat remains unclear\nwhat you want to try tomorrow" }
   ],

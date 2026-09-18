@@ -343,9 +343,25 @@ function renderExtras(stage, main, s, v) {
     bd.append(av, rows); c.querySelector('p')?.replaceWith(bd);
   }
   if (v.swap) {                                                  // 34: two AetherBOTs swap their work
-    main.classList.add('has-swap'); const sw = node('div', 'swap'); sw.setAttribute('aria-hidden', 'true');
+    const sw = node('div', 'swap'); sw.setAttribute('aria-hidden', 'true');
     ['sw-a', 'sw-b'].forEach(c => { const im = document.createElement('img'); im.src = BOTS.head.src; im.alt = ''; im.className = c; sw.append(im); });
-    sw.append(node('span', 'pkt pkt-ab'), node('span', 'pkt pkt-ba')); grid.after(sw);
+    sw.append(node('span', 'pkt pkt-ab'), node('span', 'pkt pkt-ba'));
+    if (x.stampRow) { x.stampRow.classList.add('with-swap'); x.stampRow.querySelector('.stamps-label').after(sw); } else { main.classList.add('has-swap'); grid.after(sw); }
+  }
+  if (v.template != null && cards[v.template]) {                // 36/37: an empty card template (term/definition, concept card)
+    const c = cards[v.template]; const lines = v.templateRows || String(s.cards[v.template].body).split('\n'); const t = node('div', 'tpl' + (lines.length > 3 ? ' tpl-grid' : ''));
+    lines.forEach((l, i) => { const r = node('div', 'tpl-row'); r.style.setProperty('--i', i); r.append(node('span', 'tpl-k', l), node('span', 'tpl-line'), node('span', 'tpl-line short')); t.append(r); });
+    if (v.templateRows) c.append(t); else c.querySelector('p')?.replaceWith(t);
+  }
+  if (v.notebook != null && cards[v.notebook]) {                // 39: the learning note as a notebook page
+    const c = cards[v.notebook]; c.classList.add('notebook'); const ul = node('ul', 'nb-lines');
+    String(s.cards[v.notebook].body).split('\n').forEach((t, i) => { const li = node('li', null, t); li.style.setProperty('--i', i); ul.append(li); }); c.querySelector('p')?.replaceWith(ul);
+  }
+  if (v.quietTimer) {                                            // 39: a quiet countdown without "Back at"
+    main.classList.add('has-quiet'); const box = node('div', 'pause-box quiet'); const face = node('div', 'pause-clock'); const end = Date.now() + v.quietTimer * 60000;
+    const tick = () => { const left = Math.max(0, Math.round((end - Date.now()) / 1000)); face.textContent = String(Math.floor(left / 60)).padStart(2, '0') + ':' + String(left % 60).padStart(2, '0'); box.classList.toggle('late', left <= 30 && left > 0); box.classList.toggle('done', left === 0); };
+    tick(); const iv = setInterval(tick, 1000); slideController.signal.addEventListener('abort', () => clearInterval(iv));
+    box.append(node('span', 'quiet-ico', '✍'), face); grid.after(box);
   }
   if (v.checklist != null && cards[v.checklist]) {             // 13: the checklist ticks itself off
     grid.classList.add('one-col'); const c = cards[v.checklist]; const ul = node('ul', 'checklist');
