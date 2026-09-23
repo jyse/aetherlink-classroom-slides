@@ -913,7 +913,7 @@ Explain what the application does, how it is structured and how I can verify you
     { title: "Can Claude determine", body: "what the project does\nwhere content belongs\nhow to validate changes\nwhich boundaries apply\nwhen human approval is required" }
   ],
   check: "Decision: PASS, REVISE or OPEN",
-  notes: "If your timing allows, actually swap two participants' laptops/repos for this and run a genuinely fresh Claude Code session — it's the single most convincing proof of the morning and worth the extra five minutes."
+  notes: "No laptop swap. Everyone types /clear in their own session — the files stay, the conversation is gone. The neighbour on their right then asks the five questions and decides PASS, REVISE or OPEN. If Claude can answer from CLAUDE.md alone, the project instructions work — the single most convincing proof of the morning."
 },
 
 { // Slide 48
@@ -1347,7 +1347,7 @@ Explain what the application does, how it is structured and how I can verify you
     { label: "Explain It Back learning game, with real AI feedback" },
     { label: "Approved external connection" }
   ],
-  notes: "Use the reveal button live — click through each item slowly and let the room recognise their own two days of work in the list."
+  notes: "The items appear on their own, one by one — no clicking needed. Let them come in without talking over them, and let the room recognise their own two days of work in the list."
 },
 
 { // Slide 74
