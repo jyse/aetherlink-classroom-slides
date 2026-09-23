@@ -130,6 +130,7 @@ const BOTS = {
   sleepy:       { src: 'assets/aetherbot/faces/aetherbot-face-slaperig.webp' },
   happy:        { src: 'assets/aetherbot/faces/aetherbot-face-blij.webp' },
   peek:         { src: 'assets/aetherbot/aetherbot-peek.webp' },
+  multiarm:     { src: 'assets/aetherbot/aetherbot-multiarm.webp' },
   stretchUp:    { src: 'assets/aetherbot/stretch/aetherbot-stretch-omhoog.webp', ratio: 336 / 1100 },
   stretchRight: { src: 'assets/aetherbot/stretch/aetherbot-stretch-rechts.webp', tip: [99.7, 48.5], ratio: 900 / 551 }
 };
@@ -553,6 +554,20 @@ function buildNest(main, s) {
   slideController.signal.addEventListener('abort', () => mo.disconnect());
   return api;
 }
+// opening slides 1-4: welcome (big logo), ask (one big question), agree + team (card rows)
+function buildOpener(stage, main, s, v) {
+  const head = stage.querySelector('.heading');
+  if (v.opener === 'welcome') {
+    const logo = node('div', 'opener-logo'); const img = document.createElement('img'); img.src = 'assets/aetherlink-mark.png'; img.alt = '';
+    logo.append(img, node('span', 'opener-word', 'AETHER'), node('span', 'opener-word accent', 'LINK'));
+    head.querySelector('.heading-top').after(logo);
+  }
+  if (v.opener === 'team') main.querySelectorAll('.card').forEach(c => {
+    const name = c.querySelector('h2,h3,strong,.card-title')?.textContent || c.textContent;
+    const ini = name.split(' ').filter(w => /^[A-Z]/.test(w)).map(w => w[0]).slice(0, 2).join('');
+    c.prepend(node('span', 'team-avatar', ini));
+  });
+}
 function rel(el, stage) { const a = el.getBoundingClientRect(), b = stage.getBoundingClientRect(); return { x: a.left - b.left + stage.scrollLeft, y: a.top - b.top, w: a.width, h: a.height }; }
 function renderVisual(stage, body, main, s) {
   const v = s.visual; if (!v) return;
@@ -571,6 +586,7 @@ function renderVisual(stage, body, main, s) {
     col.append(node('p', 'pop-label', src.title), list); popRow.append(col); const tg = main.querySelector('.tagline'); if (tg) tg.before(popRow); else main.append(popRow);
   }
   highlight(stage, s);
+  if (v.opener) buildOpener(stage, main, s, v);
   const bot = BOTS[v.bot]; if (!bot) return;
   const fig = node('figure', 'bot bot-' + v.bot + ' place-' + v.place); fig.setAttribute('aria-hidden', 'true');
   const live = node('div', 'bot-live'); const img = document.createElement('img'); img.src = bot.src; img.alt = ''; img.decoding = 'async';
@@ -732,6 +748,7 @@ function render() {
   document.body.classList.toggle('dark', !!s.dark);
   document.body.classList.toggle('is-assignment', type === 'practice');
   document.body.dataset.type = type;
+  document.body.dataset.opener = s.visual?.opener || '';
   document.title = s.title + ' · Aetherlink classroom';
   const stage = $('stage'); stage.replaceChildren();
   if (type === 'practice') {
