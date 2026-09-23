@@ -1,8 +1,11 @@
 # Aetherlink × Worldline — classroom deck
 
-The 78-slide HTML deck for the two teaching days ("Working with AI and
+The 82-slide HTML deck for the two teaching days ("Working with AI and
 Claude Code" and "Reusable and connected AI workflows"), built around the
-**Aether Library** practice project. Plain static site — HTML, CSS,
+**Aether Library** practice project. Slides 1–4 are a short opening
+(welcome, a show-of-hands question, agreements, who we are) added on
+23 Sep 2026; they are not in `CURRICULUM.md`, so curriculum slide numbers
+are deck numbers minus 4. Plain static site — HTML, CSS,
 vanilla JS. No build step, no framework, no dependencies to install.
 
 Content source of truth: `CURRICULUM.md` in this repo, including its
@@ -36,7 +39,7 @@ no build — that's the whole workflow.
 `serve.py` also disables browser caching outright, but this deck's own HTML
 tags additionally cache-bust every asset with a `?v=` query string
 (`styles.css?v=3`, `slides.js?v=3`, `app.js?v=3` / `presenter.js?v=3`) —
-bump that number whenever you edit `slides.js`, `app.js`, `styles.css` or
+bump that number — in **both** `index.html` and `presenter.html` — whenever you edit `slides.js`, `app.js`, `styles.css` or
 `presenter.js` and want to be certain a stale tab picks up the change.
 
 **Use `serve.py`, not plain `python3 -m http.server`.** Browsers cache
@@ -185,9 +188,13 @@ of `slides.js`; wording changes made at the same time are logged per slide in
   cut-outs. The chest logo is the AetherLink mark and must never be altered.
 - **More poses** (all generated with fal.ai, chest logo restored from the
   original afterwards): `assets/aetherbot/faces/` (7 expressions, used per
-  card on slide 12), `assets/aetherbot/stretch/` (7 telescopic-arm poses +
-  arm parts used by the growing arm on slide 25), `aetherbot-peek.webp`
-  (hands over eyes, slide 42).
+  card on slide 16), `assets/aetherbot/stretch/` (7 telescopic-arm poses +
+  arm parts used by the growing arm on slide 29), `aetherbot-peek.webp`
+  (hands over eyes, slide 46), `aetherbot-multiarm.webp` (many raised
+  hands, slide 2).
+- **Opening slides 1–4** use `visual.opener: 'welcome'|'ask'|'agree'|'team'`
+  (big logo + title, one big question, agreement cards, name cards with
+  initials) — see `buildOpener()` in `app.js`.
 - **Pauses** show a live countdown plus the real "Back at HH:MM" clock time
   (`visual.countdown`); assignment timers, banners and chips use the
   purple→orange gradient, frames are light blue.
@@ -271,7 +278,7 @@ appears immediately.
 | `index.html` | Page shell for the audience-facing deck |
 | `styles.css` | Academy-matched colours, typography, layout, assignment styling, AetherBOT visual layer |
 | `app.js` | Rendering (incl. `renderVisual` + `renderExtras` for the visual layer), hash navigation, keyboard nav (→ reveals, B plan B), timers, the "Your prompt must ask Claude Code to" panel, the footer progress bar, and presenter-sync broadcasting |
-| `slides.js` | All 78 slides as one JSON-shaped data file — the only file most edits touch |
+| `slides.js` | All 82 slides as one JSON-shaped data file — the only file most edits touch |
 | `assets/aetherbot/` | AetherBOT cut-outs (wave, think, point, head, peek) + `faces/` and `stretch/` pose sets |
 | `demo-fallback.js` | Plan B texts: captured demo run (slide 22) and Assignment 10 fixture run (slide 70) |
 | `assets/aetherlink-mark.png` | AetherLink network mark in the header |
@@ -286,8 +293,8 @@ nav, keyboard nav, footer progress bar, per-slide dark variant, the seven
 layout renderers, the "Do this now" exercise panel) but simplifies several
 things that don't apply here:
 
-- **One flat 78-slide array**, not a multi-squad/multi-day picker — this
-  deck is always exactly these 78 slides in this order, so the "Choose
+- **One flat 82-slide array**, not a multi-squad/multi-day picker — this
+  deck is always exactly these 82 slides in this order, so the "Choose
   session" picker, `?day=`/`?squad=` query params, and the framework-mode
   fallback slides were removed rather than adapted.
 - **No mascot** — removed per the brief; that's specific to the separate
@@ -298,7 +305,7 @@ things that don't apply here:
   deck.
 - **Slide type is set explicitly** (a `type` field on every slide) rather
   than guessed from kicker/title text via regex, as the source engine did.
-  With 78 hand-authored slides, explicit typing is more reliable than
+  With 82 hand-authored slides, explicit typing is more reliable than
   pattern-matching against titles that were never designed for it.
 - **`compare` supports a third column** (Slide 27's three-tier SDLC →
   working method → agent loop framing) with its own amber border/heading
@@ -324,7 +331,7 @@ treatment and timer, a pause slide, and the last slide) with no console
 errors. It has **not** been read start to finish for tone/accuracy — do that
 yourself before teaching:
 
-1. **Click through all 78 slides in order**, start to finish, both days.
+1. **Click through all 82 slides in order**, start to finish, both days.
    Confirm nothing looks broken and the content reads correctly end to end —
    this was sampled, not read in full, for tone and factual accuracy.
 2. **Read slides 62–66 (the Explain It Back / Assignment 9 area) closely** —
