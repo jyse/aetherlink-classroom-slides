@@ -531,7 +531,7 @@ const REACT = ['?', '⇄', '…?', '⌛', '!!'];
 function buildNest(main, s) {
   const wrap = main.querySelector('.steps-wrap'); const chain = wrap?.querySelector('.steps-chain'); if (!chain) return null;
   const items = [...chain.querySelectorAll('.step-item')]; chain.classList.add('nest-hidden');
-  const R = [230, 172, 116, 68], CX = 380, B = 470;
+  const five = (s.items || []).length > 4; const R = five ? [238, 194, 150, 106, 64] : [230, 172, 116, 68], CX = 380, B = 470;
   const g = document.createElementNS(SVGNS, 'svg'); g.setAttribute('viewBox', '0 0 760 480'); g.setAttribute('class', 'nest'); g.setAttribute('role', 'group');
   const labels = [];
   (s.items || []).forEach((it, i) => {
@@ -540,7 +540,7 @@ function buildNest(main, s) {
     const t = document.createElementNS(SVGNS, 'text'); t.setAttribute('x', CX); t.setAttribute('class', 'ring-label' + (i === R.length - 1 ? ' ring-label-core' : ''));
     const inner = i === R.length - 1; const words = inner ? it.label.split(' ') : [it.label];
     const lines = inner && words.length > 2 ? [words.slice(0, -1).join(' '), words.at(-1)] : [it.label];
-    const y0 = inner ? cy - (lines.length - 1) * 11 + 6 : cy - r + 52;
+    const y0 = inner ? cy - (lines.length - 1) * 11 + 6 : cy - r + (five ? 36 : 52);
     lines.forEach((ln, k) => { const ts = document.createElementNS(SVGNS, 'tspan'); ts.setAttribute('x', CX); ts.setAttribute('y', y0 + k * 20); ts.textContent = ln; t.append(ts); });
     grp.append(c, t); grp.addEventListener('click', () => items[i]?.querySelector('button')?.click());
     g.append(grp); labels.push(t);

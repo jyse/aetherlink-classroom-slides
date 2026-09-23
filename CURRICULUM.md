@@ -113,6 +113,7 @@ Examples include recognising patterns, making predictions, generating content an
 
 - Artificial intelligence is the broad field.
 - Machine learning finds patterns from data.
+- Deep learning learns with many-layered neural networks.
 - Generative AI creates new content.
 - Large language models generate and process language.
 

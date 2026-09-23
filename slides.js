@@ -224,10 +224,11 @@ window.SLIDES = [
   items: [
     { label: "Artificial intelligence", caption: "The broad field." },
     { label: "Machine learning", caption: "Finds patterns from data." },
+    { label: "Deep learning", caption: "Learns with many-layered neural networks." },
     { label: "Generative AI", caption: "Creates new content." },
     { label: "Large language models", caption: "Generate and process language." }
   ],
-  notes: "Click through the four terms live so the nesting is visible: each term sits inside the one before it. This is scaffolding for slide 8, not a separate lesson."
+  notes: "Click through the five rings live so the nesting is visible: each term sits inside the one before it. Deep learning is the layer people usually skip — it is why today's generative AI works: the models behind it are deep neural networks. This is scaffolding for slide 8, not a separate lesson."
 },
 
 { // Slide 8
