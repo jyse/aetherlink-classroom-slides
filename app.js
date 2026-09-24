@@ -562,6 +562,11 @@ function buildOpener(stage, main, s, v) {
     logo.append(img, node('span', 'opener-word', 'AETHER'), node('span', 'opener-word accent', 'LINK'));
     head.querySelector('.heading-top').after(logo);
   }
+  if (v.opener === 'showcase' && v.image) {                      // Day 2 show & tell: screenshot in a browser frame
+    const shot = node('figure', 'showcase'); const bar = node('div', 'showcase-bar'); bar.append(node('span', 'dots'), node('span', 'showcase-url', v.imageLink || ''));
+    const img = document.createElement('img'); img.src = v.image; img.alt = ''; shot.append(bar, img);
+    main.classList.add('with-showcase'); main.prepend(shot);
+  }
   if (v.opener === 'team') main.querySelectorAll('.card').forEach(c => {
     const name = c.querySelector('h2,h3,strong,.card-title')?.textContent || c.textContent;
     const ini = name.split(' ').filter(w => /^[A-Z]/.test(w)).map(w => w[0]).slice(0, 2).join('');
@@ -575,6 +580,7 @@ function renderVisual(stage, body, main, s) {
   if (v.cardArt) { const cards = main.querySelectorAll('.card'); Object.entries(v.cardArt).forEach(([i, kind]) => { if (cards[i] && ART[kind]) cards[i].append(ART[kind]()); }); }
   if (v.pillarIcons) main.querySelectorAll('.pillar').forEach((p, i) => p.prepend(svg('0 0 24 24', PILLAR_ICONS[i % 4], 'pillar-icon')));
   if (v.stagger) main.classList.add('stagger-' + v.stagger);
+  if (v.compact) main.classList.add('compact-cards');
   if (v.hero != null) { main.classList.add('has-hero'); main.querySelectorAll('.card')[v.hero]?.classList.add('card-hero'); }
   let popRow = null, nest = null; const ex = renderExtras(stage, main, s, v);
   if (v.art === 'nested') nest = buildNest(main, s);
@@ -772,6 +778,7 @@ function render() {
     const side = sideBySide(s, instructions);
     body.classList.toggle('with-side', side);
     if (side) body.append(instructions); else stage.append(instructions);
+    if (side && s.visual?.compact) main.querySelectorAll(':scope > .timer, :scope > .tagline').forEach(el => instructions.append(el)); // 48: timer + bonus under the steps
   }
   $('count').textContent = String(current + 1).padStart(2, '0') + ' / ' + slides.length;
   renderProgress();

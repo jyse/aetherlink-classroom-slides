@@ -1,6 +1,6 @@
 # Aetherlink × Worldline — classroom deck
 
-The 82-slide HTML deck for the two teaching days ("Working with AI and
+The 86-slide HTML deck for the two teaching days ("Working with AI and
 Claude Code" and "Reusable and connected AI workflows"), built around the
 **Aether Library** practice project. Slides 1–4 are a short opening
 (welcome, a show-of-hands question, agreements, who we are) added on
@@ -278,7 +278,7 @@ appears immediately.
 | `index.html` | Page shell for the audience-facing deck |
 | `styles.css` | Academy-matched colours, typography, layout, assignment styling, AetherBOT visual layer |
 | `app.js` | Rendering (incl. `renderVisual` + `renderExtras` for the visual layer), hash navigation, keyboard nav (→ reveals, B plan B), timers, the "Your prompt must ask Claude Code to" panel, the footer progress bar, and presenter-sync broadcasting |
-| `slides.js` | All 82 slides as one JSON-shaped data file — the only file most edits touch |
+| `slides.js` | All 86 slides as one JSON-shaped data file — the only file most edits touch |
 | `assets/aetherbot/` | AetherBOT cut-outs (wave, think, point, head, peek) + `faces/` and `stretch/` pose sets |
 | `demo-fallback.js` | Plan B texts: captured demo run (slide 22) and Assignment 10 fixture run (slide 70) |
 | `assets/aetherlink-mark.png` | AetherLink network mark in the header |
@@ -293,8 +293,8 @@ nav, keyboard nav, footer progress bar, per-slide dark variant, the seven
 layout renderers, the "Do this now" exercise panel) but simplifies several
 things that don't apply here:
 
-- **One flat 82-slide array**, not a multi-squad/multi-day picker — this
-  deck is always exactly these 82 slides in this order, so the "Choose
+- **One flat 86-slide array**, not a multi-squad/multi-day picker — this
+  deck is always exactly these 86 slides in this order, so the "Choose
   session" picker, `?day=`/`?squad=` query params, and the framework-mode
   fallback slides were removed rather than adapted.
 - **No mascot** — removed per the brief; that's specific to the separate
@@ -305,7 +305,7 @@ things that don't apply here:
   deck.
 - **Slide type is set explicitly** (a `type` field on every slide) rather
   than guessed from kicker/title text via regex, as the source engine did.
-  With 82 hand-authored slides, explicit typing is more reliable than
+  With 86 hand-authored slides, explicit typing is more reliable than
   pattern-matching against titles that were never designed for it.
 - **`compare` supports a third column** (Slide 27's three-tier SDLC →
   working method → agent loop framing) with its own amber border/heading
@@ -331,7 +331,7 @@ treatment and timer, a pause slide, and the last slide) with no console
 errors. It has **not** been read start to finish for tone/accuracy — do that
 yourself before teaching:
 
-1. **Click through all 82 slides in order**, start to finish, both days.
+1. **Click through all 86 slides in order**, start to finish, both days.
    Confirm nothing looks broken and the content reads correctly end to end —
    this was sampled, not read in full, for tone and factual accuracy.
 2. **Read slides 62–66 (the Explain It Back / Assignment 9 area) closely** —

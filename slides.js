@@ -852,15 +852,101 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "TEACHING DAY 2",
   subtitle: "From one concept card to a repeatable method.",
   type: "context",
-  visual: { bot: 'wave', place: 'left', dayRoute: ['Recap', 'Context', 'Skills', 'Bounded work', 'Game', 'MCP', 'Closing'] },
+  visual: { bot: 'wave', place: 'left', dayRoute: ['Warm-up', 'Recap', 'Context', 'Skills', 'Bounded work', 'Game', 'MCP', 'Closing'] },
   cards: [
     { title: "What we're doing", body: "Turning yesterday's method into something reusable, bounded and connected." },
     { title: "Today", body: "Skills, bounded agentic work, the learning game, and approved workplace connections." }
   ],
-  notes: "Short re-welcome — most of the room was here yesterday, so this can be brief. Point at the day's shape (recap → context → skills → bounded work → game → MCP → closing) before diving into the retrieval check."
+  notes: "Short re-welcome — most of the room was here yesterday, so this can be brief. Point at the day's shape (warm-up → recap → context → skills → bounded work → game → MCP → closing). The warm-up comes first: Stekkie, LibreChat bio, the action-figure avatar and putting it on your profile — then the retrieval check."
 },
 
 { // Slide 46
+  title: "Built with AI: Stekkie",
+  kicker: "DAY 2 · SHOW & TELL",
+  subtitle: "My own AI garden coach — vibe coded, live at app.stekkie.ai.",
+  type: "context",
+  visual: { opener: 'showcase', image: 'assets/stekkie.webp', imageLink: 'app.stekkie.ai', stagger: 'pop', compact: true },
+  cards: [
+    { title: "An idea", body: "A garden coach: what to sow, when to harvest, what's wrong with a leaf." },
+    { title: "A conversation with AI", body: "Built by describing what I wanted — no traditional development team." },
+    { title: "A live app", body: "Real users, real data, real bugs to fix." }
+  ],
+  tagline: "Vibe coding gets you a working app. Today is about making it reliable.",
+  notes: "Constance demos Stekkie live (app.stekkie.ai) — 3 to 5 minutes, no more. Show one flow end to end, e.g. plant something and harvest it. Then land the tagline: vibe coding got this app live, but what makes it trustworthy is exactly today's material — context, repeatable methods, bounded work and checks. If the site or wifi fails, stay on this slide and tell the story with the image."
+},
+
+{ // Slide 47
+  title: "LibreChat: teach it who you are",
+  kicker: "DAY 2 · WARM-UP · LIBRECHAT",
+  subtitle: "Fill in your bio so every answer starts from you.",
+  type: "practice",
+  layout: "exercise",
+  timer: 10,
+  stepsHeading: "In LibreChat:",
+  visual: { badge: 0 },
+  cards: [
+    { title: "Your bio covers", body: "role and team\nwhat you work on\nhow you like answers\nlanguage" }
+  ],
+  steps: [
+    "Open LibreChat and go to Settings.",
+    "Find the personalisation / bio section.",
+    "Write a short bio: role, team, what you work on, and how you like answers (short, with examples, which language).",
+    "Nothing confidential — no customer data, no credentials.",
+    "Test it: start a new chat and ask \"What do you know about me?\""
+  ],
+  expected: "LibreChat describes you correctly — without you telling it again in the chat.",
+  tagline: "Your bio is personal context. CLAUDE.md, later today, is the same idea for a project.",
+  notes: "Ten minutes, hands on. Walk the room and check people actually find the setting. The tagline is the bridge: the bio is context about you, and slides 52–53 (Sources of context, CLAUDE.md) return to exactly this idea for a project. Worth showing in two minutes if time allows — don't make it a LibreChat course: (1) the Prompts library — saved prompts with variables, the LibreChat version of a repeated method (→ skills, slide 57); (2) Agents — your own assistant with instructions and files, level 4–5 on the Levels of AI use slide; (3) choosing a model per conversation; (4) uploading a file to ask about it — only what is relevant, current and permitted."
+},
+
+{ // Slide 48
+  title: "Warm-up: your action-figure avatar",
+  kicker: "DAY 2 · WARM-UP · 5 MIN",
+  subtitle: "Create the coolest action-figure picture of yourself in LibreChat.",
+  type: "practice",
+  layout: "exercise",
+  timer: 5,
+  stepsHeading: "Your prompt must ask LibreChat to:",
+  visual: { compact: true },
+  cards: [
+    { title: "Cartoon", body: "Create a square cartoon avatar of me as an action figure: [describe yourself — hair, glasses, outfit], holding a laptop and a coffee. Bright colours, no text." },
+    { title: "Superhero", body: "Create a square comic-book superhero portrait of me: [describe yourself]. Cape, city skyline at night. No text, no logos." },
+    { title: "Jip and Janneke", body: "Create a square avatar of me in the style of the Dutch Jip and Janneke books: a black silhouette on a plain coloured background. [describe yourself]. No text." }
+  ],
+  steps: [
+    "Make an image of you — describe yourself, no real photo needed.",
+    "Pick a style: cartoon, superhero, Jip and Janneke — or your own.",
+    "Square, plain background, no text.",
+    "Download the one you like best — you need it in Claude Code next."
+  ],
+  expected: "A square avatar you'd happily put on your profile.",
+  tagline: "Bonus: set it as your LibreChat avatar too (Settings → Account).",
+  notes: "Five minutes, keep the energy high — this is meant to be fun. The three examples are starting points; encourage people to change them. Jip and Janneke is a well-known Dutch children's-book style (Fiep Westendorp): black silhouettes — explain it in one sentence for non-Dutch participants. Everyone describes themselves instead of uploading a real photo. Make sure everyone has actually downloaded the file before moving on."
+},
+
+{ // Slide 49
+  title: "Your avatar in the Aether Library",
+  kicker: "DAY 2 · WARM-UP · CLAUDE CODE",
+  subtitle: "Profiles don't have a photo yet — ask Claude Code to add one.",
+  type: "practice",
+  layout: "exercise",
+  visual: { badge: 0 },
+  cards: [
+    { title: "Your profile", body: "photo\nname\nrole\nlearning goal" }
+  ],
+  steps: [
+    "Explore how profiles are stored and shown on the Profiles page.",
+    "Plan an optional photo for a profile: the image in public/avatars/, initials when there is none.",
+    "Show the plan before editing.",
+    "Add your own avatar to your profile.",
+    "Test it: one profile with a photo, one without — both still look right."
+  ],
+  expected: "Your profile shows your avatar; profiles without a photo still show initials.",
+  tagline: "Keep it local — don't commit your picture to a public repository.",
+  notes: "Back to Claude Code, and back to the working method from Day 1 in miniature: explore, plan, approve, change, test. First make sure everyone has moved the downloaded image into their project (public/avatars/). The fallback to initials is the part people forget — that's the 'test' step: check a profile without a photo too. Watch for participants who let Claude edit without showing a plan first."
+},
+
+{ // Slide 50
   title: "Retrieval check",
   kicker: "DAY 2 · RECAP",
   subtitle: "Without looking at yesterday's slides, explain:",
@@ -877,7 +963,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "Genuinely make them answer without looking back at Day 1's deck — cold retrieval, not open-book. If the room struggles with the six steps, that's useful signal: slow down Part 1 rather than push ahead."
 },
 
-{ // Slide 47
+{ // Slide 51
   title: "Levels of AI use",
   kicker: "DAY 2 · RECAP",
   subtitle: "From asking a model to building an agent.",
@@ -899,7 +985,7 @@ Explain what the application does, how it is structured and how I can verify you
 /* DAY 2 — Part 1: Context and CLAUDE.md                                   */
 /* ---------------------------------------------------------------------- */
 
-{ // Slide 48
+{ // Slide 52
   title: "Sources of context",
   kicker: "DAY 2 · PART 1 · CONTEXT & CLAUDE.MD",
   subtitle: "Where context can come from.",
@@ -915,7 +1001,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "The last row is the one to underline — it's the seed for Part 5's MCP content later today."
 },
 
-{ // Slide 49
+{ // Slide 53
   title: "CLAUDE.md",
   kicker: "DAY 2 · PART 1 · CONTEXT & CLAUDE.MD",
   subtitle: "The briefing Claude reads at the start of every session.",
@@ -929,7 +1015,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "The tagline matters as much as the contents list — CLAUDE.md is deliberately not a prompt landfill, and it isn't an access-control mechanism either. Point participants to their seed CLAUDE.md now."
 },
 
-{ // Slide 50
+{ // Slide 54
   title: "Assignment 5: Project instructions",
   kicker: "DAY 2 · ASSIGNMENT 5 · 30 MIN",
   subtitle: "Review and improve the repository's CLAUDE.md.",
@@ -947,10 +1033,10 @@ Explain what the application does, how it is structured and how I can verify you
     "Show the proposed changes before editing."
   ],
   expected: "A CLAUDE.md that a stranger's Claude Code session could rely on without you explaining anything out loud.",
-  notes: "Watch for participants pasting today's entire to-do list into CLAUDE.md — redirect with slide 49's contents list: it isn't a prompt landfill or a temporary notes file."
+  notes: "Watch for participants pasting today's entire to-do list into CLAUDE.md — redirect with slide 53's contents list: it isn't a prompt landfill or a temporary notes file."
 },
 
-{ // Slide 51
+{ // Slide 55
   title: "Fresh-session test",
   kicker: "DAY 2 · ASSIGNMENT 5 · REVIEW",
   subtitle: "Start a fresh Claude Code session.",
@@ -964,7 +1050,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "No laptop swap. Everyone types /clear in their own session — the files stay, the conversation is gone. The neighbour on their right then asks the five questions and decides PASS, REVISE or OPEN. If Claude can answer from CLAUDE.md alone, the project instructions work — the single most convincing proof of the morning."
 },
 
-{ // Slide 52
+{ // Slide 56
   title: "Short break",
   kicker: "DAY 2 · BREAK",
   subtitle: "Return in 15 minutes.",
@@ -980,7 +1066,7 @@ Explain what the application does, how it is structured and how I can verify you
 /* DAY 2 — Part 2: From repeated prompt to skill                          */
 /* ---------------------------------------------------------------------- */
 
-{ // Slide 53
+{ // Slide 57
   title: "A repeated method",
   kicker: "DAY 2 · PART 2 · PROMPT TO SKILL",
   subtitle: "The same six instructions — every single time.",
@@ -993,7 +1079,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "This bridges directly from yesterday's concept-card assignment into the skill-building work of this whole part — say that connection out loud."
 },
 
-{ // Slide 54
+{ // Slide 58
   title: "Assignment 6: Create a second card",
   kicker: "DAY 2 · ASSIGNMENT 6 · 25 MIN",
   subtitle: "Create a second concept card with an ordinary prompt. Do not use a skill yet.",
@@ -1015,7 +1101,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "Important: this must stay a normal, ad-hoc prompt — not a skill. The inconsistency this creates between people's results is exactly what motivates building a skill next. Don't let anyone jump ahead to Assignment 7 yet."
 },
 
-{ // Slide 55
+{ // Slide 59
   title: "Compare the two runs",
   kicker: "DAY 2 · ASSIGNMENT 6 · REVIEW",
   subtitle: "Which parts should become a shared method?",
@@ -1026,10 +1112,10 @@ Explain what the application does, how it is structured and how I can verify you
   cards: [
     { title: "Compare", body: "Which instructions did you repeat?\nDid the cards follow the same structure?\nDid Claude perform the same checks?\nWhich parts should become a shared method?\nWhat must still require human judgement?" }
   ],
-  notes: "This discussion creates the need for a reusable method — collect two or three genuinely different outcomes from the room out loud before moving to slide 56, the contrast is the point."
+  notes: "This discussion creates the need for a reusable method — collect two or three genuinely different outcomes from the room out loud before moving to slide 60, the contrast is the point."
 },
 
-{ // Slide 56
+{ // Slide 60
   title: "Claude Code skills",
   kicker: "DAY 2 · PART 2 · PROMPT TO SKILL",
   subtitle: "Teach Claude a method once — reuse it every time.",
@@ -1043,7 +1129,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "The tagline is a real guardrail worth repeating — a skill is a packaged method Claude Code applies when relevant, not a background process or its own agent."
 },
 
-{ // Slide 57
+{ // Slide 61
   title: "Prompt, CLAUDE.md and skill",
   kicker: "DAY 2 · PART 2 · PROMPT TO SKILL",
   subtitle: "Three different mechanisms, three different jobs.",
@@ -1057,7 +1143,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "This table is the exact distinction Assignment 7 asks participants to build — point back to it once the room starts working."
 },
 
-{ // Slide 58
+{ // Slide 62
   title: "Create Concept Card skill",
   kicker: "DAY 2 · PART 2 · PROMPT TO SKILL",
   subtitle: "You build this skill from nothing — this is where it lives.",
@@ -1069,7 +1155,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "Preparing an incomplete skill is safer and clearer than asking every participant to invent the structure from nothing. Point out where the file lives before Assignment 7 starts so nobody spends their first five minutes just finding it."
 },
 
-{ // Slide 59
+{ // Slide 63
   title: "Assignment 7: Teach Claude the method",
   kicker: "DAY 2 · ASSIGNMENT 7 · 45 MIN",
   subtitle: "Build the Create Concept Card skill.",
@@ -1093,7 +1179,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "This is the room's first time authoring their own skill — expect it to take longer than the slide's implied pace. Your job here is coaching, not demoing a pre-built answer; circulate and check each skill still stops for human approval rather than finishing unattended."
 },
 
-{ // Slide 60
+{ // Slide 64
   title: "Lunch",
   kicker: "DAY 2 · LUNCH",
   subtitle: "Enjoy your lunch.",
@@ -1109,7 +1195,7 @@ Explain what the application does, how it is structured and how I can verify you
 /* DAY 2 — Part 3: Bounded agentic work                                    */
 /* ---------------------------------------------------------------------- */
 
-{ // Slide 61
+{ // Slide 65
   title: "Bounded autonomy",
   kicker: "DAY 2 · PART 3 · BOUNDED AGENTIC WORK",
   subtitle: "One goal, many steps — inside a fence.",
@@ -1122,7 +1208,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "This is the concept Assignment 8 puts into practice immediately — a single instruction that processes many terms, still bounded by explicit stop conditions."
 },
 
-{ // Slide 62
+{ // Slide 66
   title: "Assignment 8: Build the card library",
   kicker: "DAY 2 · ASSIGNMENT 8 · 45 MIN",
   subtitle: "Use one instruction to process every approved glossary term.",
@@ -1145,7 +1231,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "It's explicitly low infra-risk to prepare since participants build and run it themselves — your job here is circulating and checking each run actually stops to report rather than committing unattended. Watch especially for terms it should have marked OPEN instead of guessing."
 },
 
-{ // Slide 63
+{ // Slide 67
   title: "Agentic behaviour in the assignment",
   kicker: "DAY 2 · PART 3 · BOUNDED AGENTIC WORK",
   subtitle: "The agent loop inside Assignment 8.",
@@ -1162,7 +1248,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "This is the agent loop from slide 30, now made concrete in the exact assignment the room is running. Use it as a live diagnostic while circulating: ask a stuck participant which of these five steps their session is stuck on."
 },
 
-{ // Slide 64
+{ // Slide 68
   title: "Batch review",
   kicker: "DAY 2 · ASSIGNMENT 8 · REVIEW",
   subtitle: "Review the batch before accepting it.",
@@ -1176,7 +1262,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "This is a per-card decision, not one decision for the whole batch — make that explicit before the room starts reviewing."
 },
 
-{ // Slide 65
+{ // Slide 69
   title: "Short break",
   kicker: "DAY 2 · BREAK",
   subtitle: "Return in 15 minutes.",
@@ -1192,7 +1278,7 @@ Explain what the application does, how it is structured and how I can verify you
 /* DAY 2 — Part 4: Learning game                                          */
 /* ---------------------------------------------------------------------- */
 
-{ // Slide 66
+{ // Slide 70
   title: "Explain It Back",
   kicker: "DAY 2 · PART 4 · LEARNING GAME",
   subtitle: "The Library now contains enough structured knowledge to support a learning game.",
@@ -1208,7 +1294,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "This is the payoff of Parts 2–3 — every card the room built now feeds this game. Say that connection explicitly before moving to the starter state."
 },
 
-{ // Slide 67
+{ // Slide 71
   title: "Game starter state",
   kicker: "DAY 2 · PART 4 · LEARNING GAME",
   subtitle: "The game works — only the feedback is missing.",
@@ -1221,7 +1307,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "Point out explicitly what's missing: the game doesn't yet do anything when Submit is clicked. That gap is exactly what Assignment 9 fills."
 },
 
-{ // Slide 69 (shown before 64: explains checklist.md + categories first)
+{ // Slide 73 (shown before 64: explains checklist.md + categories first)
   title: "checklist.md and the term-checker skill",
   kicker: "DAY 2 · PART 4 · LEARNING GAME",
   subtitle: "What a good explanation must contain — and how Claude Code checks it.",
@@ -1235,7 +1321,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "checklist.md lives at the repo root, separate from the skill file — it's participant- and class-authored, and people may edit or extend it. This is deliberately the same pattern as create-concept-card (Skill #1): the reusable method stays generic, the specific criteria live in their own file. Say explicitly that this is required behaviour for Assignment 9, not an optional extra — there is no separate 'AI Concept Coach' assignment; this is it."
 },
 
-{ // Slide 68 (now after 65)
+{ // Slide 72 (now after 65)
   title: "Assignment 9: Learning game",
   kicker: "DAY 2 · ASSIGNMENT 9 · 60 MIN",
   subtitle: "The game already works. Build checklist.md and the term-checker skill, then use them.",
@@ -1256,7 +1342,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "Longest single assignment of the two days — give it the full 60 minutes and don't rush the wrap-up. Do NOT let anyone rebuild the game itself — it already works; the real work is Parts A and B, then actually saying Part C's exact phrase at least once. The key thing to protect: no API keys, no external model calls, no database — feedback comes entirely from the participant's own already-authenticated Claude Code session reading and writing local files. Watch for people who build checklist.md and the skill but skip Part C because time is short."
 },
 
-{ // Slide 70
+{ // Slide 74
   title: "Game review",
   kicker: "DAY 2 · ASSIGNMENT 9 · REVIEW",
   subtitle: "Test with:",
@@ -1274,7 +1360,7 @@ Explain what the application does, how it is structured and how I can verify you
 /* DAY 2 — Part 5: MCP and workplace systems                              */
 /* ---------------------------------------------------------------------- */
 
-{ // Slide 71
+{ // Slide 75
   title: "Model Context Protocol",
   kicker: "DAY 2 · PART 5 · MCP & WORKPLACE SYSTEMS",
   subtitle: "One standard plug for approved connections.",
@@ -1288,7 +1374,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "Say the tagline explicitly and connect it back to the working agreement (slide 32) — being connected to something is not the same as being allowed to change it."
 },
 
-{ // Slide 72
+{ // Slide 76
   title: "Repository access and MCP",
   kicker: "DAY 2 · PART 5 · MCP & WORKPLACE SYSTEMS",
   subtitle: "Files are local. MCP is for everything outside.",
@@ -1306,7 +1392,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "Keep this distinction crisp: everything the room has done since slide 33 used only built-in file tools. MCP is what's new starting with this part."
 },
 
-{ // Slide 73
+{ // Slide 77
   title: "Approved connections",
   kicker: "DAY 2 · PART 5 · MCP & WORKPLACE SYSTEMS",
   subtitle: "Connect the approved Worldline services.",
@@ -1320,7 +1406,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "Worldline's MCP access for Jira, GitLab and Confluence is confirmed — this is the real, primary path for Assignment 10, not a stretch goal. Insert the exact Worldline-approved setup instructions here after technical preflight; do not place credentials on this slide. Still keep the local-fixture fallback ready as a safety net in case one participant's connection fails on the day, but plan and pace the room around the real connections working."
 },
 
-{ // Slide 74
+{ // Slide 78
   title: "Assignment 10: Connected context",
   kicker: "DAY 2 · ASSIGNMENT 10 · 30 MIN",
   subtitle: "Retrieve one authorised item in read-only mode.",
@@ -1342,7 +1428,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "Highest infra-risk moment of the two days — verify the MCP connection end-to-end yourself before class. Fallback: if a participant's connection fails, have them use the local fixture files instead and explain those — the teaching point (retrieve, explain, do not modify) survives without a live round-trip. Keep a captured example ready to show the room if several people need the fallback at once."
 },
 
-{ // Slide 75
+{ // Slide 79
   title: "Transfer to workplace information",
   kicker: "DAY 2 · ASSIGNMENT 10 · REVIEW",
   subtitle: "For the item you retrieved, decide:",
@@ -1355,7 +1441,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "This is where the Aether Library's whole method (source → structured output → validation → human approval) gets pointed at real Worldline work — give the room a few minutes to actually answer these five questions for their own retrieved item, not just read them."
 },
 
-{ // Slide 76
+{ // Slide 80
   title: "The same pattern across systems",
   kicker: "DAY 2 · PART 5 · MCP & WORKPLACE SYSTEMS",
   subtitle: "Two systems, one method.",
@@ -1378,7 +1464,7 @@ Explain what the application does, how it is structured and how I can verify you
 /* DAY 2 — Closing                                                          */
 /* ---------------------------------------------------------------------- */
 
-{ // Slide 77
+{ // Slide 81
   title: "What you built",
   kicker: "DAY 2 · CLOSING",
   subtitle: "Together, we created:",
@@ -1398,7 +1484,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "The items appear on their own, one by one — no clicking needed. Let them come in without talking over them, and let the room recognise their own two days of work in the list."
 },
 
-{ // Slide 78
+{ // Slide 82
   title: "What you can now do",
   kicker: "DAY 2 · CLOSING",
   subtitle: "How Claude Code works, and why the boundaries matter.",
@@ -1414,10 +1500,10 @@ Explain what the application does, how it is structured and how I can verify you
     { label: "Explain what MCP provides." },
     { label: "Preserve human review and handoff." }
   ],
-  notes: "This is the understanding checklist, not the artefact checklist (that was slide 77) — the distinction is worth naming out loud."
+  notes: "This is the understanding checklist, not the artefact checklist (that was slide 81) — the distinction is worth naming out loud."
 },
 
-{ // Slide 79
+{ // Slide 83
   title: "The five support days",
   kicker: "PREVIEW · SUPPORT DAYS",
   subtitle: "The support programme builds on this foundation.",
@@ -1434,7 +1520,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "Preview only, matching slide 44's pattern — this is a different facilitator's territory starting next time, don't get pulled into detail questions here."
 },
 
-{ // Slide 80
+{ // Slide 84
   title: "Complete progression",
   kicker: "DAY 2 · CLOSING",
   subtitle: "From your first Claude Code conversation to applying the method during the support days.",
@@ -1453,7 +1539,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "The first six steps are exactly what the room just did across the two teaching days — say that explicitly before pointing at the last one, which belongs to the support days."
 },
 
-{ // Slide 81
+{ // Slide 85
   title: "Human responsibility",
   kicker: "DAY 2 · CLOSING",
   subtitle: "AI can inspect, propose, create, transform and check.",
@@ -1479,7 +1565,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "This is the single sentence to leave the room with above all others — slow down here, don't rush it because it's near the end of a long two days."
 },
 
-{ // Slide 82
+{ // Slide 86
   title: "Final reflection",
   kicker: "DAY 2 · CLOSING",
   subtitle: "Complete these statements.",
