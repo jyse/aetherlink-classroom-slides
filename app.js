@@ -778,7 +778,10 @@ function render() {
     const side = sideBySide(s, instructions);
     body.classList.toggle('with-side', side);
     if (side) body.append(instructions); else stage.append(instructions);
-    if (side && s.visual?.compact) main.querySelectorAll(':scope > .timer, :scope > .tagline').forEach(el => instructions.append(el)); // 48: timer + bonus under the steps
+    if (side && s.visual?.compact) main.querySelectorAll(':scope > .timer').forEach(el => instructions.append(el)); // 48: timer under the steps
+    if (s.visual?.cardImages) { const gal = node('div', 'thumb-gallery'); const row = node('div', 'thumb-row'); // 48: example avatars
+      s.visual.cardImages.forEach((src, i) => { const f = node('figure', 'thumb'); const img = document.createElement('img'); img.src = src; img.alt = ''; f.style.setProperty('--i', i); f.append(img, node('figcaption', null, s.cards[i]?.title || '')); row.append(f); });
+      gal.append(row); const t = instructions.querySelector(':scope > .timer'); if (side && t) t.before(gal); else (side ? instructions : main).append(gal); }
   }
   $('count').textContent = String(current + 1).padStart(2, '0') + ' / ' + slides.length;
   renderProgress();

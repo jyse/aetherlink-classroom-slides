@@ -907,11 +907,11 @@ Explain what the application does, how it is structured and how I can verify you
   layout: "exercise",
   timer: 5,
   stepsHeading: "Your prompt must ask LibreChat to:",
-  visual: { compact: true },
+  visual: { compact: true, cardImages: ['assets/avatars/avatar-cartoon.webp', 'assets/avatars/avatar-superhero.webp', 'assets/avatars/avatar-jipjanneke.webp'] },
   cards: [
     { title: "Cartoon", body: "Create a square cartoon avatar of me as an action figure: [describe yourself — hair, glasses, outfit], holding a laptop and a coffee. Bright colours, no text." },
-    { title: "Superhero", body: "Create a square comic-book superhero portrait of me: [describe yourself]. Cape, city skyline at night. No text, no logos." },
-    { title: "Jip and Janneke", body: "Create a square avatar of me in the style of the Dutch Jip and Janneke books: a black silhouette on a plain coloured background. [describe yourself]. No text." }
+    { title: "Superhero", body: "Create a square comic-book superhero portrait of me: [describe yourself]. Cape, city skyline at night, no text." },
+    { title: "Jip and Janneke", body: "Create a square avatar of me as a Dutch Jip and Janneke silhouette: black on a plain coloured background. [describe yourself]. No text." }
   ],
   steps: [
     "Make an image of you — describe yourself, no real photo needed.",
@@ -920,8 +920,8 @@ Explain what the application does, how it is structured and how I can verify you
     "Download the one you like best — you need it in Claude Code next."
   ],
   expected: "A square avatar you'd happily put on your profile.",
-  tagline: "Bonus: set it as your LibreChat avatar too (Settings → Account).",
-  notes: "Five minutes, keep the energy high — this is meant to be fun. The three examples are starting points; encourage people to change them. Jip and Janneke is a well-known Dutch children's-book style (Fiep Westendorp): black silhouettes — explain it in one sentence for non-Dutch participants. Everyone describes themselves instead of uploading a real photo. Make sure everyone has actually downloaded the file before moving on."
+  tagline: "Bonus: make it your LibreChat avatar too.",
+  notes: "Five minutes, keep the energy high — this is meant to be fun. The three examples are starting points; encourage people to change them. Jip and Janneke is a well-known Dutch children's-book style (Fiep Westendorp): black silhouettes — explain it in one sentence for non-Dutch participants. Everyone describes themselves instead of uploading a real photo. Make sure everyone has actually downloaded the file before moving on. Bonus (tagline): LibreChat avatar via Settings → Account. The three thumbnails are AetherBOT made with these same prompts (nano-banana-pro, chest logo put back from the original asset) — proof the prompts work."
 },
 
 { // Slide 49

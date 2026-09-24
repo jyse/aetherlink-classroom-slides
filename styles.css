@@ -1065,3 +1065,14 @@ body[data-opener="team"] .card-head{justify-content:center}
 .slide-main.compact-cards .card p{font-size:clamp(.92rem,1.1vw,1.05rem);line-height:1.4;margin-top:.35rem}
 .slide-main.compact-cards .cards{gap:clamp(.5rem,1.2vh,.9rem)}
 .slide-main.with-showcase>.tagline{margin-top:.2rem}
+
+/* example avatar gallery beside the steps (slide 48) */
+.thumb-gallery{margin:clamp(.4rem,1.2vh,.9rem) 0}
+.thumb-row{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.5rem,1vw,1rem);margin-top:.4rem}
+.thumb{margin:0;text-align:center;opacity:0;animation:pop-in .6s cubic-bezier(.2,1.3,.4,1) both;animation-delay:calc(.3s + var(--i)*.18s)}
+.thumb img{display:block;margin:0 auto;height:clamp(60px,8vh,140px);width:auto;aspect-ratio:1;object-fit:cover;border-radius:12px;border:1px solid color-mix(in srgb,var(--cyan) 45%,transparent);box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.thumb figcaption{margin-top:.3rem;font-size:.8rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted,#aab)}
+.exercise-instructions>.timer{margin-top:.4rem;padding-block:clamp(.25rem,.8vh,.9rem)}
+.exercise-instructions>.timer .timer-face{font-size:clamp(2rem,3.4vw,3.2rem)}
+.slide-main.compact-cards>.tagline{margin-top:.2rem}
+.slide-main.compact-cards .cards{gap:clamp(.4rem,1vh,.9rem)}
