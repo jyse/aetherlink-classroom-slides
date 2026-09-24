@@ -1482,26 +1482,43 @@ Explain what the application does, how it is structured and how I can verify you
 },
 
 { // Slide 83
-  title: "Assignment 13: From ticket to feature",
-  kicker: "DAY 2 · ASSIGNMENT 13",
-  subtitle: "Use the item you retrieved to plan a real improvement — then hand it to your partner.",
-  type: "practice",
-  layout: "exercise",
-  cards: [
-    { title: "Deliver", body: "a plain-language explanation\na plan for one Library feature\na handoff note for your partner" }
+  title: "From skill to workflow",
+  kicker: "DAY 2 · PART 5 · MCP & WORKPLACE SYSTEMS",
+  subtitle: "A skill is one reusable method. A workflow chains several — with tools and human checkpoints.",
+  type: "concept",
+  layout: "steps",
+  items: [
+    { label: "Trigger", caption: "One sentence starts it: \"start my day\"." },
+    { label: "Fetch", caption: "Skill 1 reads your Jira tickets (read-only, via MCP)." },
+    { label: "Sort", caption: "Skill 2 groups them: new, blocked, due soon, waiting for you." },
+    { label: "Brief", caption: "Skill 3 drafts the morning brief and your top 3 priorities." },
+    { label: "You decide", caption: "Human checkpoint: nothing changes without you." }
   ],
-  steps: [
-    "Take the item you retrieved in Assignment 12 (still read-only).",
-    "Ask Claude Code to explain what it asks for and what remains unclear (OPEN).",
-    "Ask for a plan: which Library feature or change would help, which files, how to test it. No edits yet.",
-    "Give your partner the plan. In a fresh session (/clear) they review it and say what is missing.",
-    "Write a short handoff note so your partner could carry on without you."
-  ],
-  expected: "A reviewed plan (no external system changed) and a handoff note someone else could pick up.",
-  notes: "This is the whole method on real work: explore (the ticket), plan, human review (the partner), handoff. Keep everything read-only on the external system. Fast pairs can build the smallest part of the plan locally — but only in their own Library copy. If someone's Jira connection failed in Assignment 12, they use the fixture ticket and everything else stays the same. The handoff note is the sixth step of the working method (slide 29) — this is the only place in the day where it is actually practised."
+  detail: "Click through each step — every step can be its own skill.",
+  tagline: "A skill packages one method. A workflow orders skills, tools and checkpoints.",
+  notes: "Three minutes, no more. The room has built two single-method skills (create-concept-card, term-checker). A workflow combines several of them, plus a tool connection (MCP), in a fixed order with a human checkpoint. Each step still keeps its own boundaries and stop conditions, and the agent loop from the working method happens inside each step. In practice the workflow can live in one top-level skill (for example day-start) that lists the steps in order, or in a short instruction file that names the skills. Say plainly: this is the same pattern as the Aether Library, pointed at real work — source, structured output, validation, human approval. The assignment follows immediately."
 },
 
 { // Slide 84
+  title: "Assignment 13: Day-start workflow",
+  kicker: "DAY 2 · ASSIGNMENT 13",
+  subtitle: "Connect Jira, list your tickets, and turn it into a workflow that starts your day.",
+  type: "practice",
+  layout: "exercise",
+  cards: [
+    { title: "Say it in your own words", body: "the examples in the steps show the idea\nuse your own wording\nnever change a ticket" }
+  ],
+  steps: [
+    "Look — connect Jira (/mcp), then say: \"List my open tickets. Read-only.\"",
+    "Design — say: \"Plan a day-start workflow from 2–3 skills: fetch, sort, brief. Show me the plan first.\"",
+    "Build and test — say: \"Build those skills and a day-start that runs them in order. Never change a ticket.\" Then /clear and say: \"Start my day.\"",
+    "Share — a partner copies your skills and runs the workflow on their own tickets."
+  ],
+  expected: "A repeatable day-start workflow: connected, read-only, several skills in a fixed order with a human checkpoint, tested in a fresh session.",
+  notes: "The payoff of the day: skills (Assignments 9 and 11) plus MCP (Assignment 12) become a workflow. A good split is fetch, sort (new, blocked, due soon, waiting for you) and brief (top 3 priorities, anything unclear marked OPEN). The workflow can be one top-level skill that lists the steps, or an instruction file that names them. Everything stays read-only on Jira. Real tickets can contain sensitive details — tell people not to share their screen while it runs. If a connection fails, debugging it with Claude Code is part of the lesson: paste the exact error and check /mcp. Partner step: a skill is just files, so the partner copies the skill folders into their own project and runs it on their own tickets."
+},
+
+{ // Slide 85
   title: "The same pattern across systems",
   kicker: "DAY 2 · PART 5 · MCP & WORKPLACE SYSTEMS",
   subtitle: "Two systems, one method.",
@@ -1524,7 +1541,7 @@ Explain what the application does, how it is structured and how I can verify you
 /* DAY 2 — Closing                                                          */
 /* ---------------------------------------------------------------------- */
 
-{ // Slide 85
+{ // Slide 86
   title: "What you built",
   kicker: "DAY 2 · CLOSING",
   subtitle: "Together, we created:",
@@ -1539,12 +1556,12 @@ Explain what the application does, how it is structured and how I can verify you
     { label: "Reusable create-concept-card and term-checker skills" },
     { label: "Bounded multi-card agentic run" },
     { label: "Explain It Back learning game, with real AI feedback" },
-    { label: "Approved external connection" }
+    { label: "Approved Jira connection and a day-start workflow" }
   ],
   notes: "The items appear on their own, one by one — no clicking needed. Let them come in without talking over them, and let the room recognise their own two days of work in the list."
 },
 
-{ // Slide 86
+{ // Slide 87
   title: "What you can now do",
   kicker: "DAY 2 · CLOSING",
   subtitle: "How Claude Code works, and why the boundaries matter.",
@@ -1555,15 +1572,15 @@ Explain what the application does, how it is structured and how I can verify you
     { label: "Use Claude Code inside a repository." },
     { label: "Provide context and boundaries." },
     { label: "Review plans, changes and evidence." },
-    { label: "Distinguish prompts, project instructions and skills." },
+    { label: "Distinguish prompts, project instructions, skills and workflows." },
     { label: "Recognise bounded agentic behaviour." },
     { label: "Explain what MCP provides." },
     { label: "Preserve human review and handoff." }
   ],
-  notes: "This is the understanding checklist, not the artefact checklist (that was slide 85) — the distinction is worth naming out loud."
+  notes: "This is the understanding checklist, not the artefact checklist (that was slide 86) — the distinction is worth naming out loud."
 },
 
-{ // Slide 87
+{ // Slide 88
   title: "The five support days",
   kicker: "PREVIEW · SUPPORT DAYS",
   subtitle: "The support programme builds on this foundation.",
@@ -1580,7 +1597,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "Preview only, matching slide 44's pattern — this is a different facilitator's territory starting next time, don't get pulled into detail questions here."
 },
 
-{ // Slide 88
+{ // Slide 89
   title: "Complete progression",
   kicker: "DAY 2 · CLOSING",
   subtitle: "From your first Claude Code conversation to applying the method during the support days.",
@@ -1593,13 +1610,13 @@ Explain what the application does, how it is structured and how I can verify you
     { label: "A skill", caption: "Turn a repeated method into a skill." },
     { label: "Bounded work", caption: "Let Claude perform a bounded sequence of work." },
     { label: "Interactive feature", caption: "Build an interactive AI-supported feature." },
-    { label: "Connect", caption: "Connect approved workplace information." },
+    { label: "Connect", caption: "Connect workplace information and chain skills into a workflow." },
     { label: "Apply it", caption: "Apply the method during the support days." }
   ],
   notes: "The first six steps are exactly what the room just did across the two teaching days — say that explicitly before pointing at the last one, which belongs to the support days."
 },
 
-{ // Slide 89
+{ // Slide 90
   title: "Human responsibility",
   kicker: "DAY 2 · CLOSING",
   subtitle: "AI can inspect, propose, create, transform and check.",
@@ -1625,7 +1642,7 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "This is the single sentence to leave the room with above all others — slow down here, don't rush it because it's near the end of a long two days."
 },
 
-{ // Slide 90
+{ // Slide 91
   title: "Final reflection",
   kicker: "DAY 2 · CLOSING",
   subtitle: "Complete these statements.",
