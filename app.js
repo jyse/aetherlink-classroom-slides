@@ -83,20 +83,26 @@ function renderRecap(stage, s) {
   ctrl.append(btn); stage.append(list, ctrl);
 }
 function renderTimer(stage, s) {
-  const m = s.timer || Number((s.kicker || '').match(/(\d+)\s*MIN/i)?.[1]);
-  if (!m) return;
-  let left = m * 60;
-  const box = node('div', 'timer'); const face = node('div', 'timer-face', String(m).padStart(2, '0') + ':00');
+  let total = 0, left = 0;
+  const box = node('div', 'timer'); const face = node('div', 'timer-face', '00:00');
   const bar = node('div', 'timer-bar'); const fill = node('div', 'timer-fill'); bar.append(fill);
-  const ctrl = node('div', 'widget-controls'); const start = node('button', null, 'Start ' + m + ' min'); const reset = node('button', 'secondary', 'Reset');
-  function paint() { face.textContent = String(Math.floor(left / 60)).padStart(2, '0') + ':' + String(left % 60).padStart(2, '0'); fill.style.width = (100 * (1 - left / (m * 60))) + '%'; box.classList.toggle('timer-late', left <= 60); }
-  start.addEventListener('click', () => {
-    if (timerHandle) { stopTimer(); start.textContent = 'Resume'; announce('Timer paused'); return; }
-    start.textContent = 'Pause'; announce('Timer started');
-    timerHandle = setInterval(() => { if (left > 0) { left--; paint(); } else { stopTimer(); face.textContent = 'TIME'; notify('Time is up — this assignment ends now'); } }, 1000);
-  });
-  reset.addEventListener('click', () => { stopTimer(); left = m * 60; paint(); start.textContent = 'Start ' + m + ' min'; announce('Timer reset'); });
-  ctrl.append(start, reset); box.append(face, bar, ctrl); stage.append(box);
+  const ctrl = node('div', 'widget-controls');
+  const field = node('label', 'timer-field'); const input = node('input'); input.type = 'number'; input.min = '0'; input.max = '180'; input.step = '1'; input.placeholder = '0'; input.setAttribute('aria-label', 'Minutes for this assignment');
+  field.append(input, node('span', null, 'min'));
+  const start = node('button', null, 'Start'); const reset = node('button', 'secondary', 'Reset');
+  function paint() { face.textContent = String(Math.floor(left / 60)).padStart(2, '0') + ':' + String(left % 60).padStart(2, '0'); fill.style.width = total ? (100 * (1 - left / total)) + '%' : '0%'; box.classList.toggle('timer-late', total > 0 && left <= 60); }
+  function setMinutes() { const m = Math.max(0, Math.min(180, Math.floor(Number(input.value) || 0))); total = m * 60; left = total; paint(); }
+  function begin() {
+    if (timerHandle) { stopTimer(); input.disabled = false; start.textContent = 'Resume'; announce('Timer paused'); return; }
+    if (left <= 0) { notify('Set the minutes first, then press Start.'); input.focus(); return; }
+    input.disabled = true; start.textContent = 'Pause'; announce('Timer started');
+    timerHandle = setInterval(() => { if (left > 0) { left--; paint(); } else { stopTimer(); input.disabled = false; start.textContent = 'Start'; face.textContent = 'TIME'; notify('Time is up — this assignment ends now'); } }, 1000);
+  }
+  input.addEventListener('input', () => { if (!timerHandle) { setMinutes(); start.textContent = 'Start'; } });
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); begin(); } });
+  start.addEventListener('click', begin);
+  reset.addEventListener('click', () => { stopTimer(); input.disabled = false; setMinutes(); start.textContent = 'Start'; announce('Timer reset'); });
+  ctrl.append(field, start, reset); box.append(face, bar, ctrl); stage.append(box);
 }
 function renderLayout(stage, s) {
   const L = s.layout;
@@ -447,7 +453,7 @@ function renderExtras(stage, main, s, v) {
   if (v.gameMock) {                                              // 63: the game screen — only feedback is missing
     main.classList.add('side-grid'); const g = node('div', 'gmock'); const bar = node('div', 'md-bar'); bar.append(node('i'), node('i'), node('i'), node('span', 'md-name', 'Game · Explain It Back')); g.append(bar);
     const b = node('div', 'gm-body'); b.append(node('span', 'gm-term', 'Context window'), node('span', 'gm-field'), node('span', 'gm-btn', 'Submit'));
-    const fb = node('div', 'gm-feedback'); fb.append(node('strong', null, 'Feedback'), node('span', null, 'you build this — Assignment 9')); b.append(fb); g.append(b); grid.after(g);
+    const fb = node('div', 'gm-feedback'); fb.append(node('strong', null, 'Feedback'), node('span', null, 'you build this — Assignment 12')); b.append(fb); g.append(b); grid.after(g);
   }
   if (v.phrase) {                                                // 64: the exact phrase to say
     const bub = node('div', 'phrase'); bub.append(node('span', 'phrase-who', 'You'), node('span', 'phrase-text', '“' + v.phrase + '”')); grid.after(bub);

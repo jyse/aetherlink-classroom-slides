@@ -1,6 +1,6 @@
 # Aetherlink × Worldline — classroom deck
 
-The 82-slide HTML deck for the two teaching days ("Working with AI and
+The 87-slide HTML deck for the two teaching days ("Working with AI and
 Claude Code" and "Reusable and connected AI workflows"), built around the
 **Aether Library** practice project. Slides 1–4 are a short opening
 (welcome, a show-of-hands question, agreements, who we are) added on
@@ -12,7 +12,7 @@ Content source of truth: `CURRICULUM.md` in this repo, including its
 "Resolved alignment decisions" section, which overrides three points in the
 base document and was applied when `slides.js` was authored:
 
-1. **Assignment 9 (Slide 64)** — AI feedback is *required*, not an optional
+1. **Assignment 12 (Slide 64)** — AI feedback is *required*, not an optional
    extension, and needs no API credentials. The participant's own
    Claude Code session checks the submission via a second skill
    (`term-checker`) against a class-authored `checklist.md`, entirely
@@ -50,7 +50,7 @@ what's actually on disk. If you ever do use `python3 -m http.server` or
 `npx serve` instead, do a hard refresh (or open a private window) after
 every edit.
 
-Jump to any slide directly via the URL hash, e.g. `#31` for Assignment 1.
+Jump to any slide directly via the URL hash, e.g. `#35` for Assignment 1.
 
 ## Navigating the deck
 
@@ -67,7 +67,7 @@ Jump to any slide directly via the URL hash, e.g. `#31` for Assignment 1.
 - **→ also drives reveals.** On slides with closed cards, steps, a quiz or row
   pairs, `→` first reveals the next item; only after the last reveal does it
   go to the next slide. There are no "Reveal next / Show all" buttons any more.
-- **B = plan B.** On slide 22 (live demo) and 70 (Assignment 10) `B` toggles a
+- **B = plan B.** On slide 26 (live demo) and 78 (Assignment 13) `B` toggles a
   captured run of the exact prompt (`demo-fallback.js`), for when the live
   version fails.
 
@@ -86,8 +86,8 @@ The presenter window shows, for the slide currently on screen:
   words to read aloud or paste into Claude Code
 - a preview of the **next slide's** title, so you're never caught off guard
 - a running **elapsed** clock since you opened the presenter window
-- a per-slide **assignment countdown** when the current slide carries a
-  `timer` (e.g. Assignment 1's 25 minutes), with its own Start/Pause/Reset
+- an **assignment timer** on every assignment slide: it starts at 00:00,
+  you type the minutes, then Start/Pause/Reset (independent of the main deck's timer)
 
 **How the sync works:** the main window broadcasts its current slide index
 every time it changes (on every `hashchange`), using a same-origin
@@ -114,10 +114,10 @@ with a treatment that's unmistakable from across a room:
 
 - a thick amber border around the whole slide (`#stage`), with a soft glow
 - a persistent **"ASSIGNMENT IN PROGRESS"** banner at the top of the slide
-- a large, high-contrast countdown timer — every one of the ten assignments
-  states an exact duration in `CURRICULUM.md` (25–60 minutes), and each
-  carries its own `timer` value — the timer turns red and pulses in the
-  last minute
+- a large, high-contrast countdown timer with no preset: it starts at
+  00:00, you type the minutes in the box and press Start (Enter works
+  too), so you can set any duration per group — it turns red and pulses in
+  the last minute
 - the same amber accent on the "Do this now" checklist panel
 
 ## Visual system
@@ -265,8 +265,8 @@ doesn't show up, that's the first thing to check.
 - `notes` — facilitator-only speaker notes, shown only in the presenter view.
 - `prompt` — an exact phrase to read aloud or paste into Claude Code, shown
   in the "Example prompt" panel and the presenter view.
-- `timer` — a number of minutes; only set this when the curriculum states an
-  exact duration. All ten assignments state one today, from 25 to 60 minutes.
+- (`timer` is no longer used: assignment timers have no preset, you set the
+  minutes on the slide.)
 
 Reload the browser tab after saving — there's no build step, so your change
 appears immediately.
@@ -278,9 +278,9 @@ appears immediately.
 | `index.html` | Page shell for the audience-facing deck |
 | `styles.css` | Academy-matched colours, typography, layout, assignment styling, AetherBOT visual layer |
 | `app.js` | Rendering (incl. `renderVisual` + `renderExtras` for the visual layer), hash navigation, keyboard nav (→ reveals, B plan B), timers, the "Your prompt must ask Claude Code to" panel, the footer progress bar, and presenter-sync broadcasting |
-| `slides.js` | All 82 slides as one JSON-shaped data file — the only file most edits touch |
+| `slides.js` | All 87 slides as one JSON-shaped data file — the only file most edits touch |
 | `assets/aetherbot/` | AetherBOT cut-outs (wave, think, point, head, peek) + `faces/` and `stretch/` pose sets |
-| `demo-fallback.js` | Plan B texts: captured demo run (slide 22) and Assignment 10 fixture run (slide 70) |
+| `demo-fallback.js` | Plan B texts: captured demo run (slide 26) and Assignment 13 fixture run (slide 78) |
 | `assets/aetherlink-mark.png` | AetherLink network mark in the header |
 | `assets/fonts/` | Self-hosted Nunito (latin + latin-ext, variable 600–900) |
 | `presenter.html` / `presenter.js` | The separate presenter window (notes, prompt, next slide, timers), kept live via `BroadcastChannel` |
@@ -293,8 +293,8 @@ nav, keyboard nav, footer progress bar, per-slide dark variant, the seven
 layout renderers, the "Do this now" exercise panel) but simplifies several
 things that don't apply here:
 
-- **One flat 82-slide array**, not a multi-squad/multi-day picker — this
-  deck is always exactly these 82 slides in this order, so the "Choose
+- **One flat 87-slide array**, not a multi-squad/multi-day picker — this
+  deck is always exactly these 87 slides in this order, so the "Choose
   session" picker, `?day=`/`?squad=` query params, and the framework-mode
   fallback slides were removed rather than adapted.
 - **No mascot** — removed per the brief; that's specific to the separate
@@ -305,7 +305,7 @@ things that don't apply here:
   deck.
 - **Slide type is set explicitly** (a `type` field on every slide) rather
   than guessed from kicker/title text via regex, as the source engine did.
-  With 82 hand-authored slides, explicit typing is more reliable than
+  With 87 hand-authored slides, explicit typing is more reliable than
   pattern-matching against titles that were never designed for it.
 - **`compare` supports a third column** (Slide 27's three-tier SDLC →
   working method → agent loop framing) with its own amber border/heading
@@ -331,10 +331,10 @@ treatment and timer, a pause slide, and the last slide) with no console
 errors. It has **not** been read start to finish for tone/accuracy — do that
 yourself before teaching:
 
-1. **Click through all 82 slides in order**, start to finish, both days.
+1. **Click through all 87 slides in order**, start to finish, both days.
    Confirm nothing looks broken and the content reads correctly end to end —
    this was sampled, not read in full, for tone and factual accuracy.
-2. **Read slides 62–66 (the Explain It Back / Assignment 9 area) closely** —
+2. **Read slides 70–74 (the Explain It Back / Assignment 12 area) closely** —
    this is the section most changed from the base `CURRICULUM.md` document
    (AI feedback folded in as required behaviour, no separate optional
    extension) and is the highest-value place to check the wording matches

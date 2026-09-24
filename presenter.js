@@ -30,31 +30,35 @@ renderElapsed();
 
 function stopAssignmentTimer() { if (assignmentHandle) { clearInterval(assignmentHandle); assignmentHandle = null; } assignmentRunning = false; }
 
-function setupAssignmentTimer(minutes) {
+function setupAssignmentTimer(isExercise) {
   stopAssignmentTimer();
   const box = $('p-timer');
-  if (!minutes) { box.hidden = true; return; }
+  if (!isExercise) { box.hidden = true; return; }
   box.hidden = false;
-  assignmentSeconds = minutes * 60;
+  $('p-timer-min').value = ''; $('p-timer-min').disabled = false;
+  assignmentSeconds = 0;
   paintAssignmentTimer();
   $('p-timer-start').textContent = 'Start';
 }
 function paintAssignmentTimer() {
   const box = $('p-timer');
   $('p-timer-face').textContent = fmt(Math.max(assignmentSeconds, 0));
-  box.classList.toggle('late', assignmentSeconds <= 60);
+  box.classList.toggle('late', assignmentSeconds > 0 && assignmentSeconds <= 60);
 }
+function presenterMinutesToSeconds() { return Math.max(0, Math.min(180, Math.floor(Number($('p-timer-min').value) || 0))) * 60; }
+$('p-timer-min').addEventListener('input', () => { if (!assignmentRunning) { assignmentSeconds = presenterMinutesToSeconds(); paintAssignmentTimer(); $('p-timer-start').textContent = 'Start'; } });
 $('p-timer-start').addEventListener('click', () => {
-  if (assignmentRunning) { stopAssignmentTimer(); $('p-timer-start').textContent = 'Resume'; return; }
-  assignmentRunning = true; $('p-timer-start').textContent = 'Pause';
+  if (assignmentRunning) { stopAssignmentTimer(); $('p-timer-min').disabled = false; $('p-timer-start').textContent = 'Resume'; return; }
+  if (assignmentSeconds <= 0) { $('p-timer-min').focus(); return; }
+  assignmentRunning = true; $('p-timer-min').disabled = true; $('p-timer-start').textContent = 'Pause';
   assignmentHandle = setInterval(() => {
     if (assignmentSeconds > 0) { assignmentSeconds--; paintAssignmentTimer(); }
-    else { stopAssignmentTimer(); $('p-timer-face').textContent = 'TIME'; }
+    else { stopAssignmentTimer(); $('p-timer-min').disabled = false; $('p-timer-start').textContent = 'Start'; $('p-timer-face').textContent = 'TIME'; }
   }, 1000);
 });
 $('p-timer-reset').addEventListener('click', () => {
-  const s = slides[current]; stopAssignmentTimer();
-  assignmentSeconds = (s?.timer || 0) * 60; paintAssignmentTimer(); $('p-timer-start').textContent = 'Start';
+  stopAssignmentTimer(); $('p-timer-min').disabled = false;
+  assignmentSeconds = presenterMinutesToSeconds(); paintAssignmentTimer(); $('p-timer-start').textContent = 'Start';
 });
 
 function renderSlide(index) {
@@ -74,7 +78,7 @@ function renderSlide(index) {
   if (s.prompt) { promptBlock.hidden = false; $('p-prompt').textContent = s.prompt; } else { promptBlock.hidden = true; }
   const next = slides[current + 1];
   $('p-next-title').textContent = next ? (current + 2) + '. ' + next.title : 'This is the last slide.';
-  setupAssignmentTimer(s.timer);
+  setupAssignmentTimer(s.layout === 'exercise');
 }
 
 /* ---- sync ---- */

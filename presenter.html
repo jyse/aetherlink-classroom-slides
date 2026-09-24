@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#06111e"><title>Presenter view · Aetherlink classroom</title>
-<link rel="stylesheet" href="styles.css?v=58">
+<link rel="stylesheet" href="styles.css?v=64">
 <style>
   body{padding:1.4rem clamp(1rem,3vw,2.2rem);gap:1.2rem;min-height:100vh}
   .p-top{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:1rem}
@@ -72,12 +72,13 @@
         <div class="label" style="font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">This assignment</div>
         <div class="face" id="p-timer-face">00:00</div>
         <div class="ctrl">
+          <label style="display:inline-flex;align-items:center;gap:.3rem;font-size:.8rem;color:var(--muted)"><input id="p-timer-min" type="number" min="0" max="180" step="1" placeholder="0" aria-label="Minutes for this assignment" style="width:3.6rem;min-height:36px;text-align:center;font-weight:800;border:2px solid var(--amber);border-radius:8px;background:var(--surface);color:var(--text)">min</label>
           <button id="p-timer-start">Start</button>
           <button id="p-timer-reset" class="secondary">Reset</button>
         </div>
       </div>
     </div>
   </div>
-  <script src="slides.js?v=58" defer></script>
-  <script src="presenter.js?v=58" defer></script>
+  <script src="slides.js?v=64" defer></script>
+  <script src="presenter.js?v=64" defer></script>
 </body></html>
