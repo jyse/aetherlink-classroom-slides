@@ -931,7 +931,7 @@ Explain what the application does, how it is structured and how I can verify you
 { // Slide 48
   title: "Assignment 2: Participant profile",
   kicker: "DAY 1 · ASSIGNMENT 2",
-  subtitle: "Add your profile, and the page that shows it.",
+  subtitle: "Add your profile, and the page that shows it. The first prompt is given; the rest is up to you.",
   type: "practice",
   visual: { shot: 'assets/examples/profile-card.png' },
   layout: "exercise",
@@ -940,14 +940,14 @@ Explain what the application does, how it is structured and how I can verify you
   ],
   stepsHeading: "Steps:",
   steps: [
-    "Look at the existing structure first.",
-    "Ask me for details. Invent nothing.",
-    "Show the plan, then build it.",
-    "Check it appears on the Profiles page."
+    "Plan mode on. Ask: “Look at how this app is built and plan a Profiles page with my profile on it.”",
+    "Answer Claude's questions about you. Don't let it invent anything.",
+    "Read the plan. Happy? Leave plan mode and tell Claude to go ahead.",
+    "Open the Profiles page and check your card."
   ],
   expected: "Your profile shows on a working Profiles page.",
-  keyPoints: ["Example card is only a reference","Good run: explore, plan, then change","Claude asks, doesn't invent details","Redirect file-editors to explore and plan","No confidential personal information"],
-  notes: "The Profiles page shows one example profile card as a reference; participants build the real page and their own entry. What a good run looks like: Claude inspects the structure first, asks for anything it doesn't know instead of inventing details, proposes both the profile data and the page that displays it, shows the plan before changing anything, and confirms the profile is visible afterwards. Useful profile fields: name, role, team, experience, learning goal and one workflow you'd like AI to improve. Watch for participants who skip straight to editing a file and redirect them to explore and plan, without being heavy-handed: this is the first time they feel the method in their own hands. Remind them explicitly: no confidential or unnecessary personal information."
+  keyPoints: ["Half literal: first prompt given", "Plan mode on before the first prompt", "No invented or confidential details", "Leaving plan mode = your approval", "Check the card on the Profiles page"],
+  notes: "Second step down the ladder: the first prompt is given word for word, the rest they do in their own words. Plan mode first (Shift+Tab), then the given prompt; Claude should ask for their details instead of inventing them. Reading the plan and then leaving plan mode (Shift+Tab again) and saying go ahead is the approval moment of the working method, make that explicit once for the room. The Profiles page shows one example profile card as a reference; they build the real page and their own entry. Useful profile fields: name, role, team, experience, learning goal and one workflow you'd like AI to improve. Remind them: no confidential or unnecessary personal information. Watch for people who skip plan mode and let Claude edit straight away; redirect them without being heavy-handed.",
 },
 
 { // Slide 49
@@ -979,20 +979,20 @@ Explain what the application does, how it is structured and how I can verify you
   ],
   stepsHeading: "Steps:",
   steps: [
-    "Plan mode: ask Claude for the 20 most important AI terms.",
+    "Plan mode: in your own words, ask Claude for the 20 most important AI terms.",
     "Review the list together and agree on it.",
     "Let Claude add the agreed terms to the glossary.",
     "Auto mode: ask the same in a new session and compare."
   ],
   expected: "20 agreed terms on the Glossary page, and a clear view of what changes with and without a plan.",
-  keyPoints: ["The point is the contrast","Plan mode: Shift+Tab until Plan","Agree on the 20 terms first","Fresh session in auto mode, same question","Collect two or three differences"],
+  keyPoints: ["Own words now: no given prompt", "Plan mode first, agree the 20 terms", "Fresh session in auto mode, same question", "Compare: what did it pick without a plan?", "Collect two or three differences"],
   notes: "The point of this assignment is the contrast. In plan mode (Shift+Tab until the mode shows Plan) Claude proposes its 20 terms before touching anything, so the room can see its choices and agree on them first; that's the human review step in practice. Only then do they let it add the terms (and build the Glossary page, if it doesn't show entries yet; the example terms on that page are the reference). Then, in a fresh session in auto mode, ask the same question and let it run: which terms did it pick without a plan, and would you have agreed with them? Collect two or three differences from the room. Definitions stay plain language, 1–2 sentences, in English, with no claims that can't be backed up."
 },
 
 { // Slide 51
   title: "Assignment 4: Enriched concept card",
   kicker: "DAY 1 · ASSIGNMENT 4",
-  subtitle: "Turn one glossary term into a full concept card.",
+  subtitle: "Turn one glossary term into a full concept card. You write the prompt.",
   type: "practice",
   visual: { shot: 'assets/examples/library-card.png' },
   layout: "exercise",
@@ -1001,14 +1001,14 @@ Explain what the application does, how it is structured and how I can verify you
   ],
   stepsHeading: "Steps:",
   steps: [
-    "Look at the existing data structure first.",
-    "Propose the card and a small plan.",
-    "Open and read every source.",
-    "Approve, then build and check."
+    "Pick one term from your glossary.",
+    "Write your own prompt with the template: goal, context, limits, done when.",
+    "Plan mode first. Open and check every source it suggests.",
+    "Approve, let Claude build it, then check the Library page."
   ],
   expected: "One checked concept card on the Library page.",
-  keyPoints: ["Longest assignment of Day 1","Example cards are only a reference","Sources must be opened and read","Approval before changing files","Coach on verifying the explanation"],
-  notes: "Longest assignment of Day 1 — the room will feel the jump from a basic glossary entry to a fully sourced card. The Library page shows example cards as a reference; participants build the real, data-driven page (if it doesn't exist yet) plus their own card. What a good run looks like: Claude inspects the data structure and app design first, proposes the card content and the smallest plan (including the Library page if needed), opens and reads each source (a search result is not a check), waits for approval before changing files, and runs the relevant checks afterwards. Circulate and coach on verifying the factual explanation specifically; that's the step people skip under time pressure."
+  keyPoints: ["They write their own prompt now", "Use the reliable-prompt template", "Plan mode, then approve", "Open and read every source", "Check the card on the Library page"],
+  notes: "Last step down the ladder on Day 1: no given prompt, they write their own using the reliable-prompt template from this morning (goal, context, constraints, done when; the Example prompt button on that slide copies it). Ask two or three people to read their prompt aloud before they run it; that is the learning moment. The Library page shows example cards as a reference; they build the real, data-driven page (if it doesn't exist yet) plus their own card with explanation, example, common misunderstanding, essential points, related concepts and sources. What a good run looks like: Claude inspects the data structure first, proposes the card and the smallest plan, opens and reads each source (a search result is not a check), waits for approval and runs the checks afterwards. Circulate and coach on verifying the factual explanation; that's the step people skip under time pressure.",
 },
 
 /* ---------------------------------------------------------------------- */
