@@ -1244,7 +1244,7 @@ Explain what the application does, how it is structured and how I can verify you
 { // Slide 64
   title: "Assignment 6: Design AetherBOT",
   kicker: "DAY 2 · ASSIGNMENT 6",
-  subtitle: "Decide what your chatbot is and how it behaves, then give Claude Code the right context.",
+  subtitle: "You decide what goes in. Claude writes it. You check it and own it.",
   type: "practice",
   visual: { mdfile: 0 },
   layout: "exercise",
@@ -1252,14 +1252,15 @@ Explain what the application does, how it is structured and how I can verify you
     { title: "In CLAUDE.md", body: "what AetherBOT is for\nwhere its answers come from\nits tone of voice\nyour 3 rules\nhow to test it" }
   ],
   steps: [
-    "Decide its purpose and its data: your glossary and cards.",
-    "Pick its tone of voice and 3 rules.",
+    "Your own notes: purpose, data (glossary and cards), tone, 3 rules.",
     "Sort it: what goes in CLAUDE.md, what stays in your prompt?",
-    "Ask Claude to add the lasting parts to CLAUDE.md. Review first."
+    "Plan mode: let Claude write the lasting parts into CLAUDE.md.",
+    "Read it: delete anything you didn't decide.",
+    "Change one line yourself."
   ],
-  expected: "A CLAUDE.md that tells any new Claude session what AetherBOT is and how it must behave.",
-  keyPoints: ["Design before building", "Purpose, data, tone, 3 rules, how to test", "CLAUDE.md = always true; prompt = this task only", "Review the change before it's written", "No to-do lists in CLAUDE.md"],
-  notes: "This is where the room applies the Sources of context slide to something of their own. First they decide, in their own words: what AetherBOT is for; its data (the glossary and concept cards, nothing else); its tone of voice (friendly teacher, short and to the point, playful…); and 3 rules. Good rules to steer towards: answer only from the glossary and cards, say OPEN when unsure, name the source card, refuse off-topic questions, never repeat personal profile details. Then the key question: which of this goes into CLAUDE.md, and which stays in the prompt? Everything that is always true for this project (purpose, data, tone, rules, how to test a change to the bot) goes into CLAUDE.md; the task itself (build it now, where it appears) stays in the prompt for Assignment 7. They ask Claude Code to add the lasting parts to CLAUDE.md and review the change before it is written. Watch for participants pasting a to-do list into CLAUDE.md; point back to the CLAUDE.md slide's contents list. Nothing is built yet: that's the next assignment."
+  expected: "A short CLAUDE.md with only what you decided, that tells any new Claude session what AetherBOT is and how it must behave.",
+  keyPoints: ["They decide, Claude writes, they own it", "Rough notes first: purpose, data, tone, 3 rules", "CLAUDE.md = always true; prompt = this task", "Delete anything they didn't decide", "Change one line by hand"],
+  notes: "This is where the room applies the Sources of context slide to something of their own, and learns how to handle a CLAUDE.md: they decide what goes in, Claude writes it, they check it and own it. Step 1 is the real exercise: rough notes in their own words (in the prompt or on paper) on what AetherBOT is for, its data (the glossary and concept cards, nothing else), its tone of voice (friendly teacher, short and to the point, playful…) and 3 rules. Good rules to steer towards: answer only from the glossary and cards, say OPEN when unsure, name the source card, refuse off-topic questions, never repeat personal profile details. Step 2: everything that is always true for this project (purpose, data, tone, rules, how to test a change to the bot) goes into CLAUDE.md; the task itself (build it now, where it appears) stays in the prompt for Assignment 7. Step 3 in plan mode, so they see the change before it's written. Step 4 matters most: Claude tends to add rules nobody decided and to make the file long, and a long CLAUDE.md is weaker. Anything they didn't decide gets deleted. Step 5: they edit one line by hand, so they know it's just a text file they own. Show the difference: good, “AetherBOT answers only from data/glossary.json and data/concept-cards.json. If the answer isn't there, it says OPEN.”; too vague, “AetherBOT should be helpful and accurate.” (can't be checked); doesn't belong, “Today: build the chat window and add a quiz command.” (a task, so it goes in the prompt). Tip for later: in a new project, /init writes a first CLAUDE.md from the repo; same rule, read it, delete what isn't true, add what only you know. Nothing is built yet: that's the next assignment.",
 },
 
 { // Slide 65

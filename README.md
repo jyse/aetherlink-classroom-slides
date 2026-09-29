@@ -38,7 +38,7 @@ no build — that's the whole workflow.
 
 `serve.py` also disables browser caching outright, but this deck's own HTML
 tags additionally cache-bust every asset with a `?v=` query string
-(currently `?v=82` on `styles.css`, `slides.js`, `demo-fallback.js`, `timers.js`, `app.js` / `presenter.js`) —
+(currently `?v=83` on `styles.css`, `slides.js`, `demo-fallback.js`, `timers.js`, `app.js` / `presenter.js`) —
 bump that number — in **both** `index.html` and `presenter.html` — whenever you edit `slides.js`, `app.js`, `styles.css` or
 `presenter.js` and want to be certain a stale tab picks up the change.
 
