@@ -33,9 +33,11 @@ function showInFrame(frame, index) {
   if (index == null) { frame.parentElement.hidden = true; return; }
   frame.parentElement.hidden = false;
   const hash = '#' + (index + 1);
-  try { if (frame.dataset.loaded) { frame.contentWindow.location.hash = hash; return; } } catch {}
-  frame.dataset.loaded = '1'; frame.src = 'index.html?embed=1' + hash;
+  // once the deck has loaded inside the frame, only change its hash (no reload); before that, (re)load it
+  try { if (frame.dataset.ready) { frame.contentWindow.location.hash = hash; return; } } catch {}
+  frame.src = 'index.html?embed=1' + hash;
 }
+[$('p-frame'), $('p-next-frame')].forEach(f => f.addEventListener('load', () => { f.dataset.ready = '1'; }));
 const ro = new ResizeObserver(entries => entries.forEach(e => fitShot(e.target)));
 [$('p-shot'), $('p-next-shot')].forEach(el => ro.observe(el));
 

@@ -16,8 +16,10 @@
   .p-shot{position:relative;width:100%;aspect-ratio:16/9;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--bg);margin-bottom:1rem}
   .p-shot iframe{position:absolute;left:0;top:0;width:1600px;height:900px;border:0;transform-origin:0 0;pointer-events:none}
   .p-shot.small{margin:.5rem 0 0}
+  #p-shot{max-width:min(100%,560px)}
   .p-block.keys{border-left:4px solid var(--aether-orange)}
   .p-keys{margin:0;padding-left:1.2rem;display:grid;gap:.35rem;font-size:1.15rem;line-height:1.4;font-weight:700}
+  .p-hidden[hidden]{display:none}
   .p-hidden{display:inline-flex;padding:.2rem .55rem;border-radius:999px;border:1px dashed #ff9f5a;color:#ff9f5a;font-size:.7rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
   .p-side .timer{grid-template-columns:1fr;justify-items:center;text-align:center;margin:0}
   .p-side .pause-box{border-radius:14px;padding:1rem}

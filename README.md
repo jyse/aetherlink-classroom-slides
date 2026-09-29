@@ -1,6 +1,6 @@
 # Aetherlink × Worldline — classroom deck
 
-The 91-slide HTML deck for the two teaching days ("Working with AI and
+The 103-slide HTML deck for the two teaching days ("Working with AI and
 Claude Code" and "Reusable and connected AI workflows"), built around the
 **Aether Library** practice project. Slides 1–4 are a short opening
 (welcome, a show-of-hands question, agreements, who we are) added on
@@ -38,7 +38,7 @@ no build — that's the whole workflow.
 
 `serve.py` also disables browser caching outright, but this deck's own HTML
 tags additionally cache-bust every asset with a `?v=` query string
-(`styles.css?v=3`, `slides.js?v=3`, `app.js?v=3` / `presenter.js?v=3`) —
+(currently `?v=69` on `styles.css`, `slides.js`, `demo-fallback.js`, `timers.js`, `app.js` / `presenter.js`) —
 bump that number — in **both** `index.html` and `presenter.html` — whenever you edit `slides.js`, `app.js`, `styles.css` or
 `presenter.js` and want to be certain a stale tab picks up the change.
 
@@ -67,6 +67,16 @@ Jump to any slide directly via the URL hash, e.g. `#35` for Assignment 1.
 - **→ also drives reveals.** On slides with closed cards, steps, a quiz or row
   pairs, `→` first reveals the next item; only after the last reveal does it
   go to the next slide. There are no "Reveal next / Show all" buttons any more.
+- **H = hide this slide for now.** Press `H` on a slide and the arrows, `Home`/`End`
+  and the footer arrows skip it; press `H` on it again (or use **Hide / Show** next to
+  each slide in **Chapters**) to bring it back. A hidden slide shows a
+  "Hidden · H to show" tag and a faint striped footer segment. The choice is stored
+  in this browser (`localStorage['als:hidden']`), so it survives a reload.
+- **Click-by-click reveal (`visual.stepThrough`).** On busy slides the cards,
+  pillars, compare columns, pop-out chips and the tagline appear one per click
+  or `→`, so you decide when the next item shows.
+- **Quiz slides** (`type: "quiz"`) have their own pink/orange look so quiz
+  moments stand out: let the room vote, then `→` strikes the wrong answers.
 - **B = plan B.** On slide 26 (live demo) and 81 (Assignment 12) `B` toggles a
   captured run of the exact prompt (`demo-fallback.js`), for when the live
   version fails.
@@ -80,14 +90,17 @@ on the projector. The projector never shows presenter notes.
 
 The presenter window shows, for the slide currently on screen:
 
-- the slide's type, kicker and title (compact, text-only — not a full re-render)
-- **Facilitator notes** (the `notes` field) — practical, presenter-only guidance
+- the slide's type, kicker and title, plus a **live preview of the current
+  slide** (the real deck in an iframe, `index.html?embed=1#n`)
+- **Key points** (the `keyPoints` field) — 3–5 keyword bullets to glance at
+- **Full text** (the `notes` field) — the complete facilitator text, for
+  learning the session or handing it to the next trainer
 - **Say / paste this** (the `prompt` field) when the slide has one — the exact
   words to read aloud or paste into Claude Code
-- a preview of the **next slide's** title, so you're never caught off guard
+- the **next slide's** title and a small preview, so you're never caught off guard
 - a running **elapsed** clock since you opened the presenter window
-- an **assignment timer** on every assignment slide: it starts at 00:00,
-  you type the minutes, then Start/Pause/Reset (independent of the main deck's timer)
+- the **same timer as the deck** on assignment, break and quiet-time slides
+  (see "Timers" below) — start or adjust it from either window
 
 **How the sync works:** the main window broadcasts its current slide index
 every time it changes (on every `hashchange`), using a same-origin
@@ -115,10 +128,23 @@ with a treatment that's unmistakable from across a room:
 - a thick amber border around the whole slide (`#stage`), with a soft glow
 - a persistent **"ASSIGNMENT IN PROGRESS"** banner at the top of the slide
 - a large, high-contrast countdown timer with no preset: it starts at
-  00:00, you type the minutes in the box and press Start (Enter works
-  too), so you can set any duration per group — it turns red and pulses in
-  the last minute
+  00:00, you type the minutes in the box (any time, also while it runs) and
+  press ▶ Start (Enter works too); −1 / +1 min and Reset adjust it live — it
+  turns red and pulses in the last minute
 - the same amber accent on the "Do this now" checklist panel
+
+## Timers
+
+All timers live in `timers.js` and store their state in `localStorage`
+(`als:timer:<index>:<title>`), so:
+
+- **Nothing starts on its own.** Breaks and quiet time show their full time
+  (e.g. 15:00) with a **▶ Start** button; "Back at HH:MM" appears once it runs.
+- **Changing slides doesn't break them.** Start the break, go to another slide,
+  come back: the time is still right.
+- **Adjust live:** Pause / Resume, −1 min, +1 min, Reset (breaks reset to their
+  preset; assignments to the minutes you typed).
+- The presenter view shows and controls the **same** timer.
 
 ## Visual system
 
