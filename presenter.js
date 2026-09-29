@@ -4,81 +4,78 @@
    Sync channel: BroadcastChannel('aetherlink-classroom-slides'), same name
    the main app.js broadcasts on. Falls back to a localStorage 'storage'
    event for browsers without BroadcastChannel (older Safari/WebViews).
+   Shows: a live preview of the current and next slide (index.html?embed=1 in
+   an iframe), keyword bullets (keyPoints) above the full notes text, and the
+   same timer as the deck (timers.js, shared through localStorage).
    ========================================================================== */
 const slides = window.SLIDES || [];
 const PRESENTER_CHANNEL = 'aetherlink-classroom-slides';
 const PRESENTER_KEY = 'als:presenter:index';
+const HIDDEN_KEY = 'als:hidden';
 const $ = id => document.getElementById(id);
 
 let current = 0;
 const startedAt = Date.now();
-let assignmentSeconds = 0, assignmentHandle = null, assignmentRunning = false;
+let timerController = null;
 
 function setSyncStatus(live) {
   $('sync-status').classList.toggle('live', live);
   $('sync-label').textContent = live ? 'Live — following the main window' : 'Waiting for the main window…';
 }
 
-function fmt(totalSeconds) {
-  const m = Math.floor(totalSeconds / 60), s = totalSeconds % 60;
-  return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
-}
-
-function renderElapsed() { $('elapsed').textContent = fmt(Math.floor((Date.now() - startedAt) / 1000)); }
+function renderElapsed() { $('elapsed').textContent = ALSTimer.fmt(Math.floor((Date.now() - startedAt) / 1000)); }
 setInterval(renderElapsed, 1000);
 renderElapsed();
 
-function stopAssignmentTimer() { if (assignmentHandle) { clearInterval(assignmentHandle); assignmentHandle = null; } assignmentRunning = false; }
+/* ---- slide previews: the real deck in an iframe, scaled to fit ---- */
+function fitShot(shot) { const f = shot.querySelector('iframe'); f.style.transform = 'scale(' + (shot.clientWidth / 1600) + ')'; }
+function showInFrame(frame, index) {
+  if (index == null) { frame.parentElement.hidden = true; return; }
+  frame.parentElement.hidden = false;
+  const hash = '#' + (index + 1);
+  try { if (frame.dataset.loaded) { frame.contentWindow.location.hash = hash; return; } } catch {}
+  frame.dataset.loaded = '1'; frame.src = 'index.html?embed=1' + hash;
+}
+const ro = new ResizeObserver(entries => entries.forEach(e => fitShot(e.target)));
+[$('p-shot'), $('p-next-shot')].forEach(el => ro.observe(el));
 
-function setupAssignmentTimer(isExercise) {
-  stopAssignmentTimer();
-  const box = $('p-timer');
-  if (!isExercise) { box.hidden = true; return; }
-  box.hidden = false;
-  $('p-timer-min').value = ''; $('p-timer-min').disabled = false;
-  assignmentSeconds = 0;
-  paintAssignmentTimer();
-  $('p-timer-start').textContent = 'Start';
+function isHidden(i) { try { return JSON.parse(localStorage.getItem(HIDDEN_KEY) || '[]').includes(i + ':' + slides[i].title); } catch { return false; } }
+
+/* ---- the timer for this slide, if it has one (assignment, break or quiet timer) ---- */
+function setupTimer(s) {
+  timerController?.abort(); timerController = new AbortController();
+  const slot = $('p-timer-slot'); slot.replaceChildren();
+  const v = s.visual || {}; const key = ALSTimer.key(current, s.title); let box = null, label = '';
+  if (s.layout === 'exercise') { label = 'This assignment'; box = ALSTimer.mount({ key, defaultSec: 0, minutes: true, bar: true, doneText: 'TIME', signal: timerController.signal }); }
+  else if (v.countdown) { label = 'Break'; box = ALSTimer.mount({ key, defaultSec: v.countdown * 60, back: true, boxCls: 'pause-box', faceCls: 'pause-clock', lateCls: 'late', signal: timerController.signal }); }
+  else if (v.quietTimer) { label = 'Quiet time'; box = ALSTimer.mount({ key, defaultSec: v.quietTimer * 60, boxCls: 'pause-box quiet', faceCls: 'pause-clock', lateCls: 'late', lateAt: 30, signal: timerController.signal }); }
+  $('p-timer').hidden = !box; $('p-timer-label').textContent = label; if (box) slot.append(box);
 }
-function paintAssignmentTimer() {
-  const box = $('p-timer');
-  $('p-timer-face').textContent = fmt(Math.max(assignmentSeconds, 0));
-  box.classList.toggle('late', assignmentSeconds > 0 && assignmentSeconds <= 60);
-}
-function presenterMinutesToSeconds() { return Math.max(0, Math.min(180, Math.floor(Number($('p-timer-min').value) || 0))) * 60; }
-$('p-timer-min').addEventListener('input', () => { if (!assignmentRunning) { assignmentSeconds = presenterMinutesToSeconds(); paintAssignmentTimer(); $('p-timer-start').textContent = 'Start'; } });
-$('p-timer-start').addEventListener('click', () => {
-  if (assignmentRunning) { stopAssignmentTimer(); $('p-timer-min').disabled = false; $('p-timer-start').textContent = 'Resume'; return; }
-  if (assignmentSeconds <= 0) { $('p-timer-min').focus(); return; }
-  assignmentRunning = true; $('p-timer-min').disabled = true; $('p-timer-start').textContent = 'Pause';
-  assignmentHandle = setInterval(() => {
-    if (assignmentSeconds > 0) { assignmentSeconds--; paintAssignmentTimer(); }
-    else { stopAssignmentTimer(); $('p-timer-min').disabled = false; $('p-timer-start').textContent = 'Start'; $('p-timer-face').textContent = 'TIME'; }
-  }, 1000);
-});
-$('p-timer-reset').addEventListener('click', () => {
-  stopAssignmentTimer(); $('p-timer-min').disabled = false;
-  assignmentSeconds = presenterMinutesToSeconds(); paintAssignmentTimer(); $('p-timer-start').textContent = 'Start';
-});
 
 function renderSlide(index) {
   if (!Number.isInteger(index) || index < 0 || index >= slides.length) return;
   current = index;
   const s = slides[current];
   const type = s.type || (s.layout === 'exercise' ? 'practice' : s.layout === 'recap' ? 'recap' : 'context');
-  const TYPE_LABEL = { practice: 'Assignment', concept: 'Concept', review: 'Review', recap: 'Recap', pause: 'Break', context: 'Context' };
+  const TYPE_LABEL = { practice: 'Assignment', concept: 'Concept', review: 'Review', quiz: 'Quiz', recap: 'Recap', pause: 'Break', context: 'Context' };
   $('ptype-wrap').dataset.ptype = type;
   $('p-type-label').textContent = TYPE_LABEL[type] || 'Context';
   $('p-kicker-text').textContent = s.kicker || '';
   $('p-progress').textContent = (current + 1) + ' / ' + slides.length;
+  $('p-hidden').hidden = !isHidden(current);
   $('p-title').textContent = s.title;
+  const keys = s.keyPoints || [];
+  $('p-keys-block').hidden = !keys.length;
+  $('p-keys').replaceChildren(...keys.map(k => { const li = document.createElement('li'); li.textContent = k; return li; }));
   $('p-notes').textContent = s.notes || 'No facilitator notes on this slide.';
   $('p-notes').classList.toggle('p-empty', !s.notes);
   const promptBlock = $('p-prompt-block');
   if (s.prompt) { promptBlock.hidden = false; $('p-prompt').textContent = s.prompt; } else { promptBlock.hidden = true; }
-  const next = slides[current + 1];
-  $('p-next-title').textContent = next ? (current + 2) + '. ' + next.title : 'This is the last slide.';
-  setupAssignmentTimer(s.layout === 'exercise');
+  const nextIndex = current + 1 < slides.length ? current + 1 : null;
+  $('p-next-title').textContent = nextIndex != null ? (nextIndex + 1) + '. ' + slides[nextIndex].title : 'This is the last slide.';
+  showInFrame($('p-frame'), current);
+  showInFrame($('p-next-frame'), nextIndex);
+  setupTimer(s);
 }
 
 /* ---- sync ---- */
@@ -88,6 +85,7 @@ if (channel) {
   channel.addEventListener('message', e => { if (e.data && e.data.type === 'slide') { setSyncStatus(true); renderSlide(e.data.index); } });
 }
 window.addEventListener('storage', e => {
+  if (e.key === HIDDEN_KEY) { $('p-hidden').hidden = !isHidden(current); return; }
   if (e.key !== PRESENTER_KEY || !e.newValue) return;
   try { const data = JSON.parse(e.newValue); setSyncStatus(true); renderSlide(data.index); } catch {}
 });

@@ -50,9 +50,7 @@ function cardBody(body) {
 function renderCard(c, i) { const card = node('article', 'card'); card.style.setProperty('--i', i); const head = node('div', 'card-head'); head.append(cardIcon(c.title), node('h2', null, c.title)); card.append(head, cardBody(c.body)); return card; }
 
 /* ---- slide layouts ---- */
-let timerHandle = null;
 let slideController = null;
-function stopTimer() { if (timerHandle) { clearInterval(timerHandle); timerHandle = null; } }
 function renderTagline(stage, s) { if (s.tagline) stage.append(node('p', 'tagline', s.tagline)); }
 function renderPillars(stage, s) { const row = node('div', 'pillars'); (s.items || []).forEach((it, i) => { const p = node('div', 'pillar'); p.style.setProperty('--i', i); p.append(node('span', 'pillar-label', it.label)); if (it.caption) p.append(node('span', 'pillar-caption', it.caption)); row.append(p); }); stage.append(row); }
 function renderSteps(stage, s) {
@@ -83,26 +81,9 @@ function renderRecap(stage, s) {
   ctrl.append(btn); stage.append(list, ctrl);
 }
 function renderTimer(stage, s) {
-  let total = 0, left = 0;
-  const box = node('div', 'timer'); const face = node('div', 'timer-face', '00:00');
-  const bar = node('div', 'timer-bar'); const fill = node('div', 'timer-fill'); bar.append(fill);
-  const ctrl = node('div', 'widget-controls');
-  const field = node('label', 'timer-field'); const input = node('input'); input.type = 'number'; input.min = '0'; input.max = '180'; input.step = '1'; input.placeholder = '0'; input.setAttribute('aria-label', 'Minutes for this assignment');
-  field.append(input, node('span', null, 'min'));
-  const start = node('button', null, 'Start'); const reset = node('button', 'secondary', 'Reset');
-  function paint() { face.textContent = String(Math.floor(left / 60)).padStart(2, '0') + ':' + String(left % 60).padStart(2, '0'); fill.style.width = total ? (100 * (1 - left / total)) + '%' : '0%'; box.classList.toggle('timer-late', total > 0 && left <= 60); }
-  function setMinutes() { const m = Math.max(0, Math.min(180, Math.floor(Number(input.value) || 0))); total = m * 60; left = total; paint(); }
-  function begin() {
-    if (timerHandle) { stopTimer(); input.disabled = false; start.textContent = 'Resume'; announce('Timer paused'); return; }
-    if (left <= 0) { notify('Set the minutes first, then press Start.'); input.focus(); return; }
-    input.disabled = true; start.textContent = 'Pause'; announce('Timer started');
-    timerHandle = setInterval(() => { if (left > 0) { left--; paint(); } else { stopTimer(); input.disabled = false; start.textContent = 'Start'; face.textContent = 'TIME'; notify('Time is up — this assignment ends now'); } }, 1000);
-  }
-  input.addEventListener('input', () => { if (!timerHandle) { setMinutes(); start.textContent = 'Start'; } });
-  input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); begin(); } });
-  start.addEventListener('click', begin);
-  reset.addEventListener('click', () => { stopTimer(); input.disabled = false; setMinutes(); start.textContent = 'Start'; announce('Timer reset'); });
-  ctrl.append(field, start, reset); box.append(face, bar, ctrl); stage.append(box);
+  // starts at 00:00; minutes can be typed or nudged any time, and the timer keeps running when you change slides
+  stage.append(ALSTimer.mount({ key: ALSTimer.key(current, s.title), defaultSec: 0, minutes: true, bar: true, doneText: 'TIME',
+    onDone: () => notify('Time is up — this assignment ends now'), onEmpty: () => notify('Set the minutes first, then press Start.'), signal: slideController.signal }));
 }
 function renderLayout(stage, s) {
   const L = s.layout;
@@ -236,13 +217,9 @@ function renderExtras(stage, main, s, v) {
     g.addEventListener('click', next); window.__reveal = next;
     slideController.signal.addEventListener('abort', () => { if (window.__reveal === next) window.__reveal = null; });
   }
-  if (v.countdown) {                                             // pauses: live countdown + real clock time
-    const box = node('div', 'pause-box'); const face = node('div', 'pause-clock'); const back = node('p', 'pause-back');
-    const end = Date.now() + v.countdown * 60000; const hhmm = new Date(end).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-    back.append(document.createTextNode('Back at '), node('strong', null, hhmm));
-    const tick = () => { const left = Math.max(0, Math.round((end - Date.now()) / 1000)); face.textContent = String(Math.floor(left / 60)).padStart(2, '0') + ':' + String(left % 60).padStart(2, '0'); box.classList.toggle('late', left <= 60); box.classList.toggle('done', left === 0); };
-    tick(); const iv = setInterval(tick, 1000); slideController.signal.addEventListener('abort', () => clearInterval(iv));
-    box.append(face, back); if (s.cards?.[0]?.body) box.append(node('p', 'pause-next', s.cards[0].body));
+  if (v.countdown) {                                             // pauses: countdown waits for ▶, keeps time across slides, shows the real return time
+    const box = ALSTimer.mount({ key: ALSTimer.key(current, s.title), defaultSec: v.countdown * 60, back: true, boxCls: 'pause-box', faceCls: 'pause-clock', lateCls: 'late', signal: slideController.signal });
+    if (s.cards?.[0]?.body) box.append(node('p', 'pause-next', s.cards[0].body));
     grid.replaceWith(box);
   }
   if (v.term) {                                                  // 20: a terminal that types a few commands, then asks
@@ -367,11 +344,10 @@ function renderExtras(stage, main, s, v) {
     const c = cards[v.notebook]; c.classList.add('notebook'); const ul = node('ul', 'nb-lines');
     String(s.cards[v.notebook].body).split('\n').forEach((t, i) => { const li = node('li', null, t); li.style.setProperty('--i', i); ul.append(li); }); c.querySelector('p')?.replaceWith(ul);
   }
-  if (v.quietTimer) {                                            // 39: a quiet countdown without "Back at"
-    main.classList.add('has-quiet'); const box = node('div', 'pause-box quiet'); const face = node('div', 'pause-clock'); const end = Date.now() + v.quietTimer * 60000;
-    const tick = () => { const left = Math.max(0, Math.round((end - Date.now()) / 1000)); face.textContent = String(Math.floor(left / 60)).padStart(2, '0') + ':' + String(left % 60).padStart(2, '0'); box.classList.toggle('late', left <= 30 && left > 0); box.classList.toggle('done', left === 0); };
-    tick(); const iv = setInterval(tick, 1000); slideController.signal.addEventListener('abort', () => clearInterval(iv));
-    box.append(node('span', 'quiet-ico', '✍'), face); grid.after(box);
+  if (v.quietTimer) {                                            // 39: a quiet countdown without "Back at", waits for ▶
+    main.classList.add('has-quiet');
+    const box = ALSTimer.mount({ key: ALSTimer.key(current, s.title), defaultSec: v.quietTimer * 60, boxCls: 'pause-box quiet', faceCls: 'pause-clock', lateCls: 'late', lateAt: 30, prefix: node('span', 'quiet-ico', '✍'), signal: slideController.signal });
+    grid.after(box);
   }
   if (v.badges) {                                               // 40: achievements unlocking one by one
     grid.classList.add('badges'); main.classList.add('side-grid');
@@ -696,7 +672,7 @@ function renderVisual(stage, body, main, s) {
 }
 
 /* ---- slide type -> colour chip, footer segment ---- */
-const TYPE_LABEL = { practice: 'Assignment', concept: 'Concept', review: 'Review', recap: 'Recap', pause: 'Break', context: 'Context' };
+const TYPE_LABEL = { practice: 'Assignment', concept: 'Concept', review: 'Review', quiz: 'Quiz', recap: 'Recap', pause: 'Break', context: 'Context' };
 function slideType(s) { return TYPE_LABEL[s.type] ? s.type : (s.layout === 'exercise' ? 'practice' : s.layout === 'recap' ? 'recap' : 'context'); }
 
 const stateKey = () => 'als:' + current + ':' + slides[current].title;
@@ -732,7 +708,7 @@ function sideBySide(s, instructions) { if (!instructions) return false; return s
 function renderProgress() {
   const bar = $('progress'); const hadFocus = bar.contains(document.activeElement); bar.replaceChildren();
   slides.forEach((s, i) => {
-    const seg = node('button', 'seg'); seg.dataset.type = slideType(s); seg.classList.toggle('done', i < current); seg.classList.toggle('current', i === current);
+    const seg = node('button', 'seg'); seg.dataset.type = slideType(s); seg.classList.toggle('done', i < current); seg.classList.toggle('current', i === current); seg.classList.toggle('is-hidden', isHidden(i));
     seg.tabIndex = i === current ? 0 : -1; if (i === current) seg.setAttribute('aria-current', 'step');
     seg.setAttribute('aria-label', String(i + 1) + '. ' + s.title); seg.title = s.title;
     seg.addEventListener('click', () => go(i)); bar.append(seg);
@@ -754,6 +730,36 @@ function openPresenterView() {
   if (!w) notify('Allow pop-ups to open the presenter view.');
 }
 
+/* ---- embed mode: presenter.html shows this page in an iframe (?embed=1) as a live preview ---- */
+const EMBED = new URLSearchParams(location.search).has('embed');
+if (EMBED) document.documentElement.classList.add('embed');
+
+/* ---- hide a slide for now: H toggles; arrows, Home and End skip hidden slides ---- */
+const HIDDEN_KEY = 'als:hidden';
+const hideId = i => i + ':' + slides[i].title;
+function hiddenIds() { try { return new Set(JSON.parse(localStorage.getItem(HIDDEN_KEY) || '[]')); } catch { return new Set(); } }
+function isHidden(i) { return hiddenIds().has(hideId(i)); }
+function toggleHidden(i) {
+  const h = hiddenIds(); const id = hideId(i); const now = !h.has(id); if (now) h.add(id); else h.delete(id);
+  try { localStorage.setItem(HIDDEN_KEY, JSON.stringify([...h])); } catch {}
+  return now;
+}
+function visibleFrom(i, dir) { for (let n = i; n >= 0 && n < slides.length; n += dir) if (!isHidden(n)) return n; return null; }
+function step(dir) { const n = visibleFrom(current + dir, dir); if (n !== null) go(n); }
+
+/* ---- stepThrough: every main item starts hidden, click / → shows the next one ---- */
+const STEP_ITEMS = '.cards > .card, .pillars > .pillar, .compare > .compare-col, .pop-chips > .pop-chip, .slide-main > .tagline';
+function applyStepThrough(main, s) {
+  const v = s.visual || {}; if (!v.stepThrough || window.__reveal) return;
+  const items = [...main.querySelectorAll(typeof v.stepThrough === 'string' ? v.stepThrough : STEP_ITEMS)];
+  if (!items.length) return;
+  items.forEach(el => el.classList.add('st-pending'));
+  main.classList.add('step-through');
+  const next = () => { const el = items.find(e => e.classList.contains('st-pending')); if (!el) return false; el.classList.remove('st-pending'); el.classList.add('st-shown'); announce(el.textContent); return true; };
+  main.addEventListener('click', e => { if (!e.target.closest('button, a, input, textarea')) next(); }, { signal: slideController.signal });
+  window.__reveal = next; slideController.signal.addEventListener('abort', () => { if (window.__reveal === next) window.__reveal = null; });
+}
+
 function render() {
   slideController?.abort(); slideController = new AbortController();
   const s = slides[current]; const type = slideType(s);
@@ -772,13 +778,14 @@ function render() {
   const parts = (s.kicker || '').split('·').map(x => x.trim());
   eyebrow.append(node('span', 'type-chip', TYPE_LABEL[type]), node('span', 'kicker-text', parts.join(' · ')));
   top.append(eyebrow, node('p', 'slide-count', String(current + 1) + ' / ' + slides.length));
+  if (isHidden(current)) eyebrow.append(node('span', 'hidden-chip', 'Hidden · H to show'));
   head.append(top, node('h1', null, s.title), node('p', 'subtitle', s.subtitle));
   stage.append(head);
   const body = node('div', 'slide-body'); const main = node('div', 'slide-main'); body.append(main); stage.append(body);
-  stopTimer();
   renderLayout(main, s);
   renderTagline(main, s);
   renderVisual(stage, body, main, s);
+  applyStepThrough(main, s);
   const instructions = (s.visual?.quiz || s.visual?.stamps || s.visual?.perCard || s.visual?.runner) ? null : renderInstructions(s);
   if (instructions) {
     const side = sideBySide(s, instructions);
@@ -793,31 +800,39 @@ function render() {
   renderProgress();
   $('prev').disabled = current === 0; $('next').disabled = current === slides.length - 1;
   announce('Slide ' + (current + 1) + ' of ' + slides.length + ': ' + s.title);
-  broadcastSlide(current);
+  if (!EMBED) broadcastSlide(current);
 }
 function go(n) { if (n < 0 || n >= slides.length) return; location.hash = String(n + 1); }
 function fromHash() { if (location.hash === '#stage') { $('stage').focus(); return; } const n = Number(location.hash.slice(1)); current = Number.isInteger(n) && n >= 1 && n <= slides.length ? n - 1 : 0; render(); window.scrollTo({ top: 0, behavior: 'instant' }); }
 
-$('prev').addEventListener('click', () => go(current - 1));
-$('next').addEventListener('click', () => go(current + 1));
+$('prev').addEventListener('click', () => step(-1));
+$('next').addEventListener('click', () => step(1));
 $('prompt').addEventListener('click', () => showPrompt());
 $('presenter').addEventListener('click', openPresenterView);
 $('chapters').addEventListener('click', () => {
   const list = node('nav', 'chapter-list'); list.setAttribute('aria-label', 'All ' + slides.length + ' slides');
-  slides.forEach((s, i) => { const b = node('button', 'chapter-link'); b.append(node('span', null, String(i + 1).padStart(2, '0')), node('strong', null, s.title)); b.setAttribute('aria-current', String(i === current)); b.addEventListener('click', () => { closePanel(); go(i); }); list.append(b); });
+  slides.forEach((s, i) => {
+    const row = node('div', 'chapter-row' + (isHidden(i) ? ' is-hidden' : ''));
+    const b = node('button', 'chapter-link'); b.append(node('span', null, String(i + 1).padStart(2, '0')), node('strong', null, s.title)); b.setAttribute('aria-current', String(i === current)); b.addEventListener('click', () => { closePanel(); go(i); });
+    const t = node('button', 'chapter-hide', isHidden(i) ? 'Show' : 'Hide'); t.setAttribute('aria-label', (isHidden(i) ? 'Show' : 'Hide') + ' slide ' + (i + 1));
+    t.addEventListener('click', () => { const h = toggleHidden(i); row.classList.toggle('is-hidden', h); t.textContent = h ? 'Show' : 'Hide'; renderProgress(); if (i === current) render(); });
+    row.append(b, t); list.append(row);
+  });
   openPanel('Chapters', list);
 });
 $('fullscreen').addEventListener('click', async () => { try { if (document.fullscreenElement) await document.exitFullscreen(); else await document.documentElement.requestFullscreen(); } catch { notify('Fullscreen is unavailable in this browser.'); } });
 document.addEventListener('fullscreenchange', () => $('fullscreen').setAttribute('aria-label', document.fullscreenElement ? 'Exit fullscreen' : 'Enter fullscreen'));
 document.addEventListener('keydown', e => {
+  if (EMBED) return;
   if (panel.open || e.altKey || e.ctrlKey || e.metaKey || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName) || e.target.closest('[role=tablist]')) return;
-  if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); if (window.__reveal?.()) return; go(current + 1); }
-  if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(current - 1); }
-  if (e.key === 'Home') { e.preventDefault(); go(0); }
-  if (e.key === 'End') { e.preventDefault(); go(slides.length - 1); }
+  if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); if (window.__reveal?.()) return; step(1); }
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); step(-1); }
+  if (e.key === 'Home') { e.preventDefault(); const n = visibleFrom(0, 1); if (n !== null) go(n); }
+  if (e.key === 'End') { e.preventDefault(); const n = visibleFrom(slides.length - 1, -1); if (n !== null) go(n); }
+  if (e.key === 'h' || e.key === 'H') { e.preventDefault(); const h = toggleHidden(current); notify(h ? 'Slide hidden — the arrows will skip it (H to show again)' : 'Slide shown again'); render(); return; }
   if ((e.key === 'b' || e.key === 'B') && window.__planB) { e.preventDefault(); window.__planB(); return; }
   if (e.key === 's' || e.key === 'S') { e.preventDefault(); openPresenterView(); }
 });
-window.addEventListener('pagehide', () => { slideController?.abort(); stopTimer(); });
+window.addEventListener('pagehide', () => { slideController?.abort(); });
 window.addEventListener('hashchange', fromHash);
 fromHash();

@@ -12,7 +12,17 @@
   .p-status{font-size:.8rem;color:var(--muted);display:flex;align-items:center;gap:.4rem}
   .p-status .dot{width:8px;height:8px;border-radius:50%;background:var(--border)}
   .p-status.live .dot{background:var(--ok);box-shadow:0 0 0 3px color-mix(in srgb,var(--ok) 30%,transparent)}
-  .p-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,1fr);gap:1.4rem;margin-top:1.2rem;flex:1}
+  .p-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(280px,1fr);gap:1.4rem;margin-top:1.2rem;flex:1}
+  .p-shot{position:relative;width:100%;aspect-ratio:16/9;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--bg);margin-bottom:1rem}
+  .p-shot iframe{position:absolute;left:0;top:0;width:1600px;height:900px;border:0;transform-origin:0 0;pointer-events:none}
+  .p-shot.small{margin:.5rem 0 0}
+  .p-block.keys{border-left:4px solid var(--aether-orange)}
+  .p-keys{margin:0;padding-left:1.2rem;display:grid;gap:.35rem;font-size:1.15rem;line-height:1.4;font-weight:700}
+  .p-hidden{display:inline-flex;padding:.2rem .55rem;border-radius:999px;border:1px dashed #ff9f5a;color:#ff9f5a;font-size:.7rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  .p-side .timer{grid-template-columns:1fr;justify-items:center;text-align:center;margin:0}
+  .p-side .pause-box{border-radius:14px;padding:1rem}
+  .p-side .pause-clock{font-size:3.4rem}
+  .p-timer-label{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 .4rem}
   .p-main{min-width:0}
   .p-kicker{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 .4rem;display:flex;gap:.6rem;align-items:center}
   .p-type{padding:.25rem .6rem;border-radius:999px;font-weight:750;color:var(--ink);background:var(--context)}
@@ -22,6 +32,7 @@
   [data-ptype=recap] .p-type{background:var(--recap)}
   [data-ptype=pause] .p-type{background:var(--pause);color:#fff}
   [data-ptype=context] .p-type{background:var(--context);color:#fff}
+  [data-ptype=quiz] .p-type{background:var(--quiz,#ff4fa3);color:#fff}
   .p-title{font-size:clamp(1.5rem,3vw,2.3rem);margin:0 0 1rem;line-height:1.1}
   .p-block{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem;margin-bottom:1rem}
   .p-block h2{margin:0 0 .6rem;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
@@ -52,10 +63,15 @@
   </div>
   <div class="p-grid">
     <div class="p-main" id="ptype-wrap">
-      <p class="p-kicker"><span class="p-type" id="p-type-label">Context</span><span id="p-kicker-text"></span><span class="p-progress" id="p-progress"></span></p>
+      <p class="p-kicker"><span class="p-type" id="p-type-label">Context</span><span id="p-kicker-text"></span><span class="p-progress" id="p-progress"></span><span class="p-hidden" id="p-hidden" hidden>Hidden</span></p>
       <h1 class="p-title" id="p-title">Waiting for the presentation…</h1>
+      <div class="p-shot" id="p-shot"><iframe id="p-frame" title="Current slide" tabindex="-1" scrolling="no"></iframe></div>
+      <div class="p-block keys" id="p-keys-block" hidden>
+        <h2>Key points</h2>
+        <ul class="p-keys" id="p-keys"></ul>
+      </div>
       <div class="p-block notes">
-        <h2>Facilitator notes</h2>
+        <h2>Full text</h2>
         <p id="p-notes" class="p-empty">Open the main deck and navigate a slide to see its notes here.</p>
       </div>
       <div class="p-block prompt" id="p-prompt-block" hidden>
@@ -67,18 +83,15 @@
       <div class="p-next">
         <h2>Next slide</h2>
         <strong id="p-next-title">—</strong>
+        <div class="p-shot small" id="p-next-shot"><iframe id="p-next-frame" title="Next slide" tabindex="-1" scrolling="no"></iframe></div>
       </div>
-      <div class="p-timer" id="p-timer" hidden>
-        <div class="label" style="font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">This assignment</div>
-        <div class="face" id="p-timer-face">00:00</div>
-        <div class="ctrl">
-          <label style="display:inline-flex;align-items:center;gap:.3rem;font-size:.8rem;color:var(--muted)"><input id="p-timer-min" type="number" min="0" max="180" step="1" placeholder="0" aria-label="Minutes for this assignment" style="width:3.6rem;min-height:36px;text-align:center;font-weight:800;border:2px solid var(--amber);border-radius:8px;background:var(--surface);color:var(--text)">min</label>
-          <button id="p-timer-start">Start</button>
-          <button id="p-timer-reset" class="secondary">Reset</button>
-        </div>
+      <div id="p-timer" hidden>
+        <p class="p-timer-label" id="p-timer-label">Timer</p>
+        <div id="p-timer-slot"></div>
       </div>
     </div>
   </div>
   <script src="slides.js?v=68" defer></script>
+  <script src="timers.js?v=68" defer></script>
   <script src="presenter.js?v=68" defer></script>
 </body></html>

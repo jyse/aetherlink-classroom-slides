@@ -1079,3 +1079,51 @@ body[data-opener="team"] .card-head{justify-content:center}
 .exercise-instructions>.timer .timer-face{font-size:clamp(2rem,3.4vw,3.2rem)}
 .slide-main.compact-cards>.tagline{margin-top:.2rem}
 .slide-main.compact-cards .cards{gap:clamp(.4rem,1vh,.9rem)}
+
+/* ==========================================================================
+   Squad-2 updates: persistent timers, hide a slide, stepThrough, quiz slides,
+   embed mode for the presenter preview.
+   ========================================================================== */
+/* timers: ▶ Start / Pause, −1 / +1 min, Reset (timers.js) */
+.timer-controls{align-items:center}
+.pause-box .timer-controls{justify-content:center;margin-top:1rem}
+.pause-box .pause-back[hidden]{display:none}
+.pause-box.running .pause-clock{animation:none}
+.timer-play{min-width:7.5rem}
+
+/* hide a slide (H) */
+.hidden-chip{display:inline-flex;align-items:center;padding:.25rem .6rem;border-radius:999px;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;font-weight:800;color:#ff9f5a;border:1px dashed #ff9f5a}
+.progress .seg.is-hidden{opacity:.12;background:repeating-linear-gradient(90deg,var(--muted) 0 2px,transparent 2px 4px)}
+.chapter-row{display:flex;gap:.5rem;align-items:stretch}
+.chapter-row .chapter-link{flex:1}
+.chapter-hide{flex:0 0 auto;min-width:4.4rem;font-size:.8rem;color:var(--muted);border-color:var(--border);background:transparent}
+.chapter-row.is-hidden .chapter-link strong{text-decoration:line-through;opacity:.5}
+.chapter-row.is-hidden .chapter-hide{color:#ff9f5a;border-color:#ff9f5a}
+
+/* stepThrough: items wait for a click or → (their own entrance animation plays on reveal) */
+.step-through{cursor:pointer}
+.st-pending{visibility:hidden}
+.st-pending,.st-pending *{animation:none!important}
+.st-shown{animation:enter .45s both}
+
+/* quiz slides: their own colour and look, so quiz moments stand out */
+:root{--quiz:#ff4fa3}
+[data-type=quiz] .type-chip{background:linear-gradient(105deg,var(--quiz),var(--aether-orange));color:#fff}
+.progress .seg[data-type=quiz]{background:var(--quiz)}
+body[data-type=quiz]{background:radial-gradient(1200px 520px at 50% -10%,color-mix(in srgb,var(--quiz) 22%,transparent),transparent 70%),radial-gradient(circle at 1px 1px,color-mix(in srgb,var(--quiz) 18%,transparent) 1px,transparent 0) 0 0/26px 26px,var(--bg)}
+body[data-type=quiz] #stage{border:2px solid color-mix(in srgb,var(--quiz) 55%,transparent);box-shadow:0 0 0 6px color-mix(in srgb,var(--quiz) 10%,transparent);padding-inline:clamp(1rem,3vw,2.5rem)}
+body[data-type=quiz] .heading h1{background:linear-gradient(105deg,var(--quiz),var(--aether-orange));-webkit-background-clip:text;background-clip:text;color:transparent}
+[data-type=quiz] .cards{gap:1rem}
+[data-type=quiz] .card{border:2px solid color-mix(in srgb,var(--quiz) 40%,var(--border));cursor:pointer}
+[data-type=quiz] .card-head .card-icon{display:none}
+[data-type=quiz] .card-head h2{width:2.8rem;height:2.8rem;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--quiz),var(--aether-orange));color:#fff;font-size:1.35rem}
+[data-type=quiz] .card p{font-size:clamp(1.05rem,1.6vw,1.35rem)}
+
+/* embed (presenter preview iframe): just the slide */
+html.embed .toolbar,html.embed .controls,html.embed .skip{display:none}
+html.embed body{min-height:100vh}
+.timer{grid-template-columns:auto 1fr}
+.timer .timer-bar{grid-column:1/-1;order:3}
+.timer .timer-controls{justify-content:flex-end}
+.timer .timer-controls button{min-height:34px;padding:.35rem .65rem;font-size:.85rem}
+.timer .timer-field input{min-height:34px}
