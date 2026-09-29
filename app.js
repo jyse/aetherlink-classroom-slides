@@ -5,7 +5,7 @@
    keyboard nav, the segmented footer progress bar, per-slide dark variant,
    the "Do this now" exercise panel, all 7 layout renderers. Removed: the
    multi-squad/day picker, glossary, mascot, and the framework-mode fallback
-   branches — this deck is always a single flat 78-slide array.
+   branches — this deck is always a single flat array of slides.
    New: assignment-visibility styling and the presenter-view sync (BroadcastChannel
    with a localStorage fallback) — see presenter.js for the receiving end.
    ========================================================================== */
