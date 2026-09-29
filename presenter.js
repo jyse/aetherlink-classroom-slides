@@ -41,7 +41,10 @@ function showInFrame(frame, index) {
 const ro = new ResizeObserver(entries => entries.forEach(e => fitShot(e.target)));
 [$('p-shot'), $('p-next-shot')].forEach(el => ro.observe(el));
 
-function isHidden(i) { try { return JSON.parse(localStorage.getItem(HIDDEN_KEY) || '[]').includes(i + ':' + slides[i].title); } catch { return false; } }
+function isHidden(i) {
+  const id = i + ':' + slides[i].title; const list = k => { try { return JSON.parse(localStorage.getItem(k) || '[]'); } catch { return []; } };
+  return slides[i].hidden ? !list('als:shown').includes(id) : list(HIDDEN_KEY).includes(id);
+}
 
 /* ---- the timer for this slide, if it has one (assignment, break or quiet timer) ---- */
 function setupTimer(s) {
@@ -87,7 +90,7 @@ if (channel) {
   channel.addEventListener('message', e => { if (e.data && e.data.type === 'slide') { setSyncStatus(true); renderSlide(e.data.index); } });
 }
 window.addEventListener('storage', e => {
-  if (e.key === HIDDEN_KEY) { $('p-hidden').hidden = !isHidden(current); return; }
+  if (e.key === HIDDEN_KEY || e.key === 'als:shown') { $('p-hidden').hidden = !isHidden(current); return; }
   if (e.key !== PRESENTER_KEY || !e.newValue) return;
   try { const data = JSON.parse(e.newValue); setSyncStatus(true); renderSlide(data.index); } catch {}
 });

@@ -739,12 +739,15 @@ if (EMBED) document.documentElement.classList.add('embed');
 /* ---- hide a slide for now: H toggles; arrows, Home and End skip hidden slides ---- */
 const HIDDEN_KEY = 'als:hidden';
 const hideId = i => i + ':' + slides[i].title;
-function hiddenIds() { try { return new Set(JSON.parse(localStorage.getItem(HIDDEN_KEY) || '[]')); } catch { return new Set(); } }
-function isHidden(i) { return hiddenIds().has(hideId(i)); }
+// A slide with `hidden: true` in slides.js starts hidden on every laptop; H (or Chapters) can still show it.
+const SHOWN_KEY = 'als:shown';
+const readSet = k => { try { return new Set(JSON.parse(localStorage.getItem(k) || '[]')); } catch { return new Set(); } };
+const writeSet = (k, set) => { try { localStorage.setItem(k, JSON.stringify([...set])); } catch {} };
+function isHidden(i) { const id = hideId(i); return slides[i].hidden ? !readSet(SHOWN_KEY).has(id) : readSet(HIDDEN_KEY).has(id); }
 function toggleHidden(i) {
-  const h = hiddenIds(); const id = hideId(i); const now = !h.has(id); if (now) h.add(id); else h.delete(id);
-  try { localStorage.setItem(HIDDEN_KEY, JSON.stringify([...h])); } catch {}
-  return now;
+  const id = hideId(i); const now = !isHidden(i); const key = slides[i].hidden ? SHOWN_KEY : HIDDEN_KEY; const set = readSet(key);
+  if (slides[i].hidden) { if (now) set.delete(id); else set.add(id); } else { if (now) set.add(id); else set.delete(id); }
+  writeSet(key, set); return now;
 }
 function visibleFrom(i, dir) { for (let n = i; n >= 0 && n < slides.length; n += dir) if (!isHidden(n)) return n; return null; }
 function step(dir) { const n = visibleFrom(current + dir, dir); if (n !== null) go(n); }

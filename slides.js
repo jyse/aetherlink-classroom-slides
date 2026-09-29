@@ -17,6 +17,7 @@
                  Controls the colour chip and the footer progress dot.
                  quiz: its own colour and look (use with visual.quiz).
      dark      - true to render this slide on the dark background variant.
+     hidden    - true to skip this slide by default on every laptop (H or Chapters shows it again).
      layout    - optional: "steps" | "pillars" | "compare" | "recap" |
                  "exercise" (assignment slides — timer + "Do this now" panel).
                  Leave out for a plain card grid (the default).
@@ -1063,12 +1064,13 @@ Explain what the application does, how it is structured and how I can verify you
     { title: "What we're doing", body: "Turning yesterday's method into something reusable, bounded and connected." },
     { title: "Today", body: "Skills, bounded agentic work, the learning game, and approved workplace connections." }
   ],
-  keyPoints: ["Short re-welcome","Point at the day's shape","Warm-up first: Stekkie, bio, avatar","Then the retrieval check"],
-  notes: "Short re-welcome — most of the room was here yesterday, so this can be brief. Point at the day's shape (warm-up → recap → context → skills → bounded work → game → MCP → closing). The warm-up comes first: Stekkie, LibreChat bio, the action-figure avatar and putting it on your profile — then the retrieval check."
+  keyPoints: ["Short re-welcome","Point at the day's shape","Warm-up first: bio, avatar","Then the retrieval check"],
+  notes: "Short re-welcome — most of the room was here yesterday, so this can be brief. Point at the day's shape (warm-up → recap → context → skills → bounded work → game → MCP → closing). The warm-up comes first: LibreChat bio, the action-figure avatar and putting it on your profile — then the retrieval check."
 },
 
 { // Slide 0
   title: "Built with AI: Stekkie",
+  hidden: true, // hidden for now (press H on it, or use Chapters, to show it again)
   kicker: "DAY 2 · SHOW & TELL",
   subtitle: "Constance's own AI garden coach — vibe coded, live at app.stekkie.ai.",
   type: "context",
