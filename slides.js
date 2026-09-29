@@ -931,7 +931,7 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 1 · ASSIGNMENT 2",
   subtitle: "Add your profile, and the page that shows it.",
   type: "practice",
-  visual: { badge: 0 },
+  visual: { shot: 'assets/examples/profile-card.png' },
   layout: "exercise",
   cards: [
     { title: "Include", body: "name\nrole\nteam\nlearning goal" }
@@ -970,7 +970,7 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 1 · ASSIGNMENT 3",
   subtitle: "First in plan mode, then in auto mode. Spot the difference.",
   type: "practice",
-  visual: { template: 0, templateRows: ['Term', 'Definition'] },
+  visual: { shot: 'assets/examples/glossary-list.png' },
   layout: "exercise",
   cards: [
     { title: "Add", body: "20 terms, each with a plain-language definition of 1–2 sentences" }
@@ -992,7 +992,7 @@ Explain what the application does, how it is structured and how I can verify you
   kicker: "DAY 1 · ASSIGNMENT 4",
   subtitle: "Turn one glossary term into a full concept card.",
   type: "practice",
-  visual: { template: 0 },
+  visual: { shot: 'assets/examples/library-card.png' },
   layout: "exercise",
   cards: [
     { title: "Include", body: "explanation\nexample\ncommon misunderstanding\nessential points\nrelated concepts\nsources" }
@@ -1110,6 +1110,7 @@ Explain what the application does, how it is structured and how I can verify you
   subtitle: "Create the coolest action-figure picture of yourself in LibreChat.",
   type: "practice",
   layout: "exercise",
+  prompt: "Cartoon:\nCreate a square cartoon avatar of me as an action figure: [describe yourself — hair, glasses, outfit], holding a laptop and a coffee. Bright colours, no text.\n\nSuperhero:\nCreate a square comic-book superhero portrait of me: [describe yourself]. Cape, city skyline at night, no text.\n\nJip and Janneke:\nCreate a square avatar of me as a Dutch Jip and Janneke silhouette: black on a plain coloured background. [describe yourself]. No text.",
   stepsHeading: "In LibreChat:",
   visual: { compact: true, cardImages: ['assets/avatars/avatar-cartoon.webp', 'assets/avatars/avatar-superhero.webp', 'assets/avatars/avatar-jipjanneke.webp'] },
   cards: [
@@ -1614,9 +1615,9 @@ Explain what the application does, how it is structured and how I can verify you
     "Part A: define a good answer in checklist.md.",
     "Part B: build the term-checker skill.",
     "No API, no external model.",
-    "Part C: say the phrase below."
+    "Part C: say the phrase on the right."
   ],
-  expected: "A working game where AI feedback comes entirely from your own authenticated Claude Code session — no API credentials, no external model calls, no database.",
+  expected: "The game gives feedback from your own Claude Code session. No API key, no database.",
   stepsHeading: "Steps:",
   keyPoints: ["Full 60 minutes, don't rush","A: checklist.md with four ratings","B: term-checker reads checklist.md","C: say the exact phrase","No rebuild, no API keys, no database"],
   notes: "Longest single assignment of the two days; give it the full 60 minutes and don't rush the wrap-up. Part A: propose what a good “explain this term back” answer contains, based on the approved concept cards, including the four rating categories (Strong explanation, Partially complete, Review this concept, Unable to evaluate); write it to checklist.md once approved. Part B: create .claude/skills/term-checker/SKILL.md; it reads checklist.md (never hardcoded criteria) and the latest submission, compares against the matching concept card and writes structured feedback. Part C: say the exact phrase “Check my latest submission using the term-checker skill.” Do NOT let anyone rebuild the game itself; it already works. Protect this: no API keys, no external model calls, no database; feedback comes entirely from the participant's own Claude Code session reading and writing local files. Watch for people who skip Part C because time is short.",

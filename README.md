@@ -38,7 +38,7 @@ no build — that's the whole workflow.
 
 `serve.py` also disables browser caching outright, but this deck's own HTML
 tags additionally cache-bust every asset with a `?v=` query string
-(currently `?v=74` on `styles.css`, `slides.js`, `demo-fallback.js`, `timers.js`, `app.js` / `presenter.js`) —
+(currently `?v=75` on `styles.css`, `slides.js`, `demo-fallback.js`, `timers.js`, `app.js` / `presenter.js`) —
 bump that number — in **both** `index.html` and `presenter.html` — whenever you edit `slides.js`, `app.js`, `styles.css` or
 `presenter.js` and want to be certain a stale tab picks up the change.
 
@@ -122,16 +122,21 @@ Practical notes:
 
 ## Assignment visibility
 
-Every slide with `layout: "exercise"` (all ten "Assignment N" slides) renders
-with a treatment that's unmistakable from across a room:
+Every slide with `layout: "exercise"` uses its own compact layout, so all
+assignments look the same and the task is what stands out:
 
-- a thick amber border around the whole slide (`#stage`), with a soft glow
-- a persistent **"ASSIGNMENT IN PROGRESS"** banner at the top of the slide
-- a large, high-contrast countdown timer with no preset: it starts at
-  00:00, you type the minutes in the box (any time, also while it runs) and
-  press ▶ Start (Enter works too); −1 / +1 min and Reset adjust it live — it
-  turns red and pulses in the last minute
-- the same amber accent on the "Do this now" checklist panel
+- **One label, no repetition:** a single chip "Assignment 3 · Day 1" (or
+  "Hands-on · Day 2" for unnumbered exercises) above a plain title — the
+  "Assignment N:" prefix is taken off the title on screen.
+- **Big numbered steps** fill the left two-thirds; click a step to tick it off.
+  "Done when" (the `expected` field) sits underneath.
+- **"What it looks like"** on the right: `visual.shot` (a screenshot, e.g. the
+  starter repo's example profile, glossary and library card in
+  `assets/examples/`), the example thumbnails (`visual.cardImages`), or the
+  slide's card with its illustration (template, CLAUDE.md file, conveyor…).
+- **Timer pill** in the top-right corner (⏱ 00:00). Click it for the controls:
+  minutes, ▶ Start / Pause, −1 / +1 min, Reset. The coloured frame around the
+  slide still marks it as an assignment.
 
 ## Timers
 

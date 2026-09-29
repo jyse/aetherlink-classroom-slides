@@ -762,6 +762,63 @@ function applyStepThrough(main, s) {
   window.__reveal = next; slideController.signal.addEventListener('abort', () => { if (window.__reveal === next) window.__reveal = null; });
 }
 
+/* ---- assignment slides: one label, big steps, a picture of the result, timer pill top right ---- */
+function assignmentLabel(s) {
+  const m = /^Assignment (\d+):\s*(.*)$/.exec(s.title || '');
+  const day = ((s.kicker || '').match(/DAY \d/) || [''])[0].replace('DAY', 'Day');
+  return { label: (m ? 'Assignment ' + m[1] : 'Hands-on') + (day ? ' · ' + day : ''), title: m ? m[2] : s.title };
+}
+function timerPill(s) {
+  const key = ALSTimer.key(current, s.title); const wrap = node('div', 'tpill-wrap');
+  const pill = node('button', 'tpill'); pill.type = 'button'; pill.setAttribute('aria-expanded', 'false'); pill.setAttribute('aria-label', 'Assignment timer: open the controls');
+  const face = node('span', 'tpill-face', '00:00'); pill.append(node('span', 'tpill-ico', '⏱'), face);
+  const pop = node('div', 'tpill-pop'); pop.hidden = true;
+  pop.append(ALSTimer.mount({ key, defaultSec: 0, minutes: true, bar: true, doneText: 'TIME',
+    onDone: () => notify('Time is up — this assignment ends now'), onEmpty: () => notify('Set the minutes first, then press Start.'), signal: slideController.signal }));
+  const toggle = open => { pop.hidden = !open; pill.setAttribute('aria-expanded', String(open)); if (open) pop.querySelector('input')?.focus(); };
+  pill.addEventListener('click', e => { e.stopPropagation(); toggle(pop.hidden); });
+  pop.addEventListener('click', e => e.stopPropagation());
+  document.addEventListener('click', () => toggle(false), { signal: slideController.signal });
+  const paint = () => { const t = ALSTimer.read(key, 0); const l = ALSTimer.left(t);
+    face.textContent = t.total > 0 && l === 0 ? 'TIME' : ALSTimer.fmt(l);
+    pill.classList.toggle('running', t.running); pill.classList.toggle('late', t.total > 0 && l > 0 && l <= 60); pill.classList.toggle('done', t.total > 0 && l === 0); };
+  paint(); const iv = setInterval(paint, 500); slideController.signal.addEventListener('abort', () => clearInterval(iv));
+  wrap.append(pill, pop); return wrap;
+}
+function renderAssignment(stage, s) {
+  const { label, title } = assignmentLabel(s);
+  const head = node('section', 'heading asg-head'); const top = node('div', 'heading-top'); const eyebrow = node('p', 'eyebrow');
+  eyebrow.append(node('span', 'type-chip', label));
+  if (isHidden(current)) eyebrow.append(node('span', 'hidden-chip', 'Hidden · H to show'));
+  const right = node('div', 'asg-top-right'); right.append(timerPill(s), node('p', 'slide-count', String(current + 1) + ' / ' + slides.length));
+  top.append(eyebrow, right); head.append(top, node('h1', null, title));
+  if (s.subtitle) head.append(node('p', 'subtitle', s.subtitle));
+  stage.append(head);
+  const body = node('div', 'asg-body'); const main = node('div', 'asg-main');
+  const st = loadState(); const done = Array.isArray(st.done) ? st.done.slice() : [];
+  const ol = node('ol', 'asg-steps');
+  (s.steps || []).forEach((t, i) => {
+    const li = node('li', 'asg-step' + (done[i] ? ' done' : '')); li.style.setProperty('--i', i); li.tabIndex = 0;
+    li.append(node('span', 'asg-num', String(i + 1)), node('span', 'asg-text', t));
+    const flip = () => { done[i] = !done[i]; li.classList.toggle('done', !!done[i]); saveState({ ...loadState(), done }); };
+    li.addEventListener('click', flip); li.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); } });
+    ol.append(li);
+  });
+  main.append(ol);
+  if (s.expected) { const p = node('p', 'asg-done'); p.append(node('span', 'asg-done-k', 'Done when'), node('span', null, s.expected)); main.append(p); }
+  body.append(main);
+  const v = s.visual || {}; const side = node('aside', 'asg-side'); side.append(node('p', 'asg-side-k', v.shotLabel || 'What it looks like'));
+  if (v.shot) { const f = node('figure', 'asg-shot'); const img = document.createElement('img'); img.src = v.shot; img.alt = ''; f.append(img); side.append(f); }
+  else if (v.cardImages) { const row = node('div', 'asg-thumbs'); v.cardImages.forEach((src, i) => { const f = node('figure', 'thumb'); const img = document.createElement('img'); img.src = src; img.alt = ''; f.append(img, node('figcaption', null, s.cards?.[i]?.title || '')); row.append(f); }); side.append(row); }
+  else if (s.cards?.length) {
+    const mini = node('div', 'slide-main asg-mini'); const grid = node('div', 'cards one-col'); s.cards.forEach((c, i) => grid.append(renderCard(c, i))); mini.append(grid); side.append(mini);
+    body.append(side); stage.append(body);
+    renderVisual(stage, body, mini, { ...s, visual: { ...v, bot: undefined, compact: undefined, cardImages: undefined } });
+    return;
+  }
+  body.append(side); stage.append(body);
+}
+
 function render() {
   slideController?.abort(); slideController = new AbortController();
   const s = slides[current]; const type = slideType(s);
@@ -771,6 +828,7 @@ function render() {
   document.body.dataset.opener = s.visual?.opener || '';
   document.title = s.title + ' · Aetherlink classroom';
   const stage = $('stage'); stage.replaceChildren();
+  if (type === 'practice' && s.layout === 'exercise') { renderAssignment(stage, s); finishRender(s); return; }
   if (type === 'practice') {
     const banner = node('div', 'assignment-banner');
     banner.append(node('span', 'dot'), document.createTextNode('Assignment in progress'));
@@ -798,6 +856,9 @@ function render() {
       s.visual.cardImages.forEach((src, i) => { const f = node('figure', 'thumb'); const img = document.createElement('img'); img.src = src; img.alt = ''; f.style.setProperty('--i', i); f.append(img, node('figcaption', null, s.cards[i]?.title || '')); row.append(f); });
       gal.append(row); const t = instructions.querySelector(':scope > .timer'); if (side && t) t.before(gal); else (side ? instructions : main).append(gal); }
   }
+  finishRender(s);
+}
+function finishRender(s) {
   $('count').textContent = String(current + 1).padStart(2, '0') + ' / ' + slides.length;
   renderProgress();
   $('prev').disabled = current === 0; $('next').disabled = current === slides.length - 1;

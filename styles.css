@@ -1128,3 +1128,43 @@ html.embed body{min-height:100vh}
 .timer .timer-controls button{min-height:34px;padding:.35rem .65rem;font-size:.85rem}
 .timer .timer-field input{min-height:34px}
 .cards.one-col.full-col{grid-template-columns:minmax(0,1fr)}
+
+/* ==========================================================================
+   Assignment slides: one label, big steps, a picture of the result,
+   and the timer as a pill in the top-right corner (click for controls).
+   ========================================================================== */
+.asg-head .heading-top{align-items:center}
+.asg-head h1{margin-top:.1rem}
+.asg-top-right{display:flex;align-items:center;gap:1rem}
+.tpill-wrap{position:relative}
+.tpill{display:inline-flex;align-items:center;gap:.55rem;min-height:0;padding:.4rem 1rem .4rem .8rem;border-radius:999px;border:2px solid transparent;background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(105deg,var(--aether-purple),var(--aether-orange)) border-box;color:var(--text);font:inherit;font-weight:900;font-size:clamp(1.35rem,2.2vw,1.9rem);letter-spacing:.03em;font-variant-numeric:tabular-nums;cursor:pointer;line-height:1}
+.tpill-ico{font-size:.8em;opacity:.8}
+.tpill.running .tpill-ico{animation:tpill-tick 1s steps(2) infinite}
+@keyframes tpill-tick{50%{opacity:.25}}
+.tpill.late{color:#ff5a5a;animation:timer-pulse 1s ease-in-out infinite}
+.tpill.done{color:#ff5a5a}
+.tpill-pop{position:absolute;right:0;top:calc(100% + .6rem);z-index:30;width:min(430px,86vw)}
+.tpill-pop[hidden]{display:none}
+.tpill-pop .timer{margin:0;box-shadow:0 18px 40px rgba(0,0,0,.45)}
+.asg-body{display:grid;grid-template-columns:minmax(0,2fr) minmax(240px,1fr);gap:clamp(1rem,2.6vw,2.2rem);align-items:start;margin-top:.4rem}
+.asg-steps{list-style:none;margin:0;padding:0;display:grid;gap:clamp(.55rem,1.3vh,.9rem)}
+.asg-step{display:flex;gap:1rem;align-items:center;padding:clamp(.75rem,1.8vh,1.15rem) 1.3rem;border-radius:16px;background:var(--surface);border:1px solid var(--border);cursor:pointer;font-size:clamp(1.15rem,2.05vw,1.65rem);font-weight:800;line-height:1.28;animation:enter .45s both;animation-delay:calc(var(--i) * .08s);transition:opacity .2s,border-color .2s}
+.asg-step:hover{border-color:color-mix(in srgb,var(--aether-orange) 60%,var(--border))}
+.asg-num{flex:0 0 auto;display:grid;place-items:center;width:2.1em;height:2.1em;border-radius:50%;background:linear-gradient(135deg,var(--aether-purple),var(--aether-orange));color:#fff;font-size:.8em;font-weight:900}
+.asg-step.done{opacity:.5}
+.asg-step.done .asg-num{background:var(--ok);color:var(--ink)}
+.asg-step.done .asg-text{text-decoration:line-through;text-decoration-thickness:2px}
+.asg-done{margin:1.1rem 0 0;display:flex;gap:.8rem;align-items:baseline;flex-wrap:wrap;font-size:clamp(1rem,1.55vw,1.3rem);font-weight:700;color:var(--text)}
+.asg-done-k{font-size:.72em;letter-spacing:.12em;text-transform:uppercase;font-weight:900;color:var(--aether-orange)}
+.asg-side{background:var(--surface2);border:1px dashed var(--border);border-radius:16px;padding:1rem 1rem 1.1rem}
+.asg-side-k{margin:0 0 .7rem;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:900}
+.asg-shot{margin:0}
+.asg-shot img{display:block;width:100%;max-height:min(52vh,470px);object-fit:contain;object-position:top;border-radius:10px}
+.asg-thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+.asg-thumbs .thumb{margin:0}
+.asg-thumbs img{width:100%;border-radius:10px;display:block}
+.asg-thumbs figcaption{font-size:.72rem;color:var(--muted);text-align:center;margin-top:.3rem}
+.asg-mini{font-size:.82em}
+.asg-mini .cards{gap:.6rem}
+.asg-mini .card{padding:.8rem .9rem}
+@media(max-width:900px){.asg-body{grid-template-columns:1fr}}
