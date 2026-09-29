@@ -1180,3 +1180,5 @@ html.embed body{min-height:100vh}
 .tpill-controls .timer-field input{width:3.4rem;min-height:34px;font-size:1rem}
 .tpill-controls .timer-play{min-width:6.2rem}
 .asg-head .heading-top{flex-wrap:nowrap}
+.asg-steps.many{gap:clamp(.4rem,.9vh,.6rem)}
+.asg-steps.many .asg-step{padding:clamp(.5rem,1.1vh,.75rem) 1.1rem;font-size:clamp(1.02rem,1.65vw,1.3rem)}

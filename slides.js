@@ -707,7 +707,7 @@ Check: [how I will verify your answer; mark anything you cannot confirm as OPEN]
 
 Explain what the application does, how it is structured and how I can verify your explanation. Support your claims with evidence from the files. Mark anything you cannot confirm as OPEN.`,
   keyPoints: ["Everyone pastes the same prompt", "You run it live on screen too", "Point out: reads, tools, evidence, OPEN", "Nothing changes: read-only", "Live run fails: press B for plan B"],
-  notes: "Everyone pastes this prompt into their own Claude Code (Example prompt, top right, copies it) and you run it live on the projector at the same time, so people can compare. While it runs, narrate what you see: it reads files, runs commands, builds up context, ties claims to evidence, marks OPEN, and changes nothing. Before class, run this exact prompt once on your own machine. If your live run fails (no network, no auth, a crash), say so plainly and press B for the captured run, then walk through it as if it were live; the teaching point survives either way. Participants go deeper into the same repo in Assignment 1 after lunch."
+  notes: "Everyone pastes this prompt into their own Claude Code (Example prompt, top right, copies it) and you run it live on the projector at the same time, so people can compare. While it runs, narrate what you see: it reads files, runs commands, builds up context, ties claims to evidence, marks OPEN, and changes nothing. Before class, run this exact prompt once on your own machine. If your live run fails (no network, no auth, a crash), say so plainly and press B for the captured run, then walk through it as if it were live; the teaching point survives either way. After lunch, in Assignment 1, they work with Claude Code on their own for the first time."
 },
 
 { // Slide 37
@@ -901,25 +901,27 @@ Explain what the application does, how it is structured and how I can verify you
 /* DAY 1 — Assignment block 1                                              */
 /* ---------------------------------------------------------------------- */
 
-{ // Slide 47
-  title: "Assignment 1: Go deeper in the repo",
+{ // Slide 0
+  title: "Assignment 1: Ask Claude about the project",
   kicker: "DAY 1 · ASSIGNMENT 1",
-  subtitle: "This morning was a first look. Now map the parts you'll change this afternoon.",
+  subtitle: "Your first time working with Claude Code on your own. You only ask questions; nothing changes.",
   type: "practice",
   layout: "exercise",
   cards: [
-    { title: "Deliver", body: "where the data lives\nhow to start and validate\nrisky files\nOPEN questions" }
+    { title: "You end up with", body: "where the data lives\nhow to start and check the app\nwhich files are risky to change\na list of OPEN questions" }
   ],
-  stepsHeading: "Steps:",
   steps: [
-    "Find where profile and glossary data live.",
-    "Find the start and validate commands.",
-    "Flag files that could break things.",
-    "Mark what you can't confirm as OPEN."
+    "In the project folder, type claude.",
+    "Press Shift+Tab until you see “plan mode”.",
+    "Ask: “Where are the profiles and the glossary stored?”",
+    "Ask: “How do I start this app and check it works?”",
+    "Ask: “Which files could break the app if I change them?”",
+    "Write down what Claude isn't sure about as OPEN."
   ],
-  expected: "A short, evidence-based map of the parts you'll change. No files changed.",
-  keyPoints: ["Builds on this morning's first look", "Still read-only: change nothing", "Timer: set minutes, press ▶ Start", "Verbal warning at 5 minutes left", "Early finishers: dig into one OPEN"],
-  notes: "Everyone explored the repo this morning; this goes deeper on exactly the parts they will change in Assignments 2 to 4: where profile and glossary data live (and that there is no profiles data yet), the start and validate commands (running npm run validate is fine, it changes nothing), files that could break something if changed carelessly, and anything unverifiable marked OPEN rather than guessed. Still read-only: no file changes. Set the minutes on the timer and press Start so everyone sees it. At 5 minutes remaining, give a verbal warning. If someone finishes early, have them dig into one OPEN question."
+  expected: "You can explain where things live and how to run the app. No files changed.",
+  prompt: "Don't change anything. Answer these questions about this project, and show which files you found each answer in:\n\n1. Where are the profiles and the glossary stored?\n2. How do I start this app and check it works?\n3. Which files could break the app if I change them?\n\nMark anything you are not sure about as OPEN.",
+  keyPoints: ["First time on their own in Claude Code", "Plan mode: Shift+Tab, nothing changes", "Ask the three questions literally", "Answers come with file names", "Collect OPEN items; timer: press ▶ Start"],
+  notes: "This is the room's first time working with Claude Code on their own, so keep it concrete: the steps say literally what to type. Show it once on the projector before they start: type claude in the project folder, press Shift+Tab until the bottom of the screen says plan mode (so Claude can look but not change anything), then type the first question as a normal sentence and press Enter. Point out that Claude answers with file names as evidence, and that anything it is unsure about should be written down as OPEN. The three questions are also in the Example prompt panel as one prompt to copy. What a good run covers: where profile and glossary data live (and that there is no profiles data yet), the start and validate commands (npm start, npm run validate), files that could break something if changed carelessly (server.js, the data files, public/app.js) and a short OPEN list. Set the minutes on the timer and press Start. Expect basic terminal questions in the first five minutes; walk the room. At 5 minutes remaining, give a verbal warning. Early finishers: ask Claude one of their OPEN questions."
 },
 
 /* ---------------------------------------------------------------------- */

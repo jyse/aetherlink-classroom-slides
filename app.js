@@ -797,7 +797,7 @@ function renderAssignment(stage, s) {
   stage.append(head);
   const body = node('div', 'asg-body'); const main = node('div', 'asg-main');
   const st = loadState(); const done = Array.isArray(st.done) ? st.done.slice() : [];
-  const ol = node('ol', 'asg-steps');
+  const ol = node('ol', 'asg-steps' + ((s.steps || []).length > 4 ? ' many' : ''));
   (s.steps || []).forEach((t, i) => {
     const li = node('li', 'asg-step' + (done[i] ? ' done' : '')); li.style.setProperty('--i', i); li.tabIndex = 0;
     li.append(node('span', 'asg-num', String(i + 1)), node('span', 'asg-text', t));
