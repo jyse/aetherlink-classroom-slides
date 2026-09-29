@@ -1127,3 +1127,4 @@ html.embed body{min-height:100vh}
 .timer .timer-controls{justify-content:flex-end}
 .timer .timer-controls button{min-height:34px;padding:.35rem .65rem;font-size:.85rem}
 .timer .timer-field input{min-height:34px}
+.cards.one-col.full-col{grid-template-columns:minmax(0,1fr)}

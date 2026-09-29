@@ -564,6 +564,7 @@ function renderVisual(stage, body, main, s) {
   if (v.pillarIcons) main.querySelectorAll('.pillar').forEach((p, i) => p.prepend(svg('0 0 24 24', PILLAR_ICONS[i % PILLAR_ICONS.length], 'pillar-icon')));
   if (v.stagger) main.classList.add('stagger-' + v.stagger);
   if (v.compact) main.classList.add('compact-cards');
+  if (v.oneCol) main.querySelector('.cards')?.classList.add('one-col', 'full-col');
   if (v.hero != null) { main.classList.add('has-hero'); main.querySelectorAll('.card')[v.hero]?.classList.add('card-hero'); }
   let popRow = null, nest = null; const ex = renderExtras(stage, main, s, v);
   if (v.art === 'nested') nest = buildNest(main, s);
