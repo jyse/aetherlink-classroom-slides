@@ -1067,20 +1067,20 @@ Explain what the application does, how it is structured and how I can verify you
   notes: "Short re-welcome — most of the room was here yesterday, so this can be brief. Point at the day's shape (warm-up → recap → context → skills → bounded work → game → MCP → closing). The warm-up comes first: Stekkie, LibreChat bio, the action-figure avatar and putting it on your profile — then the retrieval check."
 },
 
-{ // Slide 55
+{ // Slide 0
   title: "Built with AI: Stekkie",
   kicker: "DAY 2 · SHOW & TELL",
-  subtitle: "My own AI garden coach — vibe coded, live at app.stekkie.ai.",
+  subtitle: "Constance's own AI garden coach — vibe coded, live at app.stekkie.ai.",
   type: "context",
-  visual: { opener: 'showcase', image: 'assets/stekkie.webp', imageLink: 'app.stekkie.ai', stagger: 'pop', compact: true },
+  visual: { opener: 'showcase', image: 'assets/stekkie.webp', imageLink: 'app.stekkie.ai', stagger: 'pop', compact: true, stepThrough: true },
   cards: [
-    { title: "An idea", body: "A garden coach: what to sow, when to harvest, what's wrong with a leaf." },
-    { title: "A conversation with AI", body: "Built by describing what I wanted — no traditional development team." },
-    { title: "A live app", body: "Real users, real data, real bugs to fix." }
+    { title: "Constance's idea", body: "Constance loves gardening, so she built Stekkie: her own AI garden coach." },
+    { title: "What Stekkie helps with", body: "Sowing, harvesting, the weather, and spotting what's wrong with a plant from a photo. Plus a map of her garden, her planter beds and a garden logbook." },
+    { title: "Built with AI", body: "Made by describing what she wanted, without a traditional development team. Live, with real users and real bugs to fix." }
   ],
   tagline: "Vibe coding gets you a working app. Today is about making it reliable.",
-  keyPoints: ["Constance demos Stekkie live","3 to 5 minutes, no more","Show one flow end to end","Land it: trust needs today's material","Site fails: tell story with image"],
-  notes: "Constance demos Stekkie live (app.stekkie.ai) — 3 to 5 minutes, no more. Show one flow end to end, e.g. plant something and harvest it. Then land the tagline: vibe coding got this app live, but what makes it trustworthy is exactly today's material — context, repeatable methods, bounded work and checks. If the site or wifi fails, stay on this slide and tell the story with the image."
+  keyPoints: ["Constance's project: she loves gardening", "Let Constance show it, 3 to 5 minutes", "One flow end to end", "Land it: trust needs today's material", "Site fails: tell the story with the image"],
+  notes: "Stekkie is Constance's project: she loves gardening and built Stekkie, her own AI garden coach, by describing what she wanted to AI. If Constance is in the room, let her show it herself (app.stekkie.ai), 3 to 5 minutes, one flow end to end. The app's own start screen says it helps with sowing, harvesting, the weather and plant diagnosis from a photo. What you can see in its menu: a dashboard, Mijn Tuin (draw a map of your garden: grass, soil, tiles, paths, water, decking), Bakken (planter beds), Logboek (a garden logbook), Seizoen (the seasons) and a community page, plus the local weather and a chat helper. If you present it without her, stick to what the screen shows and ask the room what they would build for their own hobby. Then land the tagline: vibe coding got this app live, but what makes it trustworthy is exactly today's material: context, repeatable methods, bounded work and checks. If the site or wifi fails, stay on this slide and tell the story with the image."
 },
 
 { // Slide 56
