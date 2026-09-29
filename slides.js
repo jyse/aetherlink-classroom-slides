@@ -143,7 +143,7 @@ window.SLIDES = [
   kicker: "WELCOME · AGREEMENTS",
   subtitle: "So we get the most out of these two days.",
   type: "context",
-  visual: { opener: 'agree', stagger: 'pop', bot: 'point', place: 'beside' },
+  visual: { opener: 'agree', stagger: 'pop', stepThrough: true, bot: 'point', place: 'beside' },
   cards: [
     { title: "Be on time", body: "" },
     { title: "Be open-minded", body: "" },
@@ -166,6 +166,34 @@ window.SLIDES = [
     { title: "Ryan Lisse", body: "" }
   ],
   notes: "Each trainer introduces themselves in one or two sentences: who you are and what you do in this programme. Keep it short — 'we are what we do': the room gets to know you over the next two days."
+},
+
+{ // Slide 4
+  title: "Introduce yourself",
+  kicker: "WELCOME · INTRODUCTIONS",
+  subtitle: "One round, about 30 seconds each.",
+  type: "context",
+  visual: { stagger: 'pop', stepThrough: true, bot: 'wave', place: 'beside' },
+  cards: [
+    { title: "Your name", body: "" },
+    { title: "Your role", body: "What you do day to day." },
+    { title: "Your team", body: "Who you work with." }
+  ],
+  notes: "Go round the room once: name, role and team, about 30 seconds each. Start with yourself to show the length you mean. Write the roles and teams on the flipchart; you will use them later, when you ask which work could improve and when the room picks features to build."
+},
+
+{ // Slide 4
+  title: "What do you bring?",
+  kicker: "WELCOME · EXPECTATIONS",
+  subtitle: "Before we start: your questions and your hopes.",
+  type: "context",
+  visual: { stepThrough: true, bot: 'think', place: 'beside', tool: 'thought' },
+  cards: [
+    { title: "Questions you already have", body: "What do you want answered by the end of these two days?" },
+    { title: "What you hope to learn", body: "What would make these days worth it for you and your team?" }
+  ],
+  tagline: "We come back to these at the end of Day 2.",
+  notes: "Give people a minute to think, then collect answers on the flipchart: one column for questions, one for hopes. Don't answer the questions now; say when in the programme they come up, or park them. Keep the sheet on the wall and come back to it in the final reflection at the end of Day 2."
 },
 
 { // Slide 5
@@ -200,18 +228,19 @@ window.SLIDES = [
 { // Slide 7
   title: "Programme outcome",
   kicker: "DAY 1 · WELCOME",
-  subtitle: "By the end of the programme, participants can help design, build and review an AI-supported workflow that other people can understand and reuse.",
+  subtitle: "By the end of the programme, you can help design, build and review an AI-supported workflow for your team: one that solves a real team problem and that others can understand and reuse.",
   type: "context",
   visual: { bot: 'head', place: 'under', tool: 'toolbox', pillarIcons: true,
-    highlight: [{ in: 'subtitle', text: 'understand and reuse', tone: 'orange' }] },
+    highlight: [{ in: 'subtitle', text: 'for your team', tone: 'purple' }, { in: 'subtitle', text: 'understand and reuse', tone: 'orange' }] },
   layout: "pillars",
   items: [
     { label: "Useful" },
     { label: "Safe" },
     { label: "Verifiable" },
-    { label: "Reusable" }
+    { label: "Reusable" },
+    { label: "For your team" }
   ],
-  notes: "Read the subtitle exactly as written — it's the north star for both teaching days. The four words are the test you'll come back to throughout: is what we built useful, safe, verifiable and reusable?"
+  notes: "Read the subtitle as written — it's the north star for both teaching days. Stress the team part: the goal is not a personal trick but a workflow that solves a real problem for your team and that colleagues can pick up. The five words are the test you'll come back to throughout: is what we built useful, safe, verifiable, reusable, and does it work for the team?"
 },
 
 { // Slide 8
@@ -233,7 +262,7 @@ window.SLIDES = [
   kicker: "DAY 1 · WELCOME",
   subtitle: "By 16:00, you can use Claude Code to:",
   type: "context",
-  visual: { stagger: 'pop' },
+  visual: { stagger: 'pop', stepThrough: true },
   cards: [
     { title: "Explore", body: "understand an existing project" },
     { title: "Plan", body: "make a plan for a small change" },
@@ -253,7 +282,7 @@ window.SLIDES = [
   kicker: "DAY 1 · PART 1 · AI FOUNDATIONS",
   subtitle: "Not one technology — a broad field.",
   type: "concept",
-  visual: { hero: 0, popOut: 1, bot: 'head', place: 'popout',
+  visual: { hero: 0, popOut: 1, bot: 'head', place: 'popout', stepThrough: true,
     highlight: [{ in: 'card:0', text: 'broad field', tone: 'purple' }, { in: 'card:0', text: 'human intelligence', tone: 'orange' }] },
   cards: [
     { title: "Definition", body: "Artificial intelligence is the broad field of building systems that perform tasks associated with human intelligence." },
@@ -270,13 +299,55 @@ window.SLIDES = [
   layout: "steps",
   visual: { art: 'nested', bot: 'point', place: 'nest', stepKeys: true },
   items: [
-    { label: "Artificial intelligence", caption: "The broad field." },
-    { label: "Machine learning", caption: "Finds patterns from data." },
-    { label: "Deep learning", caption: "Learns with many-layered neural networks." },
-    { label: "Generative AI", caption: "Creates new content." },
-    { label: "Large language models", caption: "Generate and process language." }
+    { label: "Artificial intelligence", caption: "The broad field: machines doing tasks we link to human intelligence." },
+    { label: "Machine learning", caption: "AI that learns patterns from data instead of following hand-written rules." },
+    { label: "Deep learning", caption: "Machine learning with many-layered neural networks." },
+    { label: "Generative AI", caption: "Deep learning that creates new text, images, audio or code." },
+    { label: "Large language models", caption: "Generative AI for language: text in, text out." }
   ],
-  notes: "Click through the five rings live so the nesting is visible: each term sits inside the one before it. Deep learning is the layer people usually skip — it is why today's generative AI works: the models behind it are deep neural networks. This is scaffolding for slide 12, not a separate lesson."
+  notes: "Click through the five rings live so the nesting is visible: each term sits inside the one before it. Flipchart: draw five circles inside each other, biggest to smallest, and write one everyday example next to each: AI, a chess computer or route planner; machine learning, a spam filter; deep learning, face unlock on a phone; generative AI, an image generator; LLM, ChatGPT or Claude. Deep learning is the layer people usually skip, yet it is why today's generative AI works: the models behind it are deep neural networks. The next slides give each ring its own definition."
+},
+
+{ // Slide 11
+  title: "Machine learning",
+  kicker: "DAY 1 · PART 1 · AI FOUNDATIONS",
+  subtitle: "Learning from examples instead of following rules.",
+  type: "concept",
+  visual: { hero: 0, popOut: 1, bot: 'head', place: 'popout', stepThrough: true,
+    highlight: [{ in: 'card:0', text: 'learns patterns from example data', tone: 'orange' }] },
+  cards: [
+    { title: "Definition", body: "Machine learning is a way of building AI where the system learns patterns from example data, instead of a person writing every rule." },
+    { title: "Examples", body: "spam filters\nproduct recommendations\nfraud detection\nforecasting" }
+  ],
+  notes: "One sentence to land: nobody writes a rule for every spam email; the filter learns from thousands of examples of spam and normal mail. Fraud detection is a good example for this room. Contrast it with the chess computer from the rings: that one can follow rules someone wrote, which is AI but not machine learning."
+},
+
+{ // Slide 11
+  title: "Deep learning",
+  kicker: "DAY 1 · PART 1 · AI FOUNDATIONS",
+  subtitle: "Machine learning with many layers.",
+  type: "concept",
+  visual: { hero: 0, popOut: 1, bot: 'head', place: 'popout', stepThrough: true,
+    highlight: [{ in: 'card:0', text: 'many layers', tone: 'orange' }] },
+  cards: [
+    { title: "Definition", body: "Deep learning is machine learning that uses neural networks with many layers, so it can learn complex patterns from large amounts of data such as images, sound and text." },
+    { title: "Examples", body: "recognising faces in photos\nspeech to text\ntranslation\nthe models behind generative AI" }
+  ],
+  notes: "Keep it light: no maths. The word “deep” just means many layers stacked on top of each other, each one picking up a slightly more complex pattern. The last example is the one that matters for today: generative AI and LLMs are deep learning models."
+},
+
+{ // Slide 11
+  title: "Generative AI",
+  kicker: "DAY 1 · PART 1 · AI FOUNDATIONS",
+  subtitle: "AI that creates something new.",
+  type: "concept",
+  visual: { hero: 0, popOut: 1, bot: 'head', place: 'popout', stepThrough: true,
+    highlight: [{ in: 'card:0', text: 'create new content', tone: 'orange' }] },
+  cards: [
+    { title: "Definition", body: "Generative AI uses deep learning models to create new content, such as text, images, audio or code, based on patterns learned from existing examples." },
+    { title: "Examples", body: "drafting an email\ncreating an image from a description\nsummarising a document\nsuggesting code" }
+  ],
+  notes: "Ask who has used one of these examples this week; most hands go up. Then plant the caution that the next slide makes explicit: new content is not the same as correct content. LLMs are the text-and-language part of generative AI."
 },
 
 { // Slide 12
@@ -310,19 +381,52 @@ window.SLIDES = [
 },
 
 { // Slide 14
-  title: "Tokens and context windows",
+  title: "Tokens",
+  kicker: "DAY 1 · PART 1 · AI FOUNDATIONS",
+  subtitle: "How a model reads and writes text.",
+  type: "concept",
+  visual: { stepThrough: true,
+    highlight: [{ in: 'tagline', text: 'not the same as a word', tone: 'orange' }] },
+  cards: [
+    { title: "Definition", body: "A token is a small piece of text that a model reads and writes: often a whole word, sometimes part of a word or a single character." },
+    { title: "How it works", body: "your text → tokens → numbers → the model" },
+    { title: "Why it matters", body: "Context limits, usage limits and costs are all counted in tokens." }
+  ],
+  tagline: "A token is not the same as a word.",
+  notes: "Flipchart: write one sentence and draw lines where a model might cut it into pieces; common words stay whole, longer or rarer words get split. Then say why it matters: the model never sees your words, only tokens turned into numbers, and everything is counted in tokens: how much fits, how much you can use, what it costs. Rule of thumb from Anthropic's docs: one Claude token is about 3.5 English characters, so a page of text is a few hundred tokens."
+},
+
+{ // Slide 14
+  title: "Context windows",
   kicker: "DAY 1 · PART 1 · AI FOUNDATIONS",
   subtitle: "The model can only consider so much at once.",
   type: "concept",
   visual: { art: 'window',
     highlight: [{ in: 'tagline', text: 'Relevant', tone: 'orange' }, { in: 'tagline', text: 'current', tone: 'purple' }, { in: 'tagline', text: 'permitted', tone: 'mark' }] },
   cards: [
-    { title: "Tokens", body: "Models process text as tokens." },
     { title: "Context window", body: "A context window limits how much information the model can consider at once." },
+    { title: "What fills it", body: "Your prompt, the conversation so far, files and tool results, and the answer itself." },
     { title: "Distraction", body: "Irrelevant context can distract from the task." }
   ],
   tagline: "Relevant, current and permitted context works best.",
-  notes: "The tagline is the takeaway to repeat: relevant, current, permitted. It resurfaces almost word-for-word in Day 2's CLAUDE.md and context slides."
+  notes: "Flipchart: draw one box as the window and keep adding blocks as the conversation grows: prompt, answer, a pasted file, more answers, until it is full. Irrelevant blocks take space and pull attention away from what matters. The tagline is the takeaway to repeat: relevant, current, permitted. It resurfaces almost word-for-word in Day 2's CLAUDE.md and context slides."
+},
+
+{ // Slide 14
+  title: "Quiz: tokens and context",
+  kicker: "DAY 1 · QUIZ",
+  subtitle: "Which statement is true?",
+  type: "quiz",
+  visual: { quiz: { answer: 1 }, bot: 'stretchLeft', place: 'pointer', pointAt: 1 },
+  cards: [
+    { title: "A", body: "A token is always exactly one word." },
+    { title: "B", body: "The conversation so far and the answer both count toward the context window." },
+    { title: "C", body: "Adding more context always improves the answer." },
+    { title: "D", body: "The context window has no limit." }
+  ],
+  check: "Answer: B",
+  keyPoints: ["Vote first", "Answer: B", "C links back to “distraction”"],
+  notes: "Vote first, then press → to strike the wrong answers. The answer is B: everything in the request counts, including the model's own answer. A and D are the two slides you just saw. If someone argues for C, point back to the distraction card: irrelevant context takes space and attention."
 },
 
 { // Slide 15
@@ -330,11 +434,9 @@ window.SLIDES = [
   kicker: "DAY 1 · PART 1 · AI FOUNDATIONS",
   subtitle: "Pick the model that fits the task.",
   type: "concept",
-  visual: { cardArt: { 0: 'sliders', 1: 'thermo' },
-    highlight: [{ in: 'card:1', text: 'does not make an answer more truthful', tone: 'orange' }] },
+  visual: { cardArt: { 0: 'sliders' } },
   cards: [
-    { title: "Model choice", body: "Different models offer different balances of capability, speed and cost." },
-    { title: "Temperature", body: "Temperature influences variation in generated responses. It does not make an answer more truthful." }
+    { title: "Model choice", body: "Different models offer different balances of capability, speed and cost." }
   ],
   notes: "Keep this slide brief — participants do not configure model APIs during Day 1. Thirty seconds, then move on."
 },
@@ -357,31 +459,52 @@ window.SLIDES = [
 },
 
 { // Slide 17
-  title: "A reliable request",
+  title: "Prompt",
   kicker: "DAY 1 · PART 1 · AI FOUNDATIONS",
-  subtitle: "A useful request gives Claude:",
+  subtitle: "What you give the model to work with.",
+  type: "concept",
+  visual: { keyLine: 1, stamp: 'CLEAR', bot: 'head', place: 'key',
+    highlight: [{ in: 'card:1', text: 'unless the prompt tells it', tone: 'mark' }] },
+  cards: [
+    { title: "Definition", body: "A prompt is everything you send the model: your instruction or question, plus any background, examples or documents you add." },
+    { title: "Key line", body: "The model does not know your situation unless the prompt tells it." }
+  ],
+  notes: "Keep it short: a prompt is more than the question you type, it is everything you send along with it. The key line is the bridge to the next slide: because the model only knows what you tell it, a good prompt has a fixed set of ingredients."
+},
+
+{ // Slide 17
+  title: "A reliable prompt",
+  kicker: "DAY 1 · PART 1 · AI FOUNDATIONS",
+  subtitle: "A template you can copy into Claude Code or ChatGPT today.",
   type: "concept",
   visual: { checklist: 0, bot: 'point', place: 'left' },
   cards: [
-    { title: "Checklist", body: "the intended outcome\nrelevant context\nconstraints\nsuccess criteria\nthe required output\na validation method" }
+    { title: "Template", body: "Goal: the result you want\nContext: what the model needs to know\nConstraints: what it must not do or change\nDone when: how you recognise a good result\nOutput: the format you want back\nCheck: how you will verify it" }
   ],
-  notes: "This is the checklist behind every well-formed prompt panel in the deck — point forward to it as the pattern participants will see repeated in every assignment."
+  tagline: "Press “Example prompt” to copy the template.",
+  prompt: `Goal: [the result I want]
+Context: [who I am, the project or situation, and what you need to know]
+Constraints: [what you must not do or change]
+Done when: [how I will recognise a good result]
+Output: [the format I want back, e.g. a short plan, a table or 5 bullets]
+Check: [how I will verify your answer; mark anything you cannot confirm as OPEN]`,
+  notes: "This is the pattern behind every assignment prompt in the deck. Walk through the six lines once, then open “Example prompt” (top right) and show that it copies. Invite people to paste it into whatever they use today, Claude Code or ChatGPT, and fill it in for one real task from their own work during the next break. It works in any chat tool: the template only makes sure the model gets the goal, the context, the limits and a way to check the answer."
 },
 
 { // Slide 18
   title: "Knowledge check",
-  kicker: "DAY 1 · PART 1 · KNOWLEDGE CHECK",
+  kicker: "DAY 1 · QUIZ",
   subtitle: "Which statement is most accurate?",
-  type: "review",
+  type: "quiz",
   visual: { quiz: { answer: 1 }, bot: 'stretchLeft', place: 'pointer', pointAt: 1 },
   cards: [
     { title: "A", body: "An LLM retrieves a guaranteed correct answer." },
     { title: "B", body: "An LLM generates a response that still needs verification." },
     { title: "C", body: "More context always produces a better answer." },
-    { title: "D", body: "Temperature controls factual accuracy." }
+    { title: "D", body: "A token is always exactly one word." }
   ],
   check: "Answer: B",
-  notes: "Let the room vote (show of hands or chat) before revealing the answer. If anyone argues for C, connect it back to slide 14's 'more is not automatically better' point."
+  notes: "Let the room vote (show of hands or chat) before revealing the answer. If anyone argues for C, connect it back to the context window slide: more is not automatically better. D checks the tokens slide: a token can be a word, part of a word or a single character."
 },
 
 { // Slide 19
@@ -444,7 +567,7 @@ window.SLIDES = [
   kicker: "DAY 1 · PART 2 · CLAUDE & CLAUDE CODE",
   subtitle: "Not just answering — acting toward a goal.",
   type: "concept",
-  visual: { hero: 0, popOut: 1, chipIcons: ['▶', '↻', '■', '✋'],
+  visual: { hero: 0, popOut: 1, stepThrough: true, chipIcons: ['▶', '↻', '■', '✋'],
     highlight: [{ in: 'card:0', text: 'works toward a goal', tone: 'orange' }] },
   cards: [
     { title: "Definition", body: "An AI agent works toward a goal by gathering context, choosing actions, using tools and checking results." },
@@ -458,7 +581,7 @@ window.SLIDES = [
   kicker: "DAY 1 · PART 2 · CLAUDE & CLAUDE CODE",
   subtitle: "You are using an agent — not building one (yet).",
   type: "concept",
-  visual: { popOut: 0, bot: 'head', place: 'popout', chipGrid: 3, chipIcons: ['🔍', '🗺', '✏️', '▶', '👁', '↻'],
+  visual: { popOut: 0, bot: 'head', place: 'popout', stepThrough: true, chipGrid: 3, chipIcons: ['🔍', '🗺', '✏️', '▶', '👁', '↻'],
     highlight: [{ in: 'tagline', text: 'existing agentic tool', tone: 'orange' }] },
   cards: [
     { title: "Claude Code can", body: "inspect a repository\nform a plan\nread and edit files\nrun commands and tests\ninspect results\nadjust its approach" }
@@ -530,6 +653,23 @@ Explain what the application does, how it is structured and how I can verify you
     { title: "Remained read-only", body: "Did all of this without changing anything." }
   ],
   notes: "Let the room answer the question themselves before you reveal the six points — the answer ('it could look at the real files') is the whole bridge into Part 3."
+},
+
+{ // Slide 27
+  title: "Quiz: Claude Code",
+  kicker: "DAY 1 · QUIZ",
+  subtitle: "What makes Claude Code an agentic tool?",
+  type: "quiz",
+  visual: { quiz: { answer: 1 }, bot: 'stretchLeft', place: 'pointer', pointAt: 1 },
+  cards: [
+    { title: "A", body: "It writes nicer answers than chat." },
+    { title: "B", body: "It gathers context, uses tools, acts and checks results toward a goal." },
+    { title: "C", body: "It never needs your approval." },
+    { title: "D", body: "It runs a different AI than Claude." }
+  ],
+  check: "Answer: B",
+  keyPoints: ["Vote first", "Answer: B", "Link back to the demo you just saw"],
+  notes: "Vote first, then press → to strike the wrong answers. The answer is B: gathering context, using tools, acting and checking results toward a goal is exactly what the room just watched in the demo. C is the dangerous one: Claude Code asks for approval, and the permissions and Plan Mode slide explains why that matters."
 },
 
 { // Slide 28
@@ -608,15 +748,37 @@ Explain what the application does, how it is structured and how I can verify you
 },
 
 { // Slide 32
-  title: "Working agreement",
+  title: "What does AI need to know first?",
   kicker: "DAY 1 · PART 3 · WORKING METHOD",
-  subtitle: "During the exercises, Claude must:",
+  subtitle: "Before the exercises: what would you tell a new colleague before they touch your project?",
   type: "context",
-  visual: { checklist: 0, addLine: 'add your own…' },
+  visual: { reveal: 'click', buttons: true, bot: 'think', place: 'slot' },
   cards: [
-    { title: "Our agreement", body: "investigate before changing\nshow the plan first\nmake small changes\nrun relevant checks\nshow evidence\nmark uncertainty as OPEN\nwait for human approval before committing" }
+    { title: "Who you are", body: "Your role, and what you need from this." },
+    { title: "The project", body: "What it is and where things live." },
+    { title: "The goal", body: "What “done” looks like." },
+    { title: "The limits", body: "What it must not change, and when to stop and ask." },
+    { title: "How to work", body: "Investigate first, show the plan, small changes, show evidence, mark OPEN, wait for approval." }
   ],
-  notes: "Frame this as the room's own working agreement with Claude Code, not a rule imposed from outside — ask if anyone wants to add anything before moving into the Aether Library."
+  keyPoints: ["Ask the room first", "Collect answers on the flipchart", "Then reveal one card at a time", "Last card = our working agreement"],
+  notes: "Don't show the answers yet. Ask the room: before a new colleague touches your project, what do you tell them first? Collect answers on the flipchart for a minute or two. Then reveal the cards one by one (click or →) and match them to what the room said. The last card is the working agreement for every exercise: investigate before changing, show the plan first, make small changes, run relevant checks, show evidence, mark uncertainty as OPEN and wait for human approval before committing. Frame it as the room's own agreement with Claude Code, not a rule imposed from outside."
+},
+
+{ // Slide 32
+  title: "Quiz: the working method",
+  kicker: "DAY 1 · QUIZ",
+  subtitle: "In our working method, who makes the final decision?",
+  type: "quiz",
+  visual: { quiz: { answer: 1 }, bot: 'stretchLeft', place: 'pointer', pointAt: 1 },
+  cards: [
+    { title: "A", body: "Claude Code, once the tests pass." },
+    { title: "B", body: "The human." },
+    { title: "C", body: "Whoever wrote the plan." },
+    { title: "D", body: "Nobody: the agent loop decides." }
+  ],
+  check: "Answer: B",
+  keyPoints: ["Vote first: hands up per letter", "→ strikes the wrong answers", "Answer: B, the human decides"],
+  notes: "Let the room vote before you reveal (hands up per letter). Press → to strike the wrong answers one by one. The answer is B: the human owns the goal, the boundaries and the final decision. Passing tests are evidence for that decision, not a replacement for it."
 },
 
 /* ---------------------------------------------------------------------- */
@@ -649,10 +811,10 @@ Explain what the application does, how it is structured and how I can verify you
     { title: "1 · Clone and run", body: "git clone https://github.com/jyse/aetherlink-classroom-starter.git\ncd aetherlink-classroom-starter\nnpm install\nnpm start" },
     { title: "2 · Open it", body: "Open http://localhost:3000." },
     { title: "3 · Start Claude Code", body: "In a second terminal, run:\nclaude" },
-    { title: "Expected starting state", body: "Profiles, Glossary and Library are empty — only the Game works." }
+    { title: "Expected starting state", body: "Profiles, Glossary and Library only show an example — only the Game works." }
   ],
-  prompt: "Clone https://github.com/jyse/aetherlink-classroom-starter.git, then run npm install and npm start. Open http://localhost:3000 — Profiles, Glossary and Library are empty; only the Game works. Then open a second terminal in the same folder and run claude. Put a checkmark in chat once both are running.",
-  notes: "Facilitator-led step, not self-paced — walk the room through it together and watch chat for stragglers before moving on. The GitHub repo name stays aetherlink-classroom-practice; only the product's on-screen branding is Aether Library, so don't be thrown if the clone URL doesn't match the name on screen. If someone's npm install hangs, pair them with a neighbour to keep pace rather than debugging live for everyone."
+  prompt: "Clone https://github.com/jyse/aetherlink-classroom-starter.git, then run npm install and npm start. Open http://localhost:3000 — Profiles, Glossary and Library only show an example; only the Game works. Then open a second terminal in the same folder and run claude. Put a checkmark in chat once both are running.",
+  notes: "Facilitator-led step, not self-paced — walk the room through it together and watch chat for stragglers before moving on. The repo is aetherlink-classroom-starter; the product's on-screen name is Aether Library, so don't be thrown if the clone URL doesn't match the name on screen. The Profiles, Glossary and Library pages each show a small example as a reference, but no real data yet. If someone's npm install hangs, pair them with a neighbour to keep pace rather than debugging live for everyone."
 },
 
 /* ---------------------------------------------------------------------- */
@@ -662,22 +824,21 @@ Explain what the application does, how it is structured and how I can verify you
 { // Slide 35
   title: "Assignment 1: Repository explorer",
   kicker: "DAY 1 · ASSIGNMENT 1",
-  subtitle: "Use Claude Code to understand the project without changing it.",
+  subtitle: "Understand the project without changing it.",
   type: "practice",
   layout: "exercise",
   cards: [
-    { title: "Deliver", body: "app purpose\nproject structure\nrelevant files\nstart and validate commands\nprotected areas\nOPEN questions" }
+    { title: "Deliver", body: "what the app does\nwhere things live\nhow to start and check it\nOPEN questions" }
   ],
+  stepsHeading: "Steps:",
   steps: [
-    "Explore the repository without changing anything.",
-    "Explain what the app does and how it's structured.",
-    "Find where profiles and glossary data live.",
+    "Explore the repo. Change nothing.",
+    "Explain what the app does and how it's built.",
     "Find the start and validate commands.",
-    "Flag files that could break something if changed carelessly.",
-    "Mark anything unverifiable as OPEN rather than guessing."
+    "Mark what you can't confirm as OPEN."
   ],
-  expected: "An evidence-based repository map. No code changed, and unknowns are marked OPEN rather than guessed.",
-  notes: "First solo assignment of the day — expect questions about basic terminal use in the first five minutes, that's normal. Start the timer visibly. At 5 minutes remaining, give a verbal warning. If someone finishes early, have them dig into one OPEN question rather than move ahead."
+  expected: "A short, evidence-based map of the project. No files changed.",
+  notes: "First solo assignment of the day — expect questions about basic terminal use in the first five minutes, that's normal. What a good run covers: the app's purpose, the project structure, where profile and glossary data live, the start and validate commands, files that could break something if changed carelessly, and anything unverifiable marked OPEN rather than guessed. Set the minutes on the timer and press Start so everyone sees it. At 5 minutes remaining, give a verbal warning. If someone finishes early, have them dig into one OPEN question rather than move ahead."
 },
 
 { // Slide 36
@@ -700,23 +861,22 @@ Explain what the application does, how it is structured and how I can verify you
 { // Slide 37
   title: "Assignment 2: Participant profile",
   kicker: "DAY 1 · ASSIGNMENT 2",
-  subtitle: "Add your profile — and the page that shows it.",
+  subtitle: "Add your profile, and the page that shows it.",
   type: "practice",
   visual: { badge: 0 },
   layout: "exercise",
   cards: [
-    { title: "Include", body: "name\nrole\nteam\nexperience\nlearning goal\none workflow you'd like AI to improve" }
+    { title: "Include", body: "name\nrole\nteam\nlearning goal" }
   ],
+  stepsHeading: "Steps:",
   steps: [
-    "Inspect the existing structure first.",
-    "Ask you for anything it doesn't know — no invented details.",
-    "Propose both the profile data and the page that displays it.",
-    "Show the plan before changing anything.",
-    "Leave out confidential or unnecessary personal information.",
-    "Confirm the profile is visible on the Profiles page afterward."
+    "Look at the existing structure first.",
+    "Ask me for details. Invent nothing.",
+    "Show the plan, then build it.",
+    "Check it appears on the Profiles page."
   ],
-  expected: "Your profile appears on a working Profiles page and passes validation, with the plan approved before any file changed.",
-  notes: "Watch for participants who skip straight to editing the file — redirect them back to explore/plan without being heavy-handed about it, this is the first time they'll feel the method in their own hands. Remind them explicitly: no confidential or unnecessary personal information."
+  expected: "Your profile shows on a working Profiles page.",
+  notes: "The Profiles page shows one example profile card as a reference; participants build the real page and their own entry. What a good run looks like: Claude inspects the structure first, asks for anything it doesn't know instead of inventing details, proposes both the profile data and the page that displays it, shows the plan before changing anything, and confirms the profile is visible afterwards. Useful profile fields: name, role, team, experience, learning goal and one workflow you'd like AI to improve. Watch for participants who skip straight to editing a file and redirect them to explore and plan, without being heavy-handed: this is the first time they feel the method in their own hands. Remind them explicitly: no confidential or unnecessary personal information."
 },
 
 { // Slide 38
@@ -749,45 +909,45 @@ Explain what the application does, how it is structured and how I can verify you
 /* ---------------------------------------------------------------------- */
 
 { // Slide 40
-  title: "Assignment 3: Glossary contribution",
+  title: "Assignment 3: The 20 AI terms that matter",
   kicker: "DAY 1 · ASSIGNMENT 3",
-  subtitle: "Choose one AI term and add it to the glossary.",
+  subtitle: "First in plan mode, then in auto mode. Spot the difference.",
   type: "practice",
   visual: { template: 0, templateRows: ['Term', 'Definition'] },
   layout: "exercise",
   cards: [
-    { title: "Add", body: "a plain-language definition — 1–2 sentences, in English" }
+    { title: "Add", body: "20 terms, each with a plain-language definition of 1–2 sentences" }
   ],
+  stepsHeading: "Steps:",
   steps: [
-    "Choose one AI term not already in the glossary.",
-    "Follow the existing glossary structure, written for someone new to agentic AI.",
-    "Show the draft before touching the repository.",
-    "Avoid claims that can't be backed up.",
-    "Build the Glossary page too, if it doesn't already display entries."
+    "Plan mode: ask Claude for the 20 most important AI terms.",
+    "Review the list together and agree on it.",
+    "Let Claude add the agreed terms to the glossary.",
+    "Auto mode: ask the same in a new session and compare."
   ],
-  expected: "A new glossary entry appears on a working Glossary page, reviewed as a draft before it was added.",
-  notes: "The verification step is the whole point of this assignment — if someone's first draft goes straight in unchecked, stop and ask them to verify it against today's material first."
+  expected: "20 agreed terms on the Glossary page, and a clear view of what changes with and without a plan.",
+  notes: "The point of this assignment is the contrast. In plan mode (Shift+Tab until the mode shows Plan) Claude proposes its 20 terms before touching anything, so the room can see its choices and agree on them first; that's the human review step in practice. Only then do they let it add the terms (and build the Glossary page, if it doesn't show entries yet; the example terms on that page are the reference). Then, in a fresh session in auto mode, ask the same question and let it run: which terms did it pick without a plan, and would you have agreed with them? Collect two or three differences from the room. Definitions stay plain language, 1–2 sentences, in English, with no claims that can't be backed up."
 },
 
 { // Slide 41
   title: "Assignment 4: Enriched concept card",
   kicker: "DAY 1 · ASSIGNMENT 4",
-  subtitle: "Turn one glossary term into a complete concept card.",
+  subtitle: "Turn one glossary term into a full concept card.",
   type: "practice",
   visual: { template: 0 },
   layout: "exercise",
   cards: [
-    { title: "Include", body: "plain-language explanation\npractical example\ncommon misunderstanding\nessential points\nrelated concepts\nreliable resources (official docs or research)" }
+    { title: "Include", body: "explanation\nexample\ncommon misunderstanding\nessential points\nrelated concepts\nsources" }
   ],
+  stepsHeading: "Steps:",
   steps: [
-    "Inspect the existing data structure and application design first.",
-    "Propose the card content and the smallest plan — including the Library page, if it doesn't exist yet.",
-    "Open and read each source — a search result is not a check.",
-    "Wait for approval before changing files.",
-    "Run the relevant checks afterward."
+    "Look at the existing data structure first.",
+    "Propose the card and a small plan.",
+    "Open and read every source.",
+    "Approve, then build and check."
   ],
-  expected: "One enriched concept card appears on a working Library page, verified and checked.",
-  notes: "Longest assignment of the morning — the room will feel the jump from a basic glossary entry to a fully sourced card. Circulate and coach on 'verify the factual explanation' specifically; that's the step people are tempted to skip under time pressure."
+  expected: "One checked concept card on the Library page.",
+  notes: "Longest assignment of Day 1 — the room will feel the jump from a basic glossary entry to a fully sourced card. The Library page shows example cards as a reference; participants build the real, data-driven page (if it doesn't exist yet) plus their own card. What a good run looks like: Claude inspects the data structure and app design first, proposes the card content and the smallest plan (including the Library page if needed), opens and reads each source (a search result is not a check), waits for approval before changing files, and runs the relevant checks afterwards. Circulate and coach on verifying the factual explanation specifically; that's the step people skip under time pressure."
 },
 
 { // Slide 42
