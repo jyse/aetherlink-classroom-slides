@@ -772,8 +772,9 @@ function timerPill(s) {
   const key = ALSTimer.key(current, s.title); const wrap = node('div', 'tpill-wrap');
   const pill = node('button', 'tpill'); pill.type = 'button'; pill.setAttribute('aria-expanded', 'false'); pill.setAttribute('aria-label', 'Assignment timer: open the controls');
   const face = node('span', 'tpill-face', '00:00'); pill.append(node('span', 'tpill-ico', '⏱'), face);
-  const pop = node('div', 'tpill-pop'); pop.hidden = true;
-  pop.append(ALSTimer.mount({ key, defaultSec: 0, minutes: true, bar: true, doneText: 'TIME',
+  // the controls slide out to the left of the pill, in the same row, so they never cover the slide
+  const pop = node('div', 'tpill-bar'); pop.hidden = true;
+  pop.append(ALSTimer.mount({ key, defaultSec: 0, minutes: true, boxCls: 'tpill-controls', faceCls: 'tpill-face-hidden', doneText: 'TIME',
     onDone: () => notify('Time is up — this assignment ends now'), onEmpty: () => notify('Set the minutes first, then press Start.'), signal: slideController.signal }));
   const toggle = open => { pop.hidden = !open; pill.setAttribute('aria-expanded', String(open)); if (open) pop.querySelector('input')?.focus(); };
   pill.addEventListener('click', e => { e.stopPropagation(); toggle(pop.hidden); });
@@ -783,7 +784,7 @@ function timerPill(s) {
     face.textContent = t.total > 0 && l === 0 ? 'TIME' : ALSTimer.fmt(l);
     pill.classList.toggle('running', t.running); pill.classList.toggle('late', t.total > 0 && l > 0 && l <= 60); pill.classList.toggle('done', t.total > 0 && l === 0); };
   paint(); const iv = setInterval(paint, 500); slideController.signal.addEventListener('abort', () => clearInterval(iv));
-  wrap.append(pill, pop); return wrap;
+  wrap.append(pop, pill); return wrap;
 }
 function renderAssignment(stage, s) {
   const { label, title } = assignmentLabel(s);

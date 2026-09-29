@@ -1168,3 +1168,15 @@ html.embed body{min-height:100vh}
 .asg-mini .cards{gap:.6rem}
 .asg-mini .card{padding:.8rem .9rem}
 @media(max-width:900px){.asg-body{grid-template-columns:1fr}}
+/* timer pill: controls slide out sideways in the header row (no overlay) */
+.tpill-wrap{display:flex;align-items:center;gap:.6rem}
+.tpill-bar{display:flex;align-items:center;animation:tpill-slide .2s ease-out both}
+.tpill-bar[hidden]{display:none}
+@keyframes tpill-slide{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}
+.tpill-controls{display:flex;align-items:center}
+.tpill-controls .tpill-face-hidden{display:none}
+.tpill-controls .widget-controls{flex-wrap:nowrap;gap:.35rem}
+.tpill-controls .widget-controls button{min-height:34px;padding:.3rem .65rem;font-size:.85rem;white-space:nowrap}
+.tpill-controls .timer-field input{width:3.4rem;min-height:34px;font-size:1rem}
+.tpill-controls .timer-play{min-width:6.2rem}
+.asg-head .heading-top{flex-wrap:nowrap}
