@@ -1,6 +1,6 @@
 # Aetherlink × Worldline — classroom deck
 
-The 109-slide HTML deck for the two teaching days ("Working with AI and
+The 112-slide HTML deck for the two teaching days ("Working with AI and
 Claude Code" and "Reusable and connected AI workflows"), built around the
 **Aether Library** practice project. Slides 1–4 are a short opening
 (welcome, a show-of-hands question, agreements, who we are) added on
@@ -38,7 +38,7 @@ no build — that's the whole workflow.
 
 `serve.py` also disables browser caching outright, but this deck's own HTML
 tags additionally cache-bust every asset with a `?v=` query string
-(currently `?v=87` on `styles.css`, `slides.js`, `demo-fallback.js`, `timers.js`, `app.js` / `presenter.js`) —
+(currently `?v=88` on `styles.css`, `slides.js`, `demo-fallback.js`, `timers.js`, `app.js` / `presenter.js`) —
 bump that number — in **both** `index.html` and `presenter.html` — whenever you edit `slides.js`, `app.js`, `styles.css` or
 `presenter.js` and want to be certain a stale tab picks up the change.
 
