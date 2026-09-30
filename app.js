@@ -310,6 +310,9 @@ function renderExtras(stage, main, s, v) {
         row.style.setProperty('--d', (0.5 + ci * 0.9 + i * 0.35) + 's'); if (isCmd) row.append(node('span', 'prompt-sign', '$ '), node('span', null, ln)); else row.textContent = ln; box.append(row); });
       p?.replaceWith(box); });
   }
+  if (v.code != null && cards[v.code]) {                      // card body as a code block (e.g. a settings.json), indentation kept
+    const pre = node('pre', 'code-block', s.cards[v.code].body); cards[v.code].querySelector('p')?.replaceWith(pre); cards[v.code].classList.add('code-card');
+  }
   if (v.browser != null && cards[v.browser]) {                  // 30: a tiny browser with the starting state
     const b = node('div', 'mini-browser'); const bar = node('div', 'mb-bar'); bar.append(node('i'), node('i'), node('i'), node('span', 'mb-url', 'localhost:3000'));
     const tabs = node('div', 'mb-tabs'); ['Profiles', 'Glossary', 'Library', 'Game'].forEach((t, i) => { const d = node('div', 'mb-tab' + (i === 3 ? ' live' : '')); d.append(node('span', 'mb-name', t), node('span', 'mb-body')); tabs.append(d); });

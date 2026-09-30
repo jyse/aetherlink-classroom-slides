@@ -1182,3 +1182,5 @@ html.embed body{min-height:100vh}
 .asg-head .heading-top{flex-wrap:nowrap}
 .asg-steps.many{gap:clamp(.4rem,.9vh,.6rem)}
 .asg-steps.many .asg-step{padding:clamp(.5rem,1.1vh,.75rem) 1.1rem;font-size:clamp(1.02rem,1.65vw,1.3rem)}
+
+.code-card .code-block{margin:.5rem 0 0;background:#0b0f19;border:1px solid #2a3350;border-radius:10px;padding:.7rem .9rem;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:clamp(.66rem,.82vw,.8rem);line-height:1.4;white-space:pre;overflow-x:auto;color:#dbe4ff}
