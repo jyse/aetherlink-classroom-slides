@@ -767,7 +767,7 @@ function applyStepThrough(main, s) {
 
 /* ---- assignment slides: one label, big steps, a picture of the result, timer pill top right ---- */
 function assignmentLabel(s) {
-  const m = /^Assignment (\d+):\s*(.*)$/.exec(s.title || '');
+  const m = /^Assignment (\d+[a-z]?):\s*(.*)$/.exec(s.title || '');
   const day = ((s.kicker || '').match(/DAY \d/) || [''])[0].replace('DAY', 'Day');
   return { label: (m ? 'Assignment ' + m[1] : 'Hands-on') + (day ? ' · ' + day : ''), title: m ? m[2] : s.title };
 }
