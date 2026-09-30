@@ -1035,25 +1035,26 @@ Explain what the application does, how it is structured and how I can verify you
 /* ---------------------------------------------------------------------- */
 
 { // Slide 53
-  title: "Assignment 4a: Search the glossary",
+  title: "Assignment 4a: Build a search bar for the glossary",
   kicker: "DAY 1 · ASSIGNMENT 4a",
-  subtitle: "A small feature, but you decide what “done” means before Claude builds it.",
+  subtitle: "You decide how it looks and how it behaves. Claude builds it. Then you find out where it went.",
   type: "practice",
   layout: "exercise",
-  visual: { shotLabel: 'Your test list', runner: [{ label: 'Token', tone: 'green' }, { label: 'same result', tone: 'green' }, { label: 'found', tone: 'green' }, { label: 'No terms found', tone: 'orange' }, { label: 'all 20', tone: 'green' }] },
+  visual: { shotLabel: 'Rules for the search bar', runner: [{ label: 'Token', tone: 'green' }, { label: 'same result', tone: 'green' }, { label: 'found', tone: 'green' }, { label: 'No terms found', tone: 'orange' }, { label: 'all 20', tone: 'green' }] },
   cards: [
-    { title: "Done when", body: "typing “tok” shows Token\nupper or lower case doesn't matter\nwords inside a definition are found too\nno match shows “No terms found”\nan empty search box shows every term again" }
+    { title: "Rules", body: "typing “tok” shows Token\nupper or lower case doesn't matter\nwords inside a definition are found too\nno match shows “No terms found”\nan empty search box shows every term again" }
   ],
   stepsHeading: "Steps:",
   steps: [
-    "Write your own “done when” list first, before you prompt.",
-    "Plan mode: ask for a search bar on the Glossary page. Put your list in the prompt.",
-    "Read the plan, approve, let Claude build it.",
-    "Test every line of your list in the browser yourself."
+    "Design: in plan mode, ask Claude to propose a search bar for the Glossary page, in the style of the app. Adjust it until you like it.",
+    "Rules: give Claude your rules for the search bar. Add one of your own.",
+    "Build: read the plan, approve, let Claude build it. Test every rule in the browser yourself.",
+    "Where did it go? Ask: “Which files did you change, and where exactly is the search code?” Open one yourself.",
+    "CLAUDE.md: ask “Does CLAUDE.md still describe this project correctly?” Read the proposed update before you approve."
   ],
-  expected: "A search bar on the Glossary page that passes every line of your own list.",
-  keyPoints: ["“Done when” before the prompt", "Their own list goes into the prompt", "Plan mode, then approve", "They test in the browser, not Claude", "Optional if Day 1 runs late"],
-  notes: "This is the Test step of the Day 1 outcome made concrete: before they prompt, they write down how they will know the search works. The five lines on the right are an example list; their own can differ, as long as it is written first. The list goes into the prompt as the 'Done when' line of the reliable-prompt template. After Claude builds it, they check every line themselves in the browser, one by one; Claude saying 'it works' is not the check. Good extra question for early finishers: ask Claude 'Show me what you changed and why' and compare it with what they see. If Day 1 runs late, make this one optional for early finishers; 4b and 4c matter more for Day 2."
+  expected: "The search bar looks like part of the app and passes every rule. You know which files hold the code, and CLAUDE.md is up to date.",
+  keyPoints: ["Design first, in plan mode", "Their rules go into the prompt, plus one of their own", "They test every rule in the browser", "Never accept code you can't find", "CLAUDE.md is now out of date: let Claude fix it"],
+  notes: "A full small build, from look to code to documentation. Step 1 is about design, not code: in plan mode Claude proposes where the search bar sits and what it looks like, and they can change that before anything is built. Step 2: the five rules on the right are the behaviour; they add them to the prompt as the 'Done when' of the reliable-prompt template, plus one rule of their own (for example: the number of results is shown). Step 3: after the build they test every rule themselves in the browser; Claude saying 'it works' is not the check. Step 4 teaches a habit: never accept code you can't find. Claude should name the files (likely public/app.js, public/index.html, public/style.css) and they open one to see the search code with their own eyes. Step 5 is the aha: the starter's CLAUDE.md still says the Glossary page is an empty placeholder with no data-driven rendering, which is now wrong. Claude reads that file at the start of every session, so an outdated CLAUDE.md misleads the next session. Let Claude propose the update and read it before approving; this sets up Day 2's CLAUDE.md part. If Day 1 runs late, make this assignment optional for early finishers; 4b and 4c matter more for Day 2."
 },
 
 { // Slide 54
