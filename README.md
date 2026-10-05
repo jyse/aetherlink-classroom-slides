@@ -1,6 +1,6 @@
 # Aetherlink × Worldline — classroom deck
 
-The 107-slide HTML deck for the two teaching days ("Working with AI and
+The 108-slide HTML deck for the two teaching days ("Working with AI and
 Claude Code" and "Reusable and connected AI workflows"), built around the
 **Aether Library** practice project. Slides 1–4 are a short opening
 (welcome, a show-of-hands question, agreements, who we are) added on
