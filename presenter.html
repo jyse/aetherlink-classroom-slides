@@ -53,6 +53,8 @@
   .p-empty{color:var(--muted);font-style:italic}
   .p-nav{display:flex;gap:.5rem;margin-top:.8rem}
   .p-progress{font-size:.85rem;color:var(--muted)}
+  .p-handout{font-size:.75rem;color:var(--muted);text-decoration:none;opacity:.55}
+  .p-handout:hover,.p-handout:focus-visible{opacity:1;text-decoration:underline}
 </style>
 </head>
 <body>
@@ -61,6 +63,7 @@
     <div class="p-clock">
       <div><span class="label">Elapsed</span><span id="elapsed" class="p-elapsed">00:00</span></div>
       <div class="p-status" id="sync-status"><span class="dot"></span><span id="sync-label">Waiting for the main window…</span></div>
+      <a class="p-handout" href="assets/handouts/day3-n8n-slide-overview.pdf" download>Slide overview (PDF)</a>
     </div>
   </div>
   <div class="p-grid">
