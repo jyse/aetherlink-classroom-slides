@@ -1,6 +1,6 @@
 /* ==========================================================================
    Aetherlink x Worldline — Two-day classroom deck
-   113 slides, authored from CURRICULUM.md (2026-09-15 revision) plus its
+   109 slides, authored from CURRICULUM.md (2026-09-15 revision) plus its
    "Resolved alignment decisions" section, which overrides three points in
    the base document: Assignment 11's AI feedback is required and needs no
    API credentials (folded into Slide 64 + new Slide 65); Slide 27 carries
