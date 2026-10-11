@@ -39,6 +39,18 @@ jobs:
           test ! -e dist/tools
           test -z "$(find dist -mindepth 1 -maxdepth 1 ! -name assets ! -name styles.css ! -name '*.html' ! -name '*.js' -print -quit)"
           test -z "$(find dist/assets -type d \( -name node_modules -o -name tools -o -name vendor \) -print -quit)"
+      - name: Check Pages status
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          enabled=$(gh api "repos/$GITHUB_REPOSITORY" --jq .has_pages)
+          if [ "$enabled" != "true" ]; then
+            message='Publication blocked: an administrator must enable GitHub Pages with Source set to GitHub Actions.'
+            echo "### $message" >> "$GITHUB_STEP_SUMMARY"
+            echo "::error::$message"
+            exit 1
+          fi
       - name: Configure Pages
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         uses: actions/configure-pages@v5
