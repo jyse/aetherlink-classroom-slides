@@ -57,7 +57,7 @@ function machine(presetIndex = 6) {
   body.push(`<g data-part="deny-bin">${solid({ x: 96, y: 65, w: 40, d: 18, r: 2 }, 0, 6, "lo")}</g>`);
   const fasteners = [-138,138].flatMap((x) => [-55,-40,40,55].map((y) => [x,y]));
   fasteners.forEach(([x, y], i) => body.push(`<g data-part="fastener-${String(i + 1).padStart(2, "0")}">${cyl(x, y, 2.2, 3, 2, "lo")}</g>`));
-  body.push(`<g data-part="approval-key">${cyl(-132, 28, 5, 3, 3, "hi")}${k.lineSvg(k.lineOnTop([-132, 28], [-121, 28], 6, P), { tone: "hi" })}</g>`);
+  body.push(`<g data-part="approval-key">${cyl(-132, 28, 5, 3, 3, "hi")}${k.lineSvg(k.lineOnTop([-127.7, 25.5], [-121, 20], 6, P), { tone: "hi" })}</g>`);
   body.push(`<g data-part="decision-lamp">${cyl(127, -36, 5, 3, 7, "hi", true)}</g>`);
   body.push(`<g data-part="audit-recorder">${solid({ x: 116, y: 12, w: 16, d: 25, r: 2 }, 3, 16, "mid")}</g>`);
   return body.join("");
@@ -74,7 +74,7 @@ function html(theme) {
   ], caption: "A hook input moves through detector relays in source order. Named approval changes a gated command from deny to ask; it never turns the command into allow.", body: `<div class="iso-stage" tabindex="0" role="slider" aria-label="Guard input preset" aria-valuemin="0" aria-valuemax="${results.length - 1}" aria-valuenow="${initial}">${svg}</div>` });
   const live = `
 const presets=${JSON.stringify(results)};const stage=document.querySelector('.iso-stage'),svg=stage.querySelector('svg'),readout=document.querySelector('[data-readout]');
-const reduce=matchMedia('(prefers-reduced-motion: reduce)'),tourOrder=[...presets.keys(),...presets.keys().slice(1,-1).reverse()],IDLE_START=1400,IDLE_RESUME=3600,TOUR_STEP=2200;let index=${initial},target=index,current=index,frame=0,last=0,visible=false,touring=false,tourStartedAt=0,idleTimer=0,hovered=false,focused=false,pressed=false;
+const reduce=matchMedia('(prefers-reduced-motion: reduce)'),tourOrder=[...presets.keys(),...[...presets.keys()].slice(1,-1).reverse()],IDLE_START=1400,IDLE_RESUME=3600,TOUR_STEP=2200;let index=${initial},target=index,current=index,frame=0,last=0,visible=false,touring=false,tourStartedAt=0,idleTimer=0,hovered=false,focused=false,pressed=false;
 function draw(value){const p=presets[Math.round(value)],r=p.result;svg.querySelectorAll('[data-station]').forEach(n=>n.toggleAttribute('data-active',r.visited.includes(n.dataset.station)));svg.querySelectorAll('[data-exit]').forEach(n=>n.toggleAttribute('data-active',n.dataset.exit===r.decision));const token=svg.querySelector('[data-token]');token.setAttribute('transform',translateAlong(${JSON.stringify(P)},[(value-${initial})*5,0,0]));readout.textContent=p.label+' · '+r.decision.toUpperCase();stage.setAttribute('aria-valuenow',String(Math.round(value)));stage.setAttribute('aria-valuetext',readout.textContent)}
 function engaged(){return hovered||focused||pressed}function clearIdle(){if(idleTimer){clearTimeout(idleTimer);idleTimer=0}}function stopTour(){touring=false;clearIdle()}
 function tick(now){const dt=last?Math.min((now-last)/1000,1/30):1/60;last=now;if(touring)target=tourOrder[Math.floor((now-tourStartedAt)/TOUR_STEP)%tourOrder.length];current=current+(target-current)*(1-Math.exp(-dt/.18));if(Math.abs(target-current)<.005)current=target;draw(current);frame=visible&&(touring||current!==target)?requestAnimationFrame(tick):0}function run(){if(!frame&&visible&&!reduce.matches){last=0;frame=requestAnimationFrame(tick)}}function set(n){target=Math.max(0,Math.min(presets.length-1,n));if(reduce.matches){current=target;draw(current)}else run()}

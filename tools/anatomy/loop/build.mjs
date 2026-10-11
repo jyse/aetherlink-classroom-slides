@@ -63,7 +63,7 @@ function makeScene() {
   cylinder("turntable-upper", 0, 0, 97, 5, 4, "mid", "", { steps: 96, bevel: 0.6 });
   cylinder("turntable-hub", 0, 0, 30, 9, 5, "hi", "", { steps: 48, bevel: 0.6 });
   overlays.push(tag("base-groove", L(k.planOutline(k.insetPlan(BASE, 8), 0, P, 10), { tone: "lo" })));
-  const ticks = k.radialTicks(0, 0, 92, 60, 10, 9, [2, 4], P);
+  const ticks = k.radialTicks(0, 0, 97, 60, 10, 9, [2, 4], P);
   overlays.push(tag("turntable-index", L(ticks.minor + ticks.major, { tone: "faint" })));
 
   STAGES.forEach((stage, stageIndex) => {
@@ -106,8 +106,8 @@ function makeScene() {
   cylinder("approval-post-right", 116, -92, 3.5, 0, 72, "mid", approval, { steps: 24, crease: "none" });
   slab("approval-beam", { x: 72, y: -95, w: 44, d: 6, r: 2 }, 72, 6, "mid", approval, { steps: 4, bevel: 0.5 });
   slab("approval-housing", { x: 86, y: -98, w: 16, d: 12, r: 3 }, 78, 8, "hi", approval, { steps: 4, bevel: 0.6 });
-  const leverPoints = [[94, -92, 86], [108, -92, 86]];
-  put("approval-lever", [101, -92, 86], L(k.lineOnTop([94, -92], [108, -92], 86, P), { tone: "hi" }), A.tube(leverPoints, 0.7, { name: "approval-lever", owner }), approval);
+  const leverPoints = [[102, -92, 86], [108, -92, 86]];
+  put("approval-lever", [105, -92, 86], L(k.lineOnTop([102, -92], [108, -92], 86, P), { tone: "hi" }), A.tube(leverPoints, 0.7, { name: "approval-lever", owner }), approval);
   cylinder("approval-grip", 108, -92, 3, 83, 6, "hi", approval, { steps: 20 });
   cylinder("approval-lamp", 90, -92, 2.8, 86, 5, "hi", approval, { steps: 20, lit: true });
   cylinder("approval-key", 98, -92, 2, 86, 1.2, "lo", approval, { steps: 18, bevel: 0.1 });

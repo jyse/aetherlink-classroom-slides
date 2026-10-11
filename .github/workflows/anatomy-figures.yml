@@ -23,7 +23,7 @@ jobs:
           git diff --exit-code -- assets/anatomy
       - name: Test figure models
         run: |
-          node --test --test-concurrency=2 tools/anatomy/bottleneck/model.test.mjs tools/anatomy/integration.test.mjs tools/sessions.test.mjs
+          node --test --test-concurrency=2 tools/anatomy/bottleneck/model.test.mjs tools/anatomy/integration.test.mjs tools/anatomy/runtime-init.test.mjs tools/sessions.test.mjs
       - name: Install remote browser checks
         id: browser-install
         run: |
@@ -71,9 +71,16 @@ jobs:
               const readout=page.locator('[data-readout]').first();
               const beforeValue=await slider.getAttribute('aria-valuenow');
               const beforeText=await readout.textContent();
-              await page.waitForTimeout(4200);
-              assert.notEqual(await slider.getAttribute('aria-valuenow'),beforeValue,`${id} idle tour must change preset`);
-              assert.notEqual(await readout.textContent(),beforeText,`${id} idle tour must change readout`);
+              assert.deepEqual(await page.evaluate(()=>window.__anatomyErrors),[],`${id} must initialize without page errors`);
+              try {
+                await page.waitForFunction(({beforeValue,beforeText})=>{
+                  const slider=document.querySelector('[role="slider"]'),readout=document.querySelector('[data-readout]');
+                  return slider?.getAttribute('aria-valuenow')!==beforeValue&&readout?.textContent!==beforeText;
+                },{beforeValue,beforeText},{timeout:10000});
+              } catch {
+                const afterValue=await slider.getAttribute('aria-valuenow'),afterText=await readout.textContent();
+                assert.fail(`${id} idle tour did not change within 10s; slider ${beforeValue} -> ${afterValue}; readout ${beforeText} -> ${afterText}`);
+              }
             }
             await page.goto('http://127.0.0.1:8765/workshop5.html#1');
             const sessions=await page.evaluate(()=>window.CLASSROOM_SESSIONS);

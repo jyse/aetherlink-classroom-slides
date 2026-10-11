@@ -122,7 +122,7 @@ function buildControl() {
   return [
     wrap('build-control-bed', S(k.slabOf(bed, 0, 2.6, P, 4, 0.5), { tone: 'mid' })),
     wrap('build-control-track', S(k.slabOf(track, 2.6, 0.9, P, 3), { tone: 'lo', crease: 'none' })),
-    wrap('build-control-pointer', L(k.lineOnTop([x, -51], [x, -44], 3.7, P), { tone: 'hi' })),
+    wrap('build-control-pointer', L(k.lineOnTop([x, track.y], [x, track.y + track.d], 3.55, P), { tone: 'hi' })),
     wrap('build-control-knob', knob, ' class="speed-knob"'),
   ].join('');
 }
