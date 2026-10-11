@@ -127,7 +127,8 @@ jobs:
                 assert.notEqual(await slider.getAttribute('aria-valuenow'),before,`Slide ${slide} slider must change`);
                 assert.notEqual(await readout.textContent(),text,`Slide ${slide} readout must change`);
               }
-              const button=await frame.locator('button:enabled:not([aria-pressed="true"])').first().elementHandle();
+              const buttons=frame.locator('button:enabled:not([aria-pressed="true"])');
+              const button=await buttons.count()?await buttons.first().elementHandle():null;
               if(button){
                 const before=await frame.locator('[data-readout]').first().textContent();
                 const pressed=await button.getAttribute('aria-pressed');
