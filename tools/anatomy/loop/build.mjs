@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as k from "../vendor/kit/iso-kit.mjs";
+import { RESPONSIVE_FIGURE_STYLE } from "../responsive.mjs";
 import * as A from "../vendor/kit/audit.mjs";
 import { STAGES, PARTS, partCount } from "./parts.mjs";
 import { runModelAssertions } from "./model.mjs";
@@ -154,7 +155,7 @@ function html(theme) {
   });
   const stateModel = readFileSync(join(HERE, "state.mjs"), "utf8").replace(/^export /gm, "");
   const live = readFileSync(join(HERE, "live.js"), "utf8").replace("__STAGES__", JSON.stringify(STAGES.map(({ id, label, note }) => ({ id, label, note }))));
-  return k.pageHtml({ title: "AetherLink AI-native loop", theme, body, script: `${stateModel}\n${live}`, width: 760 }).replace("</style>", `${customCss}</style>`);
+  return k.pageHtml({ title: "AetherLink AI-native loop", theme, body: RESPONSIVE_FIGURE_STYLE + body, script: `${stateModel}\n${live}`, width: 760 }).replace("</style>", `${customCss}</style>`);
 }
 
 runModelAssertions();

@@ -111,7 +111,24 @@ html{color-scheme:dark}
 body[data-theme="light"]{color-scheme:light}
 body{margin:0;background:var(--anatomy-page);color:var(--anatomy-text);font:14px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
 .iso-page{width:min(820px,100% - 32px);margin:64px auto 96px}
-</style></head><body class="iso" data-theme="light"><main class="iso-page"><figure class="iso-figure"><div class="iso-plate"><div class="iso-plate-corners" aria-hidden="true"><span class="iso-plate-corner" data-corner="fig">Fig 2</span><span class="iso-plate-corner" data-corner="title">The bottleneck moved</span><span class="iso-plate-corner" data-corner="hint">Move across the figure · arrows change Build speed</span><span class="iso-plate-corner" data-corner="readout" data-readout>Build 100% · 4.8/h · Build queue 3.0 after 1 h</span></div><div class="iso-stage" data-model="illustrative" tabindex="0" role="slider" aria-label="Build speed. Use arrow keys from 50 to 150 percent." aria-valuemin="50" aria-valuemax="150" aria-valuenow="100" style="touch-action:pan-y"><svg xmlns="http://www.w3.org/2000/svg" class="iso-svg bottleneck-machine" viewBox="0 0 740 430" role="img" aria-label="A physical line with six stations from Plan to Maintain. A speed control at Build changes its output. At low speed work queues at Build. At high speed work reaches Deploy faster than Deploy can process it, so the downstream queue grows. All values are illustrative."><style>
+</style></head><body class="iso" data-theme="light"><main class="iso-page"><style>
+@media(max-height:700px){
+ .iso-page{margin:16px auto 24px}
+ .iso-figure{margin:0 0 20px}
+ .iso-plate{padding:40px 16px 48px}
+ .iso-plate .iso-svg{max-height:calc(100vh - 300px)}
+}
+@media(max-width:560px){
+ .iso-page{width:calc(100% - 16px);margin:16px auto 32px}
+ .iso-figure{margin:0 0 20px}
+ .iso-plate{padding:12px}
+ .iso-plate-corners{position:static;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 12px;margin-bottom:12px}
+ .iso-plate-corner{position:static;min-width:0;white-space:normal;overflow-wrap:anywhere}
+ .iso-plate-corner[data-corner="title"],.iso-plate-corner[data-corner="readout"]{text-align:right}
+ .iso-key{max-width:100%;min-width:0;white-space:normal}
+ .iso-caption{overflow-wrap:anywhere}
+}
+</style><figure class="iso-figure"><div class="iso-plate"><div class="iso-plate-corners" aria-hidden="true"><span class="iso-plate-corner" data-corner="fig">Fig 2</span><span class="iso-plate-corner" data-corner="title">The bottleneck moved</span><span class="iso-plate-corner" data-corner="hint">Move across the figure · arrows change Build speed</span><span class="iso-plate-corner" data-corner="readout" data-readout>Build 100% · 4.8/h · Build queue 3.0 after 1 h</span></div><div class="iso-stage" data-model="illustrative" tabindex="0" role="slider" aria-label="Build speed. Use arrow keys from 50 to 150 percent." aria-valuemin="50" aria-valuemax="150" aria-valuenow="100" style="touch-action:pan-y"><svg xmlns="http://www.w3.org/2000/svg" class="iso-svg bottleneck-machine" viewBox="0 0 740 430" role="img" aria-label="A physical line with six stations from Plan to Maintain. A speed control at Build changes its output. At low speed work queues at Build. At high speed work reaches Deploy faster than Deploy can process it, so the downstream queue grows. All values are illustrative."><style>
     .queue-card{transition:opacity .45s var(--anatomy-ease)}
     .station[data-bottleneck="true"] .station-lamp .iso-edge{stroke:var(--anatomy-lit);stroke-width:1.3px}
     .station[data-bottleneck="true"] .station-lamp .iso-top{fill:var(--anatomy-lit-top)}

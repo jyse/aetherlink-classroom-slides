@@ -2,6 +2,7 @@ import { writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as k from '../vendor/kit/iso-kit.mjs';
+import { RESPONSIVE_FIGURE_STYLE } from '../responsive.mjs';
 import { ARRIVAL_RATE, ILLUSTRATIVE, SPEED_RANGE, STATIONS, clampSpeed, readoutOf, simulate, stationSummary } from './model.mjs';
 import { PARTS } from './parts.mjs';
 
@@ -265,7 +266,7 @@ function html(theme) {
     caption: 'Illustrative model. Six stations process work for one hour. Increase Build from 50% to 150%. Build clears its own queue, but Deploy can process only 2.6 items per hour, so the largest queue moves downstream.',
     body: `<div class="iso-stage" data-model="illustrative" tabindex="0" role="slider" aria-label="Build speed. Use arrow keys from 50 to 150 percent." aria-valuemin="50" aria-valuemax="150" aria-valuenow="100" style="touch-action:pan-y">${svg}</div>`,
   });
-  return k.pageHtml({ title: 'The bottleneck moved', theme, body, script: runtime(), width: 820 });
+  return k.pageHtml({ title: 'The bottleneck moved', theme, body: RESPONSIVE_FIGURE_STYLE + body, script: runtime(), width: 820 });
 }
 
 for (const theme of ['dark', 'light']) {

@@ -3,6 +3,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as k from "../vendor/kit/iso-kit.mjs";
+import { RESPONSIVE_FIGURE_STYLE } from "../responsive.mjs";
 import { kitScript } from "../vendor/scripts/inline-kit.mjs";
 import { PARTS, PHASES, assertModel, stateAt } from "./model.mjs";
 
@@ -144,7 +145,7 @@ const body = k.plateHtml({
 
 mkdirSync(OUT, { recursive: true });
 const suffix = theme === "light" ? "-light" : "";
-writeFileSync(join(OUT, `subagents${suffix}.html`), k.pageHtml({ title: "Subagent handoff bench", theme, body, script: kitScript() + live }));
+writeFileSync(join(OUT, `subagents${suffix}.html`), k.pageHtml({ title: "Subagent handoff bench", theme, body: RESPONSIVE_FIGURE_STYLE + body, script: kitScript() + live }));
 writeFileSync(join(OUT, `subagents${suffix}.svg`), poster);
 console.log(`wrote subagents${suffix}.html and subagents${suffix}.svg · ${PARTS.length} manifested parts`);
 if (theme === "dark" && !process.argv.includes("--dark-only")) {

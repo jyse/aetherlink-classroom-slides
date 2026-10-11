@@ -2,6 +2,7 @@ import { mkdirSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as k from "../vendor/kit/iso-kit.mjs";
+import { RESPONSIVE_FIGURE_STYLE } from "../responsive.mjs";
 import * as A from "../vendor/kit/audit.mjs";
 import { kitScript } from "../vendor/scripts/inline-kit.mjs";
 import { EVAL_PARTS } from "./parts.mjs";
@@ -73,7 +74,7 @@ function tick(){const now=performance.now(),dt=last?Math.min((now-last)/1000,1/3
 function scheduleTour(delay=IDLE_RESUME){stopTour();if(!visible||reduce.matches||engaged())return;idleTimer=setTimeout(()=>{idleTimer=0;if(!visible||reduce.matches||engaged())return;touring=true;tourStartedAt=performance.now()-tourOrder.indexOf(Math.round(current))*TOUR_STEP;run()},delay)}function hold(){stopTour();target=current}function release(){if(!engaged())scheduleTour()}
 new IntersectionObserver(es=>{visible=es[es.length-1].isIntersecting;if(!visible){stopTour();if(frame)cancelAnimationFrame(frame);frame=0;last=0;return}run();scheduleTour(IDLE_START)},{rootMargin:'100px 0px'}).observe(stage);stage.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'){hovered=true;hold()}});stage.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')hovered=false;release()});stage.addEventListener('pointerdown',e=>{pressed=true;hold();stage.setPointerCapture?.(e.pointerId)});stage.addEventListener('pointerup',()=>{pressed=false;release()});stage.addEventListener('pointercancel',()=>{pressed=false;release()});stage.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse'&&!pressed)return;hold();const b=svg.getBoundingClientRect();set(Math.round((e.clientX-b.left)/b.width*(presets.length-1)))});stage.addEventListener('focus',()=>{focused=true;hold()});stage.addEventListener('blur',()=>{focused=false;release()});stage.addEventListener('keydown',e=>{let n=null;if(e.key==='ArrowRight'||e.key==='ArrowUp')n=Math.round(current)+1;if(e.key==='ArrowLeft'||e.key==='ArrowDown')n=Math.round(current)-1;if(e.key==='Home')n=0;if(e.key==='End')n=presets.length-1;if(n===null)return;e.preventDefault();hold();set(n)});reduce.addEventListener('change',()=>{stopTour();if(reduce.matches){if(frame)cancelAnimationFrame(frame);frame=0;current=target;draw(current)}else{run();scheduleTour(IDLE_START)}});draw(current);`;
   const extra = `<style>.iso-stage{outline:none;touch-action:pan-y}.iso-stage:focus-visible{box-shadow:0 0 0 2px var(--anatomy-blue)}[data-pass] .iso-edge,[data-bin="pass"][data-active] .iso-edge{stroke:var(--anatomy-green)!important;stroke-width:1.2}[data-fail] .iso-edge,[data-bin="rejected"][data-active] .iso-edge{stroke:var(--anatomy-red)!important;stroke-width:1.2}.iso-solid[data-lit]{filter:drop-shadow(0 0 5px var(--anatomy-lit))}@media(prefers-reduced-motion:reduce){[data-flow]{animation:none!important}}</style>`;
-  return k.pageHtml({ title: "Evidence assay bench", theme, body: extra + plate, script: kitScript() + live, width: 700 });
+  return k.pageHtml({ title: "Evidence assay bench", theme, body: RESPONSIVE_FIGURE_STYLE + extra + plate, script: kitScript() + live, width: 700 });
 }
 
 function audit() {

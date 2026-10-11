@@ -23,7 +23,7 @@ jobs:
           git diff --exit-code -- assets/anatomy
       - name: Test figure models
         run: |
-          node --test --test-concurrency=2 tools/anatomy/bottleneck/model.test.mjs tools/anatomy/integration.test.mjs tools/anatomy/runtime-init.test.mjs tools/sessions.test.mjs
+          node --test --test-concurrency=2 tools/anatomy/bottleneck/model.test.mjs tools/anatomy/integration.test.mjs tools/anatomy/responsive.test.mjs tools/anatomy/runtime-init.test.mjs tools/sessions.test.mjs
       - name: Install remote browser checks
         id: browser-install
         run: |
@@ -55,6 +55,7 @@ jobs:
           const browser=await chromium.launch();
           const errors=[];
           const motionState=()=>({readouts:[...document.querySelectorAll('[data-readout]')].map(el=>el.textContent),parts:[...document.querySelectorAll('svg [transform],svg [style]')].map(el=>[el.getAttribute('transform'),el.getAttribute('style')])});
+          const overflowState=()=>({width:innerWidth,scrollWidth:Math.max(document.documentElement.scrollWidth,document.body.scrollWidth),elements:[...document.querySelectorAll('body *')].map(el=>({tag:el.tagName,id:el.id,class:el.className,rect:el.getBoundingClientRect().toJSON()})).filter(item=>item.rect.width>0&&(item.rect.right>innerWidth+1||item.rect.left<-1))});
           try {
             const page=await browser.newPage({viewport:{width:1440,height:1100}});
             page.on('pageerror',error=>errors.push(error.message));
@@ -151,12 +152,13 @@ jobs:
               const frame=await iframe.elementHandle().then(el=>el.contentFrame());
               await frame.locator('svg').first().waitFor();
               assert.ok(await frame.evaluate(()=>matchMedia('(prefers-reduced-motion: reduce)').matches));
-              assert.ok(await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)<=innerWidth+1));
-              assert.ok(await frame.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)<=innerWidth+1));
+              await page.screenshot({path:`anatomy-evidence/slide-${slide}-mobile-reduced.png`,fullPage:true});
+              const pageOverflow=await page.evaluate(overflowState),frameOverflow=await frame.evaluate(overflowState);
+              assert.ok(pageOverflow.scrollWidth<=pageOverflow.width+1,`Slide ${slide} mobile page overflow: ${JSON.stringify(pageOverflow)}`);
+              assert.ok(frameOverflow.scrollWidth<=frameOverflow.width+1,`Slide ${slide} mobile frame overflow: ${JSON.stringify(frameOverflow)}`);
               await page.waitForTimeout(1000);
               const still=await frame.evaluate(motionState); await page.waitForTimeout(2500);
               assert.deepEqual(await frame.evaluate(motionState),still,`Slide ${slide} reduced motion must remain still`);
-              await page.screenshot({path:`anatomy-evidence/slide-${slide}-mobile-reduced.png`,fullPage:true});
             }
             const closeup=await browser.newPage({viewport:{width:1440,height:1100},deviceScaleFactor:4});
             closeup.on('pageerror',error=>errors.push(error.message));
