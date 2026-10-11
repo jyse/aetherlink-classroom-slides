@@ -1,0 +1,864 @@
+/* Imported from RyanLisse/aetherlink-academy-app @ b491cc0187b948a9717186fa9d2cb3f79dbc59ca
+ * Source: apps/web/src/deck/workshop4-slides.ts. Authored content retained; image paths adapted. */
+'use strict';
+window.SLIDES = [
+  {
+    "lessonId": "workshop-4",
+    "title": "Welcome to Workshop 4 · Support agents with the Claude Agent SDK",
+    "kicker": "Workshop 4 · Thu 8 Oct",
+    "type": "concept",
+    "visual": {
+      "bot": "wave",
+      "place": "beside"
+    },
+    "subtitle": "Thu 8 Oct · 10:00–16:00 · today we rebuild yesterday’s n8n ticket flow in code.",
+    "notes": "Welcome (10:00; session 10:00–16:00). Today: the same ticket flow as yesterday in n8n, now in code with the Claude Agent SDK."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "Yesterday’s recap · Workshop 3 · Agents in n8n",
+    "kicker": "Recap · one ticket, three levels",
+    "type": "recap",
+    "layout": "recap",
+    "items": [
+      {
+        "label": "L1 · Rules",
+        "caption": "Input → Switch → Low / Med / High. No LLM."
+      },
+      {
+        "label": "L2 · Judgment",
+        "caption": "+ one AI Agent with memory suggests the priority."
+      },
+      {
+        "label": "L3 · Specialists",
+        "caption": "Reply and Risk as separate specialists, one human gate."
+      },
+      {
+        "label": "Human",
+        "caption": "A human approves the reply before it is sent."
+      }
+    ],
+    "notes": "Recap W3 (source: W3 deck). L1 Switch without an LLM; L2 one AI Agent with memory suggests the priority, a human reviews; L3 Reply and Risk specialists with one human gate. Auto-send off."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "Today · agenda",
+    "kicker": "Run of show · 10:00–16:00",
+    "type": "context",
+    "subtitle": "I show it, you do it.",
+    "keyPoints": [
+      "10:00 Welcome + recap · 10:15 Concepts n8n → Agent SDK · 10:45 Step 0 · setup · 11:00 Break · 11:15 Step 1 · one agent + CLAUDE.md · 12:00 Lunch",
+      "13:00 Step 2 · subagents · 14:00 Step 3 · MCP transaction data · 14:45 Break · 15:00 Step 4 · check + Proof · 15:30 Stretch · 15:45 Wrap-up + bridge to W5",
+      "Workshop repo: https://github.com/RyanLisse/aetherlink-day5-n8n-to-agent",
+      "Fell behind? git checkout step-1 … step-4 (finished state of each step)"
+    ],
+    "notes": "Run of show 10:00–16:00 (break 11:00, lunch 12:00–13:00, break 14:45). Format: I show it, you do it."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "Yesterday's n8n. Today's Agent SDK.",
+    "kicker": "Workshop 4 · Day 4 · three lessons",
+    "type": "concept",
+    "visual": {
+      "bot": "wave",
+      "place": "beside"
+    },
+    "subtitle": "Carry the labels, specialist split, and human gate from n8n into three Agent SDK lessons.",
+    "keyPoints": [
+      "Keep LOW, MEDIUM, and HIGH.",
+      "Separate analysis from reply writing.",
+      "Review drafts before they reach a customer."
+    ],
+    "cards": [
+      {
+        "title": "Workshop 3",
+        "body": "n8n routes a support message."
+      },
+      {
+        "title": "Workshop 4",
+        "body": "The Agent SDK uses query(), subagents, and MCP."
+      }
+    ],
+    "notes": "Open with the bridge from Workshop 3. Keep the labels, specialist split, and human review gate. Workshop 4 uses new customer messages and transaction data. Rhythm: explain, demonstrate, participants try, discuss."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "Map n8n to the Agent SDK.",
+    "kicker": "Concept · the four questions",
+    "type": "context",
+    "visual": {
+      "bot": "wave",
+      "place": "beside"
+    },
+    "subtitle": "The Agent SDK keeps familiar roles while changing how you configure and run them.",
+    "keyPoints": [
+      "AI Agent node → query().",
+      "System message → CLAUDE.md via settingSources.",
+      "Specialists, tools, and human review keep their roles."
+    ],
+    "cards": [
+      {
+        "title": "AI Agent node",
+        "body": "query() receives the prompt and SDK options."
+      },
+      {
+        "title": "System message",
+        "body": "CLAUDE.md via settingSources: ['project']."
+      },
+      {
+        "title": "Specialists",
+        "body": "ticket-analyst and email-responder in agents."
+      },
+      {
+        "title": "Tool and human gate",
+        "body": "MCP get_transaction; a person reviews output/."
+      }
+    ],
+    "notes": "Ask four questions throughout the day: What does the main agent know? What belongs to a subagent? When is a tool needed? What information came from external data? Map the n8n AI Agent node to query(), the system message to CLAUDE.md, Risk and Customer Reply roles to ticket-analyst and email-responder, a tool or HTTP node to MCP get_transaction, and the human gate to a draft in output/."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "n8n ↔ Agent SDK at a glance",
+    "kicker": "Concept recap · overview",
+    "type": "concept",
+    "layout": "compare",
+    "visual": {
+      "opener": "showcase",
+      "image": "assets/workshop-4/00-overview.png",
+      "imageLink": "n8n ↔ Agent SDK at a glance: n8n left, Claude Agent SDK right"
+    },
+    "subtitle": "Same labels, same specialists, same human at the end.",
+    "keyPoints": [
+      "Same labels, same specialists, same human at the end."
+    ],
+    "columns": [
+      {
+        "title": "n8n · Workshop 3",
+        "items": [
+          "AI Agent node",
+          "System Message",
+          "Tools on the AI Agent",
+          "HTTP Request node",
+          "IF · Wait · Error Workflow",
+          "Customer Reply + Risk Agent",
+          "Reusable sub-workflow",
+          "Fixed graph Input → Switch"
+        ]
+      },
+      {
+        "title": "Claude Agent SDK · Workshop 4",
+        "items": [
+          "query() + agent loop",
+          "CLAUDE.md / systemPrompt",
+          "tools · allowedTools",
+          "MCP server · get_transaction",
+          "canUseTool · permissionMode · hooks (hooks: not in the exercise)",
+          "subagents: ticket-analyst + email-responder",
+          "Skill · SKILL.md (not in the exercise)",
+          "code where it must · agent chooses where it may"
+        ]
+      }
+    ],
+    "notes": "Overview before the 8 concepts (~2 min). Say: same labels LOW/MEDIUM/HIGH, same specialists, same human at the end; only the toolbox changes. The n8n side comes from the day5 repo n8n/support-triage.json (W3 flow). The SDK side comes from the starter repo's step branches (step-1 … step-4). Hooks and Skills are NOT in the exercise; we only show them as concepts. Visual: concepts/visuals/00-overview.png (light: visuals/light/00-overview.png)."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "Agent and agent loop",
+    "kicker": "Concept 1 · Agent",
+    "type": "concept",
+    "layout": "compare",
+    "visual": {
+      "opener": "showcase",
+      "image": "assets/workshop-4/01-agent-loop.png",
+      "imageLink": "Agent and agent loop: n8n left, Claude Agent SDK right"
+    },
+    "subtitle": "The AI Agent node becomes a loop in code: think, tool, observe, repeat, answer.",
+    "keyPoints": [
+      "The AI Agent node becomes a loop in code: think, tool, observe, repeat, answer."
+    ],
+    "columns": [
+      {
+        "title": "n8n · Workshop 3",
+        "items": [
+          "AI Agent node with Chat Model, Memory and Tools",
+          "Options → Max Iterations",
+          "One run per click"
+        ]
+      },
+      {
+        "title": "Claude Agent SDK · Workshop 4",
+        "items": [
+          "for await (… of query({ prompt, options }))",
+          "Think → tool call → observe → repeat → answer",
+          "maxTurns limits the loop"
+        ]
+      }
+    ],
+    "notes": "n8n: AI Agent node (export: '@n8n/n8n-nodes-langchain.agent'). SDK: query() in lib/run.mjs:44-46 (import + for await), trace print l.47-58, result l.61-62. maxTurns: 01-single-agent/options.mjs:12 (=2), 02-subagents/options.mjs:17 (=10), 03-mcp/options.mjs:22 (=10). day5: src/agent.ts DEFAULT_MAX_TURNS=8 ('n8n: Max Iterations'). Live: Step 1. Visual: concepts/visuals/01-agent-loop.png (light: visuals/light/01-agent-loop.png)."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "System prompt",
+    "kicker": "Concept 2 · System prompt",
+    "type": "concept",
+    "layout": "compare",
+    "visual": {
+      "opener": "showcase",
+      "image": "assets/workshop-4/02-systeemprompt.png",
+      "imageLink": "System prompt: n8n left, Claude Agent SDK right"
+    },
+    "subtitle": "The system message now lives in a file next to the code.",
+    "keyPoints": [
+      "The system message now lives in a file next to the code."
+    ],
+    "columns": [
+      {
+        "title": "n8n · Workshop 3",
+        "items": [
+          "AI Agent → Options → System Message",
+          "One text field in the node",
+          "W3: \"Always talk with the Customer Reply Agent and with the Risk Agent\""
+        ]
+      },
+      {
+        "title": "Claude Agent SDK · Workshop 4",
+        "items": [
+          "CLAUDE.md: Purpose · Rules · Priority definitions",
+          "settingSources: ['project'] loads CLAUDE.md",
+          "systemPrompt: preset 'claude_code'",
+          "Alternative: systemPrompt as a string (day5)"
+        ]
+      }
+    ],
+    "notes": "n8n text verbatim from day5 n8n/support-triage.json (AI Agent options.systemMessage). SDK: 01-single-agent/options.mjs:8-11 (cwd, settingSources, systemPrompt preset); 01-single-agent/claude-project/CLAUDE.md (Priority definitions l.13-16, Required output l.18-20). day5: src/prompts.ts COORDINATOR_SYSTEM + settingSources: [] in src/agent.ts. Live: Step 1 (tone trap). Visual: concepts/visuals/02-systeemprompt.png (light: visuals/light/02-systeemprompt.png)."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "Tools",
+    "kicker": "Concept 3 · Tools",
+    "type": "concept",
+    "layout": "compare",
+    "visual": {
+      "opener": "showcase",
+      "image": "assets/workshop-4/03-tools.png",
+      "imageLink": "Tools: n8n left, Claude Agent SDK right"
+    },
+    "subtitle": "In code you state exactly which tools exist and which are allowed.",
+    "keyPoints": [
+      "In code you state exactly which tools exist and which are allowed."
+    ],
+    "columns": [
+      {
+        "title": "n8n · Workshop 3",
+        "items": [
+          "You attach tools to the AI Agent",
+          "Customer Reply Agent and Risk Agent as tools",
+          "Everything attached is allowed"
+        ]
+      },
+      {
+        "title": "Claude Agent SDK · Workshop 4",
+        "items": [
+          "tools: what exists (Lesson 1: [] · Lesson 2: ['Agent','Write'])",
+          "allowedTools: what runs without asking",
+          "disallowedTools: ['WebSearch','WebFetch','Bash']"
+        ]
+      }
+    ],
+    "notes": "SDK: 01-single-agent/options.mjs:12-13 (tools: [], disallowedTools); 02-subagents/options.mjs:13-15 (tools/allowedTools/disallowedTools); 03-mcp/options.mjs:17-20 (allowedTools incl. mcp__transactions__get_transaction and list_transactions). day5: src/tools.ts COORDINATOR_TOOLS = ['Agent']. Live: Steps 1–3. Visual: concepts/visuals/03-tools.png (light: visuals/light/03-tools.png)."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "MCP: external data",
+    "kicker": "Concept 4 · MCP",
+    "type": "concept",
+    "layout": "compare",
+    "visual": {
+      "opener": "showcase",
+      "image": "assets/workshop-4/04-mcp.png",
+      "imageLink": "MCP: external data: n8n left, Claude Agent SDK right"
+    },
+    "subtitle": "The MCP server owns the data. The agent only sees what the tool returns.",
+    "keyPoints": [
+      "The MCP server owns the data. The agent only sees what the tool returns."
+    ],
+    "columns": [
+      {
+        "title": "n8n · Workshop 3",
+        "items": [
+          "HTTP Request node per API",
+          "External service",
+          "(Concept: the W3 export has no HTTP node)"
+        ]
+      },
+      {
+        "title": "Claude Agent SDK · Workshop 4",
+        "items": [
+          "docs/transactions.xlsx → server.js (MCP, stdio)",
+          "The SDK starts the server on demand",
+          "mcp__transactions__get_transaction",
+          "ticket-analyst → \"External data:\""
+        ]
+      }
+    ],
+    "notes": "Honest note: the W3 n8n export (day5 n8n/support-triage.json) has NO HTTP Request node; the n8n side is a concept. SDK: 03-mcp/options.mjs:23-30 (mcpServers.transactions, type stdio, command node), analyst tool 03-mcp/agents.mjs:34, server 03-mcp/transaction-mcp/server.js, data docs/transactions.xlsx (also in .mcp.json for Claude Code). Tool name format mcp__<server>__<tool> confirmed in the Agent SDK hooks docs (docs.claude.com/en/docs/agent-sdk/hooks). Without a model: npm run smoke:mcp. Live: Step 3. Visual: concepts/visuals/04-mcp.png (light: visuals/light/04-mcp.png)."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "Control: hooks and approval",
+    "kicker": "Concept 5 · Control",
+    "type": "concept",
+    "layout": "compare",
+    "visual": {
+      "opener": "showcase",
+      "image": "assets/workshop-4/05-hooks.png",
+      "imageLink": "Control: hooks and approval: n8n left, Claude Agent SDK right"
+    },
+    "subtitle": "A human or a rule decides before a tool changes anything.",
+    "keyPoints": [
+      "A human or a rule decides before a tool changes anything."
+    ],
+    "columns": [
+      {
+        "title": "n8n · Workshop 3",
+        "items": [
+          "IF node: check before the action",
+          "Wait node: wait for approval",
+          "Error Workflow: on failure"
+        ]
+      },
+      {
+        "title": "Claude Agent SDK · Workshop 4",
+        "items": [
+          "canUseTool → \"Allow this change? [y/N]\" (in the exercise)",
+          "permissionMode: 'acceptEdits' (in the exercise)",
+          "Hooks PreToolUse / PostToolUse (not in the exercise)"
+        ]
+      }
+    ],
+    "notes": "In the exercise: canUseTool = askPerson in 03-mcp/approval.mjs:23-41, wired in 03-mcp/options.mjs:19; permissionMode 'acceptEdits' in 02-subagents/options.mjs:16 and 03-mcp/options.mjs:21. NOT in the exercise: SDK hooks (options.hooks with PreToolUse/PostToolUse, matcher on tool name, permissionDecision allow/deny/ask) — concept only, source docs.claude.com/en/docs/agent-sdk/hooks. Neither repo uses hooks. n8n IF/Wait/Error Workflow are not in the W3 export; concept. Live: Step 3b (npm run clerk, y/N). Visual: concepts/visuals/05-hooks.png (light: visuals/light/05-hooks.png)."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "Subagents",
+    "kicker": "Concept 6 · Subagents",
+    "type": "concept",
+    "layout": "compare",
+    "visual": {
+      "opener": "showcase",
+      "image": "assets/workshop-4/06-subagents.png",
+      "imageLink": "Subagents: n8n left, Claude Agent SDK right"
+    },
+    "subtitle": "The orchestrator delegates. Each specialist does one task.",
+    "keyPoints": [
+      "The orchestrator delegates. Each specialist does one task."
+    ],
+    "columns": [
+      {
+        "title": "n8n · Workshop 3",
+        "items": [
+          "AI Agent as coordinator",
+          "Customer Reply Agent + Risk Agent (own model + memory)",
+          "Code → Switch afterwards"
+        ]
+      },
+      {
+        "title": "Claude Agent SDK · Workshop 4",
+        "items": [
+          "Orchestrator follows CLAUDE.md: delegate, don't do it yourself",
+          "Agent → ticket-analyst (priority)",
+          "Agent → email-responder (draft email)",
+          "output/MSG-05.md = draft for the human"
+        ]
+      }
+    ],
+    "notes": "SDK: subagents live in options.agents: 02-subagents/agents.mjs:19-30 (ticket-analyst l.20-24, email-responder l.25-29), wired in 02-subagents/options.mjs:12-14; orchestrator rules 02-subagents/claude-project/CLAUDE.md:6-10 and :20-21. The prompts live in .claude/agents/ticket-analyst.md and .claude/agents/email-responder.md (Claude Code format); lib/agents.mjs loads them into options.agents. Live: Step 2. Visual: concepts/visuals/06-subagents.png (light: visuals/light/06-subagents.png)."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "Skills",
+    "kicker": "Concept 7 · Skills",
+    "type": "concept",
+    "layout": "compare",
+    "visual": {
+      "opener": "showcase",
+      "image": "assets/workshop-4/07-skills.png",
+      "imageLink": "Skills: n8n left, Claude Agent SDK right"
+    },
+    "subtitle": "A skill is a recipe Claude picks up by itself when it fits.",
+    "keyPoints": [
+      "A skill is a recipe Claude picks up by itself when it fits."
+    ],
+    "columns": [
+      {
+        "title": "n8n · Workshop 3",
+        "items": [
+          "Execute Workflow node calls a sub-workflow",
+          "Reusable sub-workflow or template",
+          "You choose when it runs"
+        ]
+      },
+      {
+        "title": "Claude Agent SDK · Workshop 4",
+        "items": [
+          ".claude/skills/<name>/SKILL.md (name + description)",
+          "At start: only the description",
+          "Claude picks the skill → full content loads",
+          "settingSources: ['project'] · option skills"
+        ]
+      }
+    ],
+    "notes": "NOT in the exercise: neither repo has .claude/skills or the skills option. Concept only. Source: docs.claude.com/en/docs/agent-sdk/skills ('Extend agents with skills'): skills are SKILL.md files, loaded via settingSources, model-invoked, scoped with the skills option; no programmatic API like agents. No live step. Visual: concepts/visuals/07-skills.png (light: visuals/light/07-skills.png)."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "Fixed workflow vs. dynamic agent",
+    "kicker": "Concept 8 · Workflows",
+    "type": "concept",
+    "layout": "compare",
+    "visual": {
+      "opener": "showcase",
+      "image": "assets/workshop-4/08-workflows-vs-dynamisch.png",
+      "imageLink": "Fixed workflow vs. dynamic agent: n8n left, Claude Agent SDK right"
+    },
+    "subtitle": "Code where it must. The agent chooses where it may. Always a human at the end.",
+    "keyPoints": [
+      "Code where it must. The agent chooses where it may. Always a human at the end."
+    ],
+    "columns": [
+      {
+        "title": "n8n · Workshop 3",
+        "items": [
+          "Input → Switch → Low / Medium / High",
+          "You draw every path up front",
+          "Works well for fixed rules"
+        ]
+      },
+      {
+        "title": "Claude Agent SDK · Workshop 4",
+        "items": [
+          "Fixed code: npm run check (check.mjs)",
+          "Agent chooses: which subagent, which tool",
+          "Fixed = rules, money, compliance · Agent = open questions"
+        ]
+      }
+    ],
+    "notes": "n8n Switch rules (priority equals low/medium/high) from day5 n8n/support-triage.json. Deterministic in code: day5 src/router.ts routeDecision ('The n8n Switch node') and check.mjs (hash check of labels). Dynamic: the orchestrator in 02-subagents/claude-project/CLAUDE.md picks its own Agent calls; 03-mcp/claude-project/CLAUDE.md:31-35 only sends 'Staff instruction:' to the transaction clerk. The Academy package itself has no Switch step (see PREP gap G2). Discuss: when do you choose which? Visual: concepts/visuals/08-workflows-vs-dynamisch.png (light: visuals/light/08-workflows-vs-dynamisch.png)."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "Get the workshop package.",
+    "kicker": "SOLO 0 · Your turn",
+    "type": "practice",
+    "layout": "exercise",
+    "timer": 10,
+    "visual": {
+      "bot": "point",
+      "place": "beside"
+    },
+    "cards": [
+      {
+        "title": "Level",
+        "body": "SOLO 0"
+      },
+      {
+        "title": "Workshop repo",
+        "body": "https://github.com/RyanLisse/aetherlink-day5-n8n-to-agent\ngit clone https://github.com/RyanLisse/aetherlink-day5-n8n-to-agent.git\ncd aetherlink-day5-n8n-to-agent\nnpm install\nnpm run verify\nnpm run lesson1 -- MSG-01 --dry-run"
+      }
+    ],
+    "steps": [
+      "Check for Node.js 22 or newer.",
+      "Clone the workshop repo (you start on main).",
+      "Run npm install, then npm run verify.",
+      "Run npm run lesson1 -- MSG-01 --dry-run.",
+      "Keep ANTHROPIC_API_KEY in your shell only for real model runs."
+    ],
+    "expected": "npm run verify shows fail 0, and the dry run prints the prompt and options and ends with dry run — no model call, not model evidence.",
+    "subtitle": "Clone the workshop repo, install, and inspect a dry run before calling a model.",
+    "keyPoints": [
+      "Use Node.js 22 or newer.",
+      "main is the starting point; step-1 … step-4 hold each finished step.",
+      "A dry run is not model evidence."
+    ],
+    "notes": "Participants clone https://github.com/RyanLisse/aetherlink-day5-n8n-to-agent (main = Step 0); its README and SOLO.md repeat every step for self-study, and step-1 … step-4 are the catch-up branches. Check that npm install finishes and the dry run prints the prompt, absolute cwd, project settings, and the dry-run notice. It must not import or start the SDK. Keep any API key in the shell."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "Lesson 1: one agent reads CLAUDE.md.",
+    "kicker": "Explain · one agent",
+    "type": "concept",
+    "visual": {
+      "bot": "think",
+      "place": "beside"
+    },
+    "subtitle": "query() loads project instructions when settingSources includes project.",
+    "keyPoints": [
+      "CLAUDE.md sets the support rules.",
+      "The main agent reads the customer message.",
+      "Judge impact, not tone."
+    ],
+    "cards": [
+      {
+        "title": "Project instructions",
+        "body": "settingSources: ['project'] loads CLAUDE.md."
+      },
+      {
+        "title": "One agent",
+        "body": "The main session classifies the message itself."
+      }
+    ],
+    "notes": "Explain Lesson 1. Point to query(), the absolute claude-project cwd, settingSources, and the claude_code preset. The main agent reads CLAUDE.md and the supplied message. Customer text stays data, not instructions."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "Watch one agent classify a message.",
+    "kicker": "Demo · Lesson 1",
+    "type": "concept",
+    "visual": {
+      "bot": "point",
+      "place": "beside"
+    },
+    "subtitle": "Compare a loud request with a calm report and focus on impact.",
+    "keyPoints": [
+      "Read the project rules first.",
+      "Compare tone with the reported impact.",
+      "Keep facts tied to the supplied message."
+    ],
+    "cards": [
+      {
+        "title": "Loud wording",
+        "body": "A customer is upset about a receipt."
+      },
+      {
+        "title": "Calm wording",
+        "body": "A customer reports unfamiliar transactions."
+      }
+    ],
+    "notes": "Demonstrate Lesson 1 with a loud request about a receipt and a calm message that reports unfamiliar transactions. Ask the room to judge impact, not tone. Do not name labels or expose grader results."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "Run Lesson 1 and test the tone trap.",
+    "kicker": "SOLO 1 · Your turn",
+    "type": "practice",
+    "layout": "exercise",
+    "timer": 15,
+    "visual": {
+      "bot": "point",
+      "place": "beside"
+    },
+    "cards": [
+      {
+        "title": "Level",
+        "body": "SOLO 1"
+      }
+    ],
+    "steps": [
+      "Run lesson1 for MSG-01 through MSG-06.",
+      "Temporarily remove ## Priority definitions from the Lesson 1 CLAUDE.md.",
+      "Rerun the loud-tone and tone-trap messages.",
+      "Paste the section back (lost it? git checkout step-1 -- 01-single-agent/claude-project/CLAUDE.md).",
+      "Write down one label per message (you enter them in labels.json in Step 4)."
+    ],
+    "expected": "All six messages run, the tone-trap comparison is recorded, CLAUDE.md is restored, and the six labels are written down. Fell behind? git checkout step-1.",
+    "subtitle": "Run the first six messages and test how project rules affect tone.",
+    "keyPoints": [
+      "Run all six messages.",
+      "Compare the tone-trap runs.",
+      "Restore CLAUDE.md before continuing."
+    ],
+    "notes": "Give participants 15 minutes. Ask them to remove only the Priority definitions section, rerun the loud-tone and tone-trap messages, and restore the original CLAUDE.md. Have them write down their own labels; they enter them in labels.json with npm run check in Step 4. Do not read out answer keys."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "Discuss: what does the main agent know?",
+    "kicker": "Discuss · Lesson 1",
+    "type": "concept",
+    "visual": {
+      "bot": "think",
+      "place": "beside"
+    },
+    "subtitle": "Separate project instructions, customer data, and facts the agent does not have.",
+    "keyPoints": [
+      "CLAUDE.md provides project rules.",
+      "The customer message supplies case facts.",
+      "The agent must name missing information instead of guessing."
+    ],
+    "cards": [
+      {
+        "title": "Instructions",
+        "body": "Project guidance comes from CLAUDE.md."
+      },
+      {
+        "title": "Input data",
+        "body": "The customer message is evidence, not an instruction."
+      }
+    ],
+    "notes": "Discuss the first question: What does the main agent know? Ask which facts came from CLAUDE.md, which came from the customer, and what remains unknown. Remind participants not to treat customer text as instructions to change the task."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "Lesson 2: delegate to two subagents.",
+    "kicker": "Explain · orchestrator and agents",
+    "type": "concept",
+    "visual": {
+      "bot": "point",
+      "place": "beside"
+    },
+    "subtitle": "The orchestrator delegates analysis and reply writing to separate agents.",
+    "keyPoints": [
+      "ticket-analyst decides the priority.",
+      "email-responder writes the reply draft.",
+      "The orchestrator combines the results and saves a file."
+    ],
+    "cards": [
+      {
+        "title": "ticket-analyst",
+        "body": "Reads the message and returns analysis."
+      },
+      {
+        "title": "email-responder",
+        "body": "Writes a short draft from the original message and analysis."
+      }
+    ],
+    "notes": "Explain Lesson 2. Show agents in the query options and the Agent tool. The orchestrator delegates analysis first, waits for its result, then delegates reply writing. It does not do either specialist job itself."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "Watch the orchestrator save a draft.",
+    "kicker": "Demo · Lesson 2",
+    "type": "concept",
+    "visual": {
+      "bot": "think",
+      "place": "beside"
+    },
+    "subtitle": "Follow the two Agent calls and open the saved Markdown result.",
+    "keyPoints": [
+      "Trace ticket-analyst first.",
+      "Trace email-responder second.",
+      "Review the output file before any customer-facing use."
+    ],
+    "cards": [
+      {
+        "title": "Trace",
+        "body": "Agent → ticket-analyst, then Agent → email-responder."
+      },
+      {
+        "title": "Draft",
+        "body": "Open output/MSG-05.md in the Lesson 2 project."
+      }
+    ],
+    "notes": "Run lesson2 with MSG-05. Follow the Agent trace in order, then open 02-subagents/claude-project/output/MSG-05.md. Point out that the file is a draft and needs human approval."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "Run the orchestrator and inspect the draft.",
+    "kicker": "SOLO 2 · Your turn",
+    "type": "practice",
+    "layout": "exercise",
+    "timer": 20,
+    "visual": {
+      "bot": "point",
+      "place": "beside"
+    },
+    "cards": [
+      {
+        "title": "Level",
+        "body": "SOLO 2"
+      }
+    ],
+    "steps": [
+      "Run lesson2 with MSG-05.",
+      "Confirm the analyst call precedes the email-responder call.",
+      "Open 02-subagents/claude-project/output/MSG-05.md.",
+      "Confirm that the orchestrator delegated both specialist jobs.",
+      "Run lesson2 with MSG-10 and inspect the missing-information request."
+    ],
+    "expected": "The trace shows both agents in order, the saved draft is open, and the missing-information case is reviewed.",
+    "subtitle": "Trace both specialists, inspect their saved result, and test missing information.",
+    "keyPoints": [
+      "Follow the Agent trace.",
+      "Review the saved draft.",
+      "Do not send without human approval."
+    ],
+    "notes": "Give participants 20 minutes. The expected order is ticket-analyst followed by email-responder. Ask them to point to the orchestrator instructions that keep the two specialist jobs separate. MSG-10 tests how the analyst reports missing information."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "Lesson 3: look up transaction data through MCP.",
+    "kicker": "Explain · stdio MCP",
+    "type": "concept",
+    "visual": {
+      "bot": "point",
+      "place": "beside"
+    },
+    "subtitle": "One server, five tools: the analyst reads; a clerk writes after a person approves.",
+    "keyPoints": [
+      "npm install installs dependencies, not a running server.",
+      "The Agent SDK starts the server on demand over stdio.",
+      "The workbook and server stay outside claude-project."
+    ],
+    "cards": [
+      {
+        "title": "Read tools",
+        "body": "list_transactions and get_transaction."
+      },
+      {
+        "title": "Write tools",
+        "body": "add, update, delete — a person approves."
+      }
+    ],
+    "notes": "Explain Lesson 3. Show that docs/transactions.xlsx and 03-mcp/transaction-mcp/server.js are outside 03-mcp/claude-project. npm install downloads dependencies only. The Agent SDK starts server.js on demand and connects over stdio. The server registers five tools, each with a zod input schema. The ticket-analyst gets only get_transaction. The transaction-clerk gets list, get, add, update and delete, and only acts on a prompt that starts with Staff instruction:. Writes go to a working copy, never to the workbook."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "Watch an MCP transaction lookup.",
+    "kicker": "Demo · Lesson 3",
+    "type": "concept",
+    "visual": {
+      "bot": "think",
+      "place": "beside"
+    },
+    "subtitle": "Follow one transaction ID from the customer message to the tool result.",
+    "keyPoints": [
+      "The analyst calls get_transaction.",
+      "The server reads the workbook.",
+      "The final response names facts from external data."
+    ],
+    "cards": [
+      {
+        "title": "Tool trace",
+        "body": "mcp → mcp__transactions__get_transaction."
+      },
+      {
+        "title": "Data boundary",
+        "body": "The analyst receives the record through MCP, not a file read."
+      }
+    ],
+    "notes": "Run Lesson 3 with the message about TX-1014. Show the MCP trace and the returned record as tool data. Point out the External data: line. Do not display a priority answer or put a label beside a message ID."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "Run Lesson 3 with transaction messages.",
+    "kicker": "SOLO 3 · Your turn",
+    "type": "practice",
+    "layout": "exercise",
+    "timer": 20,
+    "visual": {
+      "bot": "point",
+      "place": "beside"
+    },
+    "cards": [
+      {
+        "title": "Level",
+        "body": "SOLO 3"
+      }
+    ],
+    "steps": [
+      "Get the server (git checkout step-3 -- 03-mcp .mcp.json .claude lib package.json), run npm install, then npm run smoke:mcp; it starts server.js over stdio and calls no model.",
+      "Run lesson3 with MSG-08, MSG-07, and MSG-09.",
+      "Follow each get_transaction trace and the External data: line.",
+      "Run clerk to set TX-1003 to COMPLETED; answer n, then y.",
+      "Run npm run reset:mcp to restore the practice data."
+    ],
+    "expected": "The three runs show the MCP trace and external-data source, and the clerk run shows a declined and an approved change.",
+    "subtitle": "Use the MCP tool for transaction facts and record their source.",
+    "keyPoints": [
+      "Smoke-test the MCP server first.",
+      "Follow each lookup trace.",
+      "Keep the workbook outside the project."
+    ],
+    "notes": "Give participants 20 minutes. Remind them that npm install does not start the server; the smoke test and the Agent SDK start it over stdio. They should run the three messages, inspect each External data: line, and confirm that the workbook is outside claude-project. Then they run npm run clerk -- \"Set the status of TX-1003 to COMPLETED.\" twice: answer n at Allow this change? [y/N] the first time and y the second time. The change lands in participant-output/transactions.working.json; npm run reset:mcp removes it."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "Discuss: tools and external data.",
+    "kicker": "Discuss · Lesson 3",
+    "type": "concept",
+    "visual": {
+      "bot": "point",
+      "place": "beside"
+    },
+    "subtitle": "Name when a tool is needed, where each fact came from, and who may change data.",
+    "keyPoints": [
+      "Use a tool when the needed fact is outside the message.",
+      "The MCP result is external data.",
+      "Annotations describe a tool; the host enforces access."
+    ],
+    "cards": [
+      {
+        "title": "Read or write",
+        "body": "Annotations describe; the host enforces."
+      },
+      {
+        "title": "Human approval",
+        "body": "canUseTool stops every write for a person."
+      }
+    ],
+    "notes": "Discuss three questions: When is a tool needed? What information came from external data? Who may change data? Ask participants to trace one claim to the customer message and one to the MCP result. Then compare readOnlyHint and destructiveHint on the server with the SDK options: per-subagent tools give least privilege, allowedTools lets reads run, and canUseTool makes a person approve each write. A customer message never changes a record. Keep the workbook outside the agent project."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "Complete the acceptance table and Proof.",
+    "kicker": "SOLO 4 · Your turn · Proof",
+    "type": "practice",
+    "layout": "exercise",
+    "timer": 15,
+    "visual": {
+      "bot": "point",
+      "place": "beside"
+    },
+    "cards": [
+      {
+        "title": "Level",
+        "body": "SOLO 4"
+      }
+    ],
+    "steps": [
+      "Build a table with message, agent label, and facts from external data.",
+      "Run npm run check, fill in labels.json, and run npm run check again.",
+      "Review drafts in the Lesson 2 and Lesson 3 output folders.",
+      "Attach the table and a run trace to Proof.",
+      "Record the human review gate; a dry run is not model evidence."
+    ],
+    "expected": "The acceptance table, npm run check output, run trace, and human review gate are recorded in Proof.",
+    "subtitle": "Record the labels, external facts, run evidence, and human review.",
+    "keyPoints": [
+      "Fill the acceptance table.",
+      "Trace external facts to MCP.",
+      "Have a human review each draft."
+    ],
+    "notes": "Give participants 15 minutes to complete the acceptance table and npm run check (git checkout step-4 if they lack check.mjs). They should attach their trace, review the drafts in both output folders, and record the human gate. Do not use dry-run output as model evidence."
+  },
+  {
+    "lessonId": "workshop-4",
+    "title": "Close: keep a human in the loop.",
+    "kicker": "Done when · bridge to Workshop 5",
+    "type": "recap",
+    "layout": "recap",
+    "visual": {
+      "recapKeys": true,
+      "bot": "point",
+      "place": "beside"
+    },
+    "items": [
+      {
+        "label": "One agent",
+        "caption": "Project rules and message data guide the first lesson."
+      },
+      {
+        "label": "Two subagents",
+        "caption": "The orchestrator separates analysis from reply writing."
+      },
+      {
+        "label": "MCP tools",
+        "caption": "Reads go to the analyst; writes need a person's approval."
+      },
+      {
+        "label": "Human review",
+        "caption": "A person reviews every draft before customer-facing use."
+      }
+    ],
+    "notes": "Close by recapping the three lessons and the human review gate. Bridge to Workshop 5 without carrying this package or vehicle into the next workshop."
+  }
+];

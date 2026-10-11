@@ -1200,3 +1200,6 @@ body[data-opener="anatomy"] .slide-main{display:grid;place-items:center}
 .anatomy-figure iframe{height:min(58vh,619px)}
 .anatomy-figure figcaption{color:var(--muted);font-size:clamp(.9rem,1.4vw,1.2rem);text-align:center}
 @media(max-width:600px){.anatomy-figure iframe{height:62vh;max-height:62vh}.anatomy-figure>img{max-height:62vh}.anatomy-figure figcaption{text-align:left}}
+
+.session-picker select{max-width:260px;min-height:42px;padding:.65rem .75rem;border:1px solid var(--border);border-radius:10px;background:var(--card,#102238);color:var(--text);font:inherit;cursor:pointer}
+@media(max-width:800px){.session-picker{width:100%}.session-picker select{max-width:100%;width:100%}.tools{flex-wrap:wrap}}

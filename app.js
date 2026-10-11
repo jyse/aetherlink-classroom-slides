@@ -736,8 +736,9 @@ function renderProgress() {
 }
 
 /* ---- presenter-view sync: BroadcastChannel, localStorage fallback ---- */
-const PRESENTER_CHANNEL = 'aetherlink-classroom-slides';
-const PRESENTER_KEY = 'als:presenter:index';
+const DECK_ID = location.pathname.split('/').pop() || 'index.html';
+const PRESENTER_CHANNEL = 'aetherlink-classroom-slides:' + DECK_ID;
+const PRESENTER_KEY = 'als:presenter:index:' + DECK_ID;
 let presenterChannel = null;
 try { if ('BroadcastChannel' in window) presenterChannel = new BroadcastChannel(PRESENTER_CHANNEL); } catch {}
 function broadcastSlide(index) {
@@ -745,7 +746,7 @@ function broadcastSlide(index) {
   try { localStorage.setItem(PRESENTER_KEY, JSON.stringify({ index, at: Date.now() })); } catch {}
 }
 function openPresenterView() {
-  const w = window.open((window.PRESENTER_PAGE || 'presenter.html') + '?i=' + current, 'aetherlink-presenter', 'width=1000,height,680,noopener');
+  const w = window.open((window.PRESENTER_PAGE || 'presenter.html') + '?i=' + current, 'aetherlink-presenter:' + DECK_ID, 'width=1000,height,680,noopener');
   if (!w) notify('Allow pop-ups to open the presenter view.');
 }
 
@@ -754,10 +755,10 @@ const EMBED = new URLSearchParams(location.search).has('embed');
 if (EMBED) document.documentElement.classList.add('embed');
 
 /* ---- hide a slide for now: H toggles; arrows, Home and End skip hidden slides ---- */
-const HIDDEN_KEY = 'als:hidden';
+const HIDDEN_KEY = 'als:hidden:' + DECK_ID;
 const hideId = i => i + ':' + slides[i].title;
 // A slide with `hidden: true` in slides.js starts hidden on every laptop; H (or Chapters) can still show it.
-const SHOWN_KEY = 'als:shown';
+const SHOWN_KEY = 'als:shown:' + DECK_ID;
 const readSet = k => { try { return new Set(JSON.parse(localStorage.getItem(k) || '[]')); } catch { return new Set(); } };
 const writeSet = (k, set) => { try { localStorage.setItem(k, JSON.stringify([...set])); } catch {} };
 function isHidden(i) { const id = hideId(i); return slides[i].hidden ? !readSet(SHOWN_KEY).has(id) : readSet(HIDDEN_KEY).has(id); }

@@ -1,0 +1,34 @@
+{
+  "repo": "RyanLisse/aetherlink-academy-app",
+  "revision": "b491cc0187b948a9717186fa9d2cb3f79dbc59ca",
+  "decks": [
+    {
+      "file": "workshop3-slides.js",
+      "source": "apps/web/src/deck/workshop3-slides.ts",
+      "slides": 18,
+      "sourceSha256": "2b5a3e59ab843c619ddd58a5f1e8711ed0ca5b63876de94e45b347a5ed3f5a9f",
+      "normalizedDataSha256": "45d43abd6a24dffd22caf7674a4762acdf0089c64883e5ffbdd784b4262c3f6b"
+    },
+    {
+      "file": "workshop4-slides.js",
+      "source": "apps/web/src/deck/workshop4-slides.ts",
+      "slides": 28,
+      "sourceSha256": "db561638c82091986771f5b907618e2caab8944acb8a47bf750d0be78fdde5e8",
+      "normalizedDataSha256": "07aa80ab821ca8e3ec416c84f2efb4239dde21a9f1ec43120c1982972d11d04a"
+    },
+    {
+      "file": "workshop6-slides.js",
+      "source": "apps/web/src/deck/workshop6-slides.ts",
+      "slides": 14,
+      "sourceSha256": "2faf4fb44ec2c14b932a3ec02a96b0541a02a7b1c9267d4b272f391edbb407aa",
+      "normalizedDataSha256": "2c8dfbd66ba6a9c8e4f7a01e0606c7dc9752ed3e69f0646793785e0b1d22a2f2"
+    },
+    {
+      "file": "workshop7-slides.js",
+      "source": "apps/web/src/deck/workshop7-slides.ts",
+      "slides": 14,
+      "sourceSha256": "ad4ef37e7ad165e9f04ea406d0417df365a1c0f343234b4577f4d75e3b8778ed",
+      "normalizedDataSha256": "dbcdf048cd483000bede63e21945516adfed60582b6667045ff320e6c8b67ef5"
+    }
+  ]
+}
