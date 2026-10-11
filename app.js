@@ -51,7 +51,7 @@ function renderCard(c, i) { const card = node('article', 'card'); card.style.set
 
 /* ---- slide layouts ---- */
 let slideController = null;
-function renderTagline(stage, s) { if (s.tagline) stage.append(node('p', 'tagline', s.tagline)); }
+function renderTagline(stage, s) { if (!s.visual?.anatomy && s.tagline) stage.append(node('p', 'tagline', s.tagline)); }
 function renderPillars(stage, s) { const row = node('div', 'pillars'); (s.items || []).forEach((it, i) => { const p = node('div', 'pillar'); p.style.setProperty('--i', i); p.append(node('span', 'pillar-label', it.label)); if (it.caption) p.append(node('span', 'pillar-caption', it.caption)); row.append(p); }); stage.append(row); }
 function renderSteps(stage, s) {
   const wrap = node('div', 'steps-wrap'); const row = node('ol', 'steps-chain'); let active = -1; const els = []; const co = s.callout;
@@ -86,6 +86,7 @@ function renderTimer(stage, s) {
     onDone: () => notify('Time is up — this assignment ends now'), onEmpty: () => notify('Set the minutes first, then press Start.'), signal: slideController.signal }));
 }
 function renderLayout(stage, s) {
+  if (s.visual?.anatomy) return;
   const L = s.layout;
   if (L === 'pillars') renderPillars(stage, s);
   else if (L === 'steps') renderSteps(stage, s);
@@ -566,6 +567,15 @@ function buildOpener(stage, main, s, v) {
 function rel(el, stage) { const a = el.getBoundingClientRect(), b = stage.getBoundingClientRect(); return { x: a.left - b.left + stage.scrollLeft, y: a.top - b.top, w: a.width, h: a.height }; }
 function renderVisual(stage, body, main, s) {
   const v = s.visual; if (!v) return;
+  if (v.anatomy) {
+    const a = v.anatomy; const figure = node('figure', 'anatomy-figure');
+    if (EMBED) {
+      const img = document.createElement('img'); img.src = a.poster; img.alt = a.title + '. ' + a.caption; figure.append(img);
+    } else {
+      const frame = document.createElement('iframe'); frame.src = a.src; frame.title = a.title; figure.append(frame);
+    }
+    figure.append(node('figcaption', null, a.caption)); main.append(figure); return;
+  }
   if (v.art === 'timeline') main.prepend(ART.timeline());
   if (v.cardArt) { const cards = main.querySelectorAll('.card'); Object.entries(v.cardArt).forEach(([i, kind]) => { if (cards[i] && ART[kind]) cards[i].append(ART[kind]()); }); }
   if (v.pillarIcons) main.querySelectorAll('.pillar').forEach((p, i) => p.prepend(svg('0 0 24 24', PILLAR_ICONS[i % PILLAR_ICONS.length], 'pillar-icon')));
@@ -840,7 +850,7 @@ function render() {
   document.body.classList.toggle('dark', !!s.dark);
   document.body.classList.toggle('is-assignment', type === 'practice');
   document.body.dataset.type = type;
-  document.body.dataset.opener = s.visual?.opener || '';
+  document.body.dataset.opener = s.visual?.anatomy ? 'anatomy' : s.visual?.opener || '';
   document.title = s.title + ' · Aetherlink classroom';
   const stage = $('stage'); stage.replaceChildren();
   if (type === 'practice' && s.layout === 'exercise') { renderAssignment(stage, s); finishRender(s); return; }
@@ -864,8 +874,8 @@ function render() {
   renderLayout(main, s);
   renderTagline(main, s);
   renderVisual(stage, body, main, s);
-  applyStepThrough(main, s);
-  const instructions = (s.visual?.quiz || s.visual?.stamps || s.visual?.perCard || s.visual?.runner) ? null : renderInstructions(s);
+  if (!s.visual?.anatomy) applyStepThrough(main, s);
+  const instructions = (s.visual?.anatomy || s.visual?.quiz || s.visual?.stamps || s.visual?.perCard || s.visual?.runner) ? null : renderInstructions(s);
   if (instructions) {
     const side = sideBySide(s, instructions);
     body.classList.toggle('with-side', side);

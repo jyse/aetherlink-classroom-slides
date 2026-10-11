@@ -207,9 +207,12 @@ window.SLIDES = [
     "kicker": "W5 · WHY AI-NATIVE · FIG. 1",
     "type": "concept",
     "visual": {
-      "opener": "sdlc-loop",
-      "image": "assets/workshop5-bottleneck.svg",
-      "imageAlt": "Before agents, Build takes the largest part of the delivery cycle. With AI agents, Build is much shorter while Plan, Design, Test, Deploy, and Maintain still take time, leaving free time on the right."
+      "anatomy": {
+        "src": "assets/anatomy/bottleneck.html",
+        "poster": "assets/anatomy/bottleneck.svg",
+        "title": "Delivery bottleneck",
+        "caption": "Build gets faster. Decisions and checks still take time."
+      }
     },
     "keyPoints": [
       "Waiting time shifts to Plan, Test, and Deploy.",
@@ -267,9 +270,12 @@ window.SLIDES = [
     "type": "concept",
     "cards": [],
     "visual": {
-      "opener": "sdlc-loop",
-      "image": "assets/workshop5-sdlc-loop.svg",
-      "imageAlt": "A clockwise loop with Plan, Design, Build, Test, Deploy, and Maintain around the AetherLink bot. Humans set goals, direct, and approve."
+      "anatomy": {
+        "src": "assets/anatomy/loop.html",
+        "poster": "assets/anatomy/loop.svg",
+        "title": "The AI-native loop",
+        "caption": "The agent supports six stages. Humans set goals, direct, and approve."
+      }
     },
     "keyPoints": [
       "The six stages form one continuous loop.",
@@ -937,14 +943,12 @@ window.SLIDES = [
     ],
     "tagline": "No network. No writes.",
     "visual": {
-      "plugs": 1,
-      "highlight": [
-        {
-          "in": "card:0",
-          "text": "Local and read-only",
-          "tone": "orange"
-        }
-      ]
+      "anatomy": {
+        "src": "assets/anatomy/mcp.html",
+        "poster": "assets/anatomy/mcp.svg",
+        "title": "Read-only MCP",
+        "caption": "Five local tools read incident data. They do not write or use the network."
+      }
     },
     "keyPoints": [
       "Read-only.",
@@ -1119,7 +1123,12 @@ window.SLIDES = [
       }
     ],
     "visual": {
-      "stepThrough": true
+      "anatomy": {
+        "src": "assets/anatomy/hooks.html",
+        "poster": "assets/anatomy/hooks.svg",
+        "title": "Allow, ask, deny",
+        "caption": "The lab hook checks supported tool calls. Named approval requests confirmation; merge stays blocked."
+      }
     },
     "keyPoints": [
       "Permissions + hook + approvals/ + audit.jsonl.",
@@ -1261,7 +1270,12 @@ window.SLIDES = [
     ],
     "tagline": "Delegate the work. Never the acceptance.",
     "visual": {
-      "swap": true
+      "anatomy": {
+        "src": "assets/anatomy/subagents.html",
+        "poster": "assets/anatomy/subagents.svg",
+        "title": "Separate verifier context",
+        "caption": "A verifier checks the diagnosis in a separate context. A human accepts the result."
+      }
     },
     "keyPoints": [
       "Own context.",
@@ -1371,19 +1385,12 @@ window.SLIDES = [
     ],
     "tagline": "Fix the diagnosis, not the eval.",
     "visual": {
-      "hero": 0,
-      "popOut": 1,
-      "bot": "think",
-      "place": "popout",
-      "stepThrough": true,
-      "chipGrid": 3,
-      "highlight": [
-        {
-          "in": "tagline",
-          "text": "not the eval",
-          "tone": "orange"
-        }
-      ]
+      "anatomy": {
+        "src": "assets/anatomy/eval.html",
+        "poster": "assets/anatomy/eval.svg",
+        "title": "Diagnosis test bench",
+        "caption": "Check evidence and reasoning against the case. Fix the diagnosis, not the eval."
+      }
     },
     "keyPoints": [
       "No model needed.",
@@ -1405,28 +1412,12 @@ window.SLIDES = [
     ],
     "tagline": "The eval tests the reasoning.",
     "visual": {
-      "runner": [
-        {
-          "label": "PASS",
-          "tone": "green"
-        },
-        {
-          "label": "PASS",
-          "tone": "green"
-        },
-        {
-          "label": "PASS",
-          "tone": "green"
-        },
-        {
-          "label": "REJECTED",
-          "tone": "orange"
-        },
-        {
-          "label": "REJECTED",
-          "tone": "orange"
-        }
-      ]
+      "anatomy": {
+        "src": "assets/anatomy/eval.html?preset=rejected",
+        "poster": "assets/anatomy/eval-rejected.svg",
+        "title": "Rejected diagnosis",
+        "caption": "Real log IDs are not enough. The diagnosis must pass every case check."
+      }
     },
     "keyPoints": [
       "npm run eval: 6 of 6 as expected.",

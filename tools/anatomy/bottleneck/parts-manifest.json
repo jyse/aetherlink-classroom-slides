@@ -1,0 +1,456 @@
+{
+  "figure": "bottleneck",
+  "count": 90,
+  "parts": [
+    {
+      "id": "base-plate",
+      "group": "base",
+      "purpose": "Carries the six-station line."
+    },
+    {
+      "id": "foot-nw",
+      "group": "base",
+      "purpose": "Supports and lifts the base plate."
+    },
+    {
+      "id": "foot-ne",
+      "group": "base",
+      "purpose": "Supports and lifts the base plate."
+    },
+    {
+      "id": "foot-sw",
+      "group": "base",
+      "purpose": "Supports and lifts the base plate."
+    },
+    {
+      "id": "foot-se",
+      "group": "base",
+      "purpose": "Supports and lifts the base plate."
+    },
+    {
+      "id": "base-screw-nw",
+      "group": "base",
+      "purpose": "Fastens the plate to its frame."
+    },
+    {
+      "id": "base-screw-ne",
+      "group": "base",
+      "purpose": "Fastens the plate to its frame."
+    },
+    {
+      "id": "base-screw-sw",
+      "group": "base",
+      "purpose": "Fastens the plate to its frame."
+    },
+    {
+      "id": "base-screw-se",
+      "group": "base",
+      "purpose": "Fastens the plate to its frame."
+    },
+    {
+      "id": "ruler-strip",
+      "group": "base",
+      "purpose": "Makes the line read as a calibrated instrument."
+    },
+    {
+      "id": "model-plate",
+      "group": "base",
+      "purpose": "Marks every value as illustrative."
+    },
+    {
+      "id": "belt-back-rail",
+      "group": "transport",
+      "purpose": "Guides work along the far edge."
+    },
+    {
+      "id": "belt-front-rail",
+      "group": "transport",
+      "purpose": "Guides work along the near edge."
+    },
+    {
+      "id": "belt-roller-1",
+      "group": "transport",
+      "purpose": "Supports the work conveyor."
+    },
+    {
+      "id": "belt-roller-2",
+      "group": "transport",
+      "purpose": "Supports the work conveyor."
+    },
+    {
+      "id": "belt-roller-3",
+      "group": "transport",
+      "purpose": "Supports the work conveyor."
+    },
+    {
+      "id": "belt-roller-4",
+      "group": "transport",
+      "purpose": "Supports the work conveyor."
+    },
+    {
+      "id": "belt-roller-5",
+      "group": "transport",
+      "purpose": "Supports the work conveyor."
+    },
+    {
+      "id": "belt-roller-6",
+      "group": "transport",
+      "purpose": "Supports the work conveyor."
+    },
+    {
+      "id": "belt-roller-7",
+      "group": "transport",
+      "purpose": "Supports the work conveyor."
+    },
+    {
+      "id": "plan-pedestal",
+      "group": "plan",
+      "purpose": "Anchors the station to the line."
+    },
+    {
+      "id": "plan-housing",
+      "group": "plan",
+      "purpose": "Contains the station mechanism."
+    },
+    {
+      "id": "plan-cap",
+      "group": "plan",
+      "purpose": "Closes and stiffens the housing."
+    },
+    {
+      "id": "plan-sensor",
+      "group": "plan",
+      "purpose": "Detects incoming work."
+    },
+    {
+      "id": "plan-lamp",
+      "group": "plan",
+      "purpose": "Shows station activity or the bottleneck."
+    },
+    {
+      "id": "plan-queue-tray",
+      "group": "plan",
+      "purpose": "Holds work waiting for the station."
+    },
+    {
+      "id": "plan-queue-card-1",
+      "group": "plan",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "plan-queue-card-2",
+      "group": "plan",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "plan-queue-card-3",
+      "group": "plan",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "plan-queue-card-4",
+      "group": "plan",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "plan-queue-card-5",
+      "group": "plan",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "design-pedestal",
+      "group": "design",
+      "purpose": "Anchors the station to the line."
+    },
+    {
+      "id": "design-housing",
+      "group": "design",
+      "purpose": "Contains the station mechanism."
+    },
+    {
+      "id": "design-cap",
+      "group": "design",
+      "purpose": "Closes and stiffens the housing."
+    },
+    {
+      "id": "design-sensor",
+      "group": "design",
+      "purpose": "Detects incoming work."
+    },
+    {
+      "id": "design-lamp",
+      "group": "design",
+      "purpose": "Shows station activity or the bottleneck."
+    },
+    {
+      "id": "design-queue-tray",
+      "group": "design",
+      "purpose": "Holds work waiting for the station."
+    },
+    {
+      "id": "design-queue-card-1",
+      "group": "design",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "design-queue-card-2",
+      "group": "design",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "design-queue-card-3",
+      "group": "design",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "design-queue-card-4",
+      "group": "design",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "design-queue-card-5",
+      "group": "design",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "build-pedestal",
+      "group": "build",
+      "purpose": "Anchors the station to the line."
+    },
+    {
+      "id": "build-housing",
+      "group": "build",
+      "purpose": "Contains the station mechanism."
+    },
+    {
+      "id": "build-cap",
+      "group": "build",
+      "purpose": "Closes and stiffens the housing."
+    },
+    {
+      "id": "build-sensor",
+      "group": "build",
+      "purpose": "Detects incoming work."
+    },
+    {
+      "id": "build-lamp",
+      "group": "build",
+      "purpose": "Shows station activity or the bottleneck."
+    },
+    {
+      "id": "build-queue-tray",
+      "group": "build",
+      "purpose": "Holds work waiting for the station."
+    },
+    {
+      "id": "build-queue-card-1",
+      "group": "build",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "build-queue-card-2",
+      "group": "build",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "build-queue-card-3",
+      "group": "build",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "build-queue-card-4",
+      "group": "build",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "build-queue-card-5",
+      "group": "build",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "test-pedestal",
+      "group": "test",
+      "purpose": "Anchors the station to the line."
+    },
+    {
+      "id": "test-housing",
+      "group": "test",
+      "purpose": "Contains the station mechanism."
+    },
+    {
+      "id": "test-cap",
+      "group": "test",
+      "purpose": "Closes and stiffens the housing."
+    },
+    {
+      "id": "test-sensor",
+      "group": "test",
+      "purpose": "Detects incoming work."
+    },
+    {
+      "id": "test-lamp",
+      "group": "test",
+      "purpose": "Shows station activity or the bottleneck."
+    },
+    {
+      "id": "test-queue-tray",
+      "group": "test",
+      "purpose": "Holds work waiting for the station."
+    },
+    {
+      "id": "test-queue-card-1",
+      "group": "test",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "test-queue-card-2",
+      "group": "test",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "test-queue-card-3",
+      "group": "test",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "test-queue-card-4",
+      "group": "test",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "test-queue-card-5",
+      "group": "test",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "deploy-pedestal",
+      "group": "deploy",
+      "purpose": "Anchors the station to the line."
+    },
+    {
+      "id": "deploy-housing",
+      "group": "deploy",
+      "purpose": "Contains the station mechanism."
+    },
+    {
+      "id": "deploy-cap",
+      "group": "deploy",
+      "purpose": "Closes and stiffens the housing."
+    },
+    {
+      "id": "deploy-sensor",
+      "group": "deploy",
+      "purpose": "Detects incoming work."
+    },
+    {
+      "id": "deploy-lamp",
+      "group": "deploy",
+      "purpose": "Shows station activity or the bottleneck."
+    },
+    {
+      "id": "deploy-queue-tray",
+      "group": "deploy",
+      "purpose": "Holds work waiting for the station."
+    },
+    {
+      "id": "deploy-queue-card-1",
+      "group": "deploy",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "deploy-queue-card-2",
+      "group": "deploy",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "deploy-queue-card-3",
+      "group": "deploy",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "deploy-queue-card-4",
+      "group": "deploy",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "deploy-queue-card-5",
+      "group": "deploy",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "maintain-pedestal",
+      "group": "maintain",
+      "purpose": "Anchors the station to the line."
+    },
+    {
+      "id": "maintain-housing",
+      "group": "maintain",
+      "purpose": "Contains the station mechanism."
+    },
+    {
+      "id": "maintain-cap",
+      "group": "maintain",
+      "purpose": "Closes and stiffens the housing."
+    },
+    {
+      "id": "maintain-sensor",
+      "group": "maintain",
+      "purpose": "Detects incoming work."
+    },
+    {
+      "id": "maintain-lamp",
+      "group": "maintain",
+      "purpose": "Shows station activity or the bottleneck."
+    },
+    {
+      "id": "maintain-queue-tray",
+      "group": "maintain",
+      "purpose": "Holds work waiting for the station."
+    },
+    {
+      "id": "maintain-queue-card-1",
+      "group": "maintain",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "maintain-queue-card-2",
+      "group": "maintain",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "maintain-queue-card-3",
+      "group": "maintain",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "maintain-queue-card-4",
+      "group": "maintain",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "maintain-queue-card-5",
+      "group": "maintain",
+      "purpose": "Represents queued work from the model."
+    },
+    {
+      "id": "build-control-bed",
+      "group": "control",
+      "purpose": "Mounts the Build speed control."
+    },
+    {
+      "id": "build-control-track",
+      "group": "control",
+      "purpose": "Defines the 50–150% speed range."
+    },
+    {
+      "id": "build-control-knob",
+      "group": "control",
+      "purpose": "Lets the reader change Build speed."
+    },
+    {
+      "id": "build-control-pointer",
+      "group": "control",
+      "purpose": "Shows the selected Build speed."
+    }
+  ]
+}
