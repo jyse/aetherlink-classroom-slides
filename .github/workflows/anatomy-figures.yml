@@ -2,7 +2,7 @@ name: Anatomy figure acceptance
 on:
   workflow_dispatch:
   pull_request:
-    paths: ['assets/anatomy/**', 'tools/anatomy/**', 'app.js', 'styles.css', 'workshop5*.html', 'workshop5-slides.js', '.github/workflows/anatomy-figures.yml']
+    paths: ['assets/anatomy/**', 'tools/anatomy/**', 'app.js', 'styles.css', 'workshop*.html', 'workshop*-slides.js', 'index.html', 'presenter.html', 'presenter.js', 'sessions.js', 'tools/sessions.test.mjs', 'assets/workshop-*/**', '.github/workflows/anatomy-figures.yml']
 permissions:
   contents: read
 concurrency:
@@ -23,7 +23,7 @@ jobs:
           git diff --exit-code -- assets/anatomy
       - name: Test figure models
         run: |
-          node --test --test-concurrency=2 tools/anatomy/bottleneck/model.test.mjs tools/anatomy/integration.test.mjs
+          node --test --test-concurrency=2 tools/anatomy/bottleneck/model.test.mjs tools/anatomy/integration.test.mjs tools/sessions.test.mjs
       - name: Install remote browser checks
         id: browser-install
         run: |
@@ -32,7 +32,8 @@ jobs:
       - name: Check textures in both themes
         run: |
           mkdir -p anatomy-evidence
-          export CHROME_PATH="$(node --input-type=module -e 'import {chromium} from "playwright"; console.log(chromium.executablePath())')"
+          export ANATOMY_CHROME_PATH="$(node --input-type=module -e 'import {chromium} from "playwright"; console.log(chromium.executablePath())')"
+          export CHROME_PATH="$PWD/tools/anatomy/ci-chrome.sh"
           failures=0
           for id in bottleneck loop mcp hooks subagents eval; do
             for theme in '' '-light'; do
@@ -74,6 +75,27 @@ jobs:
               assert.notEqual(await slider.getAttribute('aria-valuenow'),beforeValue,`${id} idle tour must change preset`);
               assert.notEqual(await readout.textContent(),beforeText,`${id} idle tour must change readout`);
             }
+            await page.goto('http://127.0.0.1:8765/workshop5.html#1');
+            const sessions=await page.evaluate(()=>window.CLASSROOM_SESSIONS);
+            for(const session of sessions){
+              await page.locator('#session-select').selectOption(session.id);
+              await page.waitForURL(`**/${session.href}`);
+              assert.equal(await page.locator('#session-select').inputValue(),session.id);
+              assert.ok(await page.locator('.heading h1').textContent());
+              await page.screenshot({path:`anatomy-evidence/session-${session.id}-desktop.png`,fullPage:true});
+              await page.setViewportSize({width:390,height:844});
+              assert.ok(await page.locator('#session-select').isVisible());
+              assert.ok(await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)<=innerWidth+1));
+              await page.screenshot({path:`anatomy-evidence/session-${session.id}-mobile.png`,fullPage:true});
+              await page.setViewportSize({width:1440,height:1100});
+              const presenter=await browser.newPage();
+              const name=session.deck==='index.html'?'presenter.html':session.deck.replace('.html','-presenter.html');
+              await presenter.goto(`http://127.0.0.1:8765/${name}?i=${session.start-1}`);
+              const preview=presenter.locator('#p-frame');await preview.waitFor();
+              assert.ok((await preview.getAttribute('src')).startsWith(session.deck+'?embed=1'));
+              await presenter.screenshot({path:`anatomy-evidence/session-${session.id}-presenter.png`,fullPage:true});
+              await presenter.close();
+            }
             for(const slide of [8,10,30,35,39,43,44]){
               await page.goto(`http://127.0.0.1:8765/workshop5.html#${slide}`);
               const iframe=page.locator('.anatomy-figure iframe');
@@ -94,12 +116,12 @@ jobs:
                 assert.notEqual(await slider.getAttribute('aria-valuenow'),before,`Slide ${slide} slider must change`);
                 assert.notEqual(await readout.textContent(),text,`Slide ${slide} readout must change`);
               }
-              const button=frame.locator('button:enabled:not([aria-pressed="true"])').first();
-              if(await button.count()){
+              const button=await frame.locator('button:enabled:not([aria-pressed="true"])').first().elementHandle();
+              if(button){
                 const before=await frame.locator('[data-readout]').first().textContent();
                 const pressed=await button.getAttribute('aria-pressed');
                 await button.click(); await page.waitForTimeout(800);
-                if(pressed!==null)assert.notEqual(await button.getAttribute('aria-pressed'),pressed);
+                if(pressed!==null)assert.equal(await button.getAttribute('aria-pressed'),'true',`Slide ${slide} button must activate`);
                 else assert.notEqual(await frame.locator('[data-readout]').first().textContent(),before);
               }
               await page.screenshot({path:`anatomy-evidence/slide-${slide}-desktop.png`,fullPage:true});
