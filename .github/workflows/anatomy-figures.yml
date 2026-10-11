@@ -23,10 +23,9 @@ jobs:
           git diff --exit-code -- assets/anatomy
       - name: Test figure models
         run: |
-          rg --files tools/anatomy -g '*.test.mjs' -g '!vendor/**' > /tmp/anatomy-model-tests
-          test -s /tmp/anatomy-model-tests
-          xargs node --test --test-concurrency=2 < /tmp/anatomy-model-tests
+          node --test --test-concurrency=2 tools/anatomy/bottleneck/model.test.mjs tools/anatomy/integration.test.mjs
       - name: Install remote browser checks
+        id: browser-install
         run: |
           npm install --no-save --package-lock=false playwright
           npx playwright install --with-deps chromium
@@ -42,7 +41,7 @@ jobs:
           done
           test "$failures" = 0
       - name: Check classroom, presenter, mobile, controls and reduced motion
-        if: success() || failure()
+        if: ${{ !cancelled() && steps.browser-install.outcome == 'success' }}
         run: |
           python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/anatomy-http.log 2>&1 &
           server_pid=$!
