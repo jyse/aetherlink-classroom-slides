@@ -1,0 +1,65 @@
+name: Deploy classroom slides to Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Test classroom decks
+        run: node --test --test-concurrency=2 tools/anatomy/bottleneck/model.test.mjs tools/anatomy/integration.test.mjs tools/sessions.test.mjs
+      - name: Prepare static site
+        run: node tools/publish-site.mjs
+      - name: Check publish boundary
+        run: |
+          test -f dist/index.html
+          test -f dist/styles.css
+          test ! -e dist/.git
+          test ! -e dist/.omc
+          test ! -e dist/tools
+          test -z "$(find dist -mindepth 1 -maxdepth 1 ! -name assets ! -name styles.css ! -name '*.html' ! -name '*.js' -print -quit)"
+          test -z "$(find dist/assets -type d \( -name node_modules -o -name tools -o -name vendor \) -print -quit)"
+      - name: Configure Pages
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/configure-pages@v5
+      - name: Upload Pages artifact
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
