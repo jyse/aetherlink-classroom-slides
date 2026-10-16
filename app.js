@@ -558,10 +558,17 @@ function buildOpener(stage, main, s, v) {
     const figure = node('figure', 'sdlc-loop'); const img = document.createElement('img'); img.src = v.image; img.alt = v.imageAlt || '';
     figure.append(img); main.prepend(figure);
   }
-  if (v.opener === 'team') main.querySelectorAll('.card').forEach(c => {
+  if (v.opener === 'team') main.querySelectorAll('.card').forEach((c, i) => {
     const name = c.querySelector('h2,h3,strong,.card-title')?.textContent || c.textContent;
+    const photo = s.cards?.[i]?.photo;                               // optional: cards[i].photo = 'assets/team/<name>.jpg'
+    if (photo) { const av = node('span', 'team-avatar team-photo'); const img = document.createElement('img'); img.src = photo; img.alt = ''; av.append(img); c.prepend(av); return; }
     const ini = name.split(' ').filter(w => /^[A-Z]/.test(w)).map(w => w[0]).slice(0, 2).join('');
     c.prepend(node('span', 'team-avatar', ini));
+  });
+  if (v.opener === 'teams') main.querySelectorAll('.card').forEach(c => {   // empty robot per team: names get written on it
+    const img = document.createElement('img'); img.src = BOTS.head.src; img.alt = ''; img.className = 'teams-bot';
+    const lines = node('div', 'teams-lines'); for (let k = 0; k < 6; k++) lines.append(node('span', 'teams-line'));
+    c.prepend(img); c.append(lines);
   });
 }
 function rel(el, stage) { const a = el.getBoundingClientRect(), b = stage.getBoundingClientRect(); return { x: a.left - b.left + stage.scrollLeft, y: a.top - b.top, w: a.width, h: a.height }; }
