@@ -460,6 +460,13 @@ function renderExtras(stage, main, s, v) {
     const b = node('div', 'zone z-ext'); const chips = node('div', 'zone-chips'); v.zones[2].forEach(t => chips.append(node('span', 'zchip', t))); b.append(node('span', 'zone-label', v.zones[1]), chips, node('h3', null, cols[1]?.title || ''), node('p', null, cols[1]?.items?.[0] || ''));
     z.append(a, gate, b); cmp?.replaceWith(z);
   }
+  if (v.qa) {                                                    // knowledge check: questions visible, answers open one by one
+    grid.classList.add('qa-grid');
+    const open = c => { if (!c || c.classList.contains('qa-open')) return false; c.classList.add('qa-open'); announce(c.textContent); return true; };
+    cards.forEach(c => c.addEventListener('click', () => open(c)));
+    const next = () => open(cards.find(c => !c.classList.contains('qa-open')));
+    window.__reveal = next; slideController.signal.addEventListener('abort', () => { if (window.__reveal === next) window.__reveal = null; });
+  }
   if (v.pending) {                                               // 69: visible placeholder for instructions still to come
     const p = node('div', 'pending-box'); p.append(node('span', 'pending-ico', '⏳'), node('strong', null, v.pending[0]), node('span', null, v.pending[1])); grid.after(p);
   }
@@ -919,6 +926,13 @@ $('chapters').addEventListener('click', () => {
     row.append(b, t); list.append(row);
   });
   openPanel('Chapters', list);
+});
+// generic timer in the toolbar (any slide): same look as the pause slides, one shared timer
+let timerCtl = null;
+$('timer-btn')?.addEventListener('click', () => {
+  timerCtl?.abort(); timerCtl = new AbortController();
+  const box = ALSTimer.mount({ key: 'als:timer:toolbar', defaultSec: 0, minutes: true, back: true, boxCls: 'pause-box toolbar-timer', faceCls: 'pause-clock', lateCls: 'late', signal: timerCtl.signal });
+  openPanel('Timer', box);
 });
 $('fullscreen').addEventListener('click', async () => { try { if (document.fullscreenElement) await document.exitFullscreen(); else await document.documentElement.requestFullscreen(); } catch { notify('Fullscreen is unavailable in this browser.'); } });
 document.addEventListener('fullscreenchange', () => $('fullscreen').setAttribute('aria-label', document.fullscreenElement ? 'Exit fullscreen' : 'Enter fullscreen'));

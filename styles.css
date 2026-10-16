@@ -1230,3 +1230,8 @@ body[data-opener="teams"] .card h3,body[data-opener="teams"] .card h2{font-size:
 .teams-bot{height:clamp(110px,18vh,190px);width:auto;margin-bottom:.4rem;filter:drop-shadow(0 6px 18px color-mix(in srgb,var(--aether-purple,#8b5cf6) 35%,transparent))}
 .teams-lines{display:flex;flex-direction:column;gap:clamp(.7rem,2.2vh,1.2rem);width:80%;margin-top:.8rem}
 .teams-line{display:block;border-bottom:2px dashed color-mix(in srgb,var(--text) 30%,transparent);height:1px}
+.toolbar-timer .pause-clock{font-size:clamp(3.5rem,8vw,6.5rem)}
+.qa-grid .card{cursor:pointer}
+.qa-grid .card h3,.qa-grid .card h2{font-size:clamp(1rem,1.5vw,1.3rem);text-transform:none;letter-spacing:0}
+.qa-grid .card p{opacity:0;filter:blur(6px);transition:opacity .4s,filter .4s}
+.qa-grid .card.qa-open p{opacity:1;filter:none}
