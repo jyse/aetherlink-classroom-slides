@@ -117,6 +117,7 @@ const BOTS = {
   stretchLeft:  { src: 'assets/aetherbot/stretch/aetherbot-stretch-links.webp',  tip: [0.1, 48], ratio: 900 / 541 },
   sleepy:       { src: 'assets/aetherbot/faces/aetherbot-face-slaperig.webp' },
   happy:        { src: 'assets/aetherbot/faces/aetherbot-face-blij.webp' },
+  happyHatch:   { src: 'assets/aetherbot/faces/aetherbot-face-blij.webp', hatch: [50, 22] },
   peek:         { src: 'assets/aetherbot/aetherbot-peek.webp' },
   multiarm:     { src: 'assets/aetherbot/aetherbot-multiarm.webp' },
   stretchUp:    { src: 'assets/aetherbot/stretch/aetherbot-stretch-omhoog.webp', ratio: 336 / 1100 },
@@ -470,6 +471,14 @@ function renderExtras(stage, main, s, v) {
   if (v.pending) {                                               // 69: visible placeholder for instructions still to come
     const p = node('div', 'pending-box'); p.append(node('span', 'pending-ico', '⏳'), node('strong', null, v.pending[0]), node('span', null, v.pending[1])); grid.after(p);
   }
+  if (v.rulesBox) {                                              // 5: the client's own rules as a numbered box under the cards
+    const r = node('div', 'rules-box'); const ol = node('ol', 'rules-list');
+    v.rulesBox[1].forEach((t, i) => { const li = node('li', null, t); li.style.setProperty('--i', i); ol.append(li); });
+    r.append(node('strong', 'rules-title', v.rulesBox[0]), ol); grid.after(r);
+  }
+  if (v.flowText) {                                              // 25: a short flow as text under the cards: a → b → c
+    const f = node('p', 'tok-flow'); v.flowText.forEach((t, i) => { if (i) f.append(node('span', 'tok-arrow', '→')); f.append(node('span', 'tok-word', t)); }); grid.after(f);
+  }
   if (v.sourceTiles != null && cards[v.sourceTiles]) {          // 70: pick one source, read-only
     const c = cards[v.sourceTiles]; const t = node('div', 'src-tiles'); const icons = ['🎫', '🦊', '📘'];
     String(s.cards[v.sourceTiles].body).split('\n').forEach((l, i) => { const k = node('div', 'src-tile'); k.style.setProperty('--i', i); k.append(node('span', 'src-ico', icons[i] || '•'), node('span', 'src-name', l), node('span', 'src-lock', '🔒 read-only')); t.append(k); });
@@ -608,6 +617,10 @@ function renderVisual(stage, body, main, s) {
   }
   highlight(stage, s);
   if (v.opener) buildOpener(stage, main, s, v);
+  if (v.logoFly) {                                               // 6: our logo flies in after AetherBOT has waved
+    const logo = node('div', 'fly-logo'); const img = document.createElement('img'); img.src = 'assets/aetherlink-mark.png'; img.alt = '';
+    logo.append(img, node('span', 'opener-word', 'AETHER'), node('span', 'opener-word accent', 'LINK')); main.prepend(logo);
+  }
   const bot = BOTS[v.bot]; if (!bot) return;
   const fig = node('figure', 'bot bot-' + v.bot + ' place-' + v.place); fig.setAttribute('aria-hidden', 'true');
   const live = node('div', 'bot-live'); const img = document.createElement('img'); img.src = bot.src; img.alt = ''; img.decoding = 'async';
@@ -635,6 +648,11 @@ function renderVisual(stage, body, main, s) {
     requestAnimationFrame(() => requestAnimationFrame(put)); window.addEventListener('resize', put, { signal: slideController.signal });
     ex.pointer = fig;
     if (v.spotlight != null) { const tm = setTimeout(() => fig.classList.add('show'), 1600); slideController.signal.addEventListener('abort', () => clearTimeout(tm)); }
+  }
+  else if (v.place === 'clouds') {                             // 14: two thought clouds, one left and one right of AetherBOT
+    const grid = main.querySelector('.cards'); const cs = [...grid.querySelectorAll('.card')]; const row = node('div', 'cloud-row');
+    cs.forEach((c, i) => { c.classList.add('cloud', i ? 'cloud-right' : 'cloud-left'); const dots = node('span', 'cloud-dots'); dots.append(node('i'), node('i')); c.append(dots); });
+    row.append(cs[0], fig, ...cs.slice(1)); grid.replaceWith(row);
   }
   else if (v.place === 'timeline') { const tl = main.querySelector('.art-timeline'); const row = node('div', 'tl-row'); tl.replaceWith(row); row.append(tl, fig); }
   const fx = document.createElementNS(SVGNS, 'svg'); fx.setAttribute('class', 'fx'); fx.setAttribute('aria-hidden', 'true'); stage.append(fx);
@@ -785,7 +803,7 @@ function visibleFrom(i, dir) { for (let n = i; n >= 0 && n < slides.length; n +=
 function step(dir) { const n = visibleFrom(current + dir, dir); if (n !== null) go(n); }
 
 /* ---- stepThrough: every main item starts hidden, click / → shows the next one ---- */
-const STEP_ITEMS = '.cards > .card, .pillars > .pillar, .compare > .compare-col, .pop-chips > .pop-chip, .slide-main > .tagline';
+const STEP_ITEMS = '.cards > .card, .pillars > .pillar, .compare > .compare-col, .pop-chips > .pop-chip, .rules-box, .tok-flow, .slide-main > .tagline';
 function applyStepThrough(main, s) {
   const v = s.visual || {}; if (!v.stepThrough || window.__reveal) return;
   const items = [...main.querySelectorAll(typeof v.stepThrough === 'string' ? v.stepThrough : STEP_ITEMS)];

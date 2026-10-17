@@ -201,15 +201,15 @@ window.SLIDES = [
   kicker: "WELCOME · WHO WE ARE",
   subtitle: "Who AetherLink is, and what we are doing together.",
   type: "context",
-  visual: { bot: 'wave', place: 'left', stepThrough: true,
-    highlight: [{ in: 'card:1', text: 'together', tone: 'purple' }] },
+  visual: { bot: 'wave', place: 'left', stepThrough: true, logoFly: true,
+    highlight: [{ in: 'card:0', text: 'building brains', tone: 'orange' }, { in: 'card:1', text: 'Seven days of AI time', tone: 'purple' }] },
   dark: true,
   cards: [
-    { title: "AetherLink", body: "A Dutch AI company. We build AI products and help teams build with AI themselves." },
-    { title: "Together with Worldline", body: "Two teaching days, then five support days in which we build with your team." }
+    { title: "AetherLink", body: "A passion for the newest technology.\nCurious about the future.\nGood at building brains." },
+    { title: "Worldline", body: "Seven days of AI time: room to explore, research and learn to work with AI." }
   ],
-  keyPoints: ["Constance: who AetherLink is","What we build and why we teach","The collaboration with Worldline","Keep it short and personal"],
-  notes: "Constance tells who AetherLink is: a Dutch AI company that builds AI products and helps teams build with AI themselves. Then the collaboration: two teaching days, then five support days in which we build together with the team. Keep it short and personal — the shape of the programme comes back a few slides later."
+  keyPoints: ["AetherBOT waves, our logo flies in","Passion for the newest technology","Curious about the future, good at building brains","Worldline: seven days of AI time","Keep it short and personal"],
+  notes: "AetherBOT waves first, then our logo flies in. Constance tells who AetherLink is: a passion for the newest technology, curious about the future, and good at building brains. Then Worldline: you get seven days of AI time, room to explore, research and learn to work with AI. Keep it short and personal: the shape of the programme comes back a few slides later."
 },
 
 { // Slide 7
@@ -276,16 +276,16 @@ window.SLIDES = [
 { // Slide 11
   title: "The seven-day programme",
   kicker: "DAY 1 · WELCOME",
-  subtitle: "Two teaching days establish the foundation. Five support days apply the method to agent workflows and team work.",
+  subtitle: "Two days to practise and play. Five days to deepen and apply.",
   type: "context",
   visual: { art: 'timeline', bot: 'head', place: 'timeline', tool: 'arm', target: '.tl-arrow',
-    highlight: [{ in: 'subtitle', text: 'foundation', tone: 'purple' }, { in: 'subtitle', text: 'apply', tone: 'orange' }] },
+    highlight: [{ in: 'subtitle', text: 'practise and play', tone: 'purple' }, { in: 'subtitle', text: 'deepen and apply', tone: 'orange' }, { in: 'card:0', text: 'Just have fun, together.', tone: 'mark' }] },
   cards: [
-    { title: "Teaching Days 1–2", body: "Understand and practise." },
-    { title: "Support Days 1–5", body: "Deepen and apply." }
+    { title: "Teaching Days 1–2", body: "Practise and play. Just have fun, together." },
+    { title: "Support Days 1–5", body: "Deepen and apply: build your own team pipeline or workflow." }
   ],
-  keyPoints: ["Separate teaching days from support days","One sentence per phase","Don't detail all seven days","Support days: different facilitator"],
-  notes: "Visually distinguish the two teaching days from the five support days, but don't explain all seven days in detail now — that temptation wastes time here. One sentence per phase is enough; the support days belong to a different facilitator."
+  keyPoints: ["Important slide: take your time","Days 1–2: practise and play, just have fun together","Days 3–7: deepen and apply","Goal: your own team pipeline or workflow"],
+  notes: "This one matters: set the tone. The first two days are for practising and playing: just have fun, together. Nothing has to be perfect yet. The other five days are for deepening and applying: each team builds its own pipeline or workflow. Don't explain all seven days in detail now; one sentence per phase is enough."
 },
 
 { // Slide 12
@@ -293,19 +293,14 @@ window.SLIDES = [
   kicker: "DAY 1 · WELCOME",
   subtitle: "By the end of the programme, your team has built something with AI that works in your team.",
   type: "context",
-  visual: { stagger: 'pop', stepThrough: true,
+  visual: { popOut: 0, bot: 'happyHatch', place: 'popout', stepThrough: true,
     highlight: [{ in: 'subtitle', text: 'your team', tone: 'purple' }, { in: 'tagline', text: 'elevates your team', tone: 'orange' }] },
   cards: [
-    { title: "An agent", body: "" },
-    { title: "Skills", body: "" },
-    { title: "A pipeline", body: "" },
-    { title: "An automation", body: "" },
-    { title: "A tester", body: "" },
-    { title: "An app", body: "" }
+    { title: "For example", body: "An agent\nSkills\nA pipeline\nAn automation" }
   ],
   tagline: "Anything that elevates your team. You build it together, as a team.",
-  keyPoints: ["Give inspiration, not a definition","Agent, skills, pipeline, automation, tester, app","Anything that elevates your team","It's a team assignment"],
-  notes: "Give inspiration, not a definition. What a team ends up with can be an agent, a set of skills, a pipeline, an automation, a tester or an app — anything that elevates your team and saves time, money or effort. Make it explicit that this is a team assignment: you build it together with your team, not as a personal trick."
+  keyPoints: ["Give inspiration, not a definition","Agent, skills, pipeline, automation","Anything that elevates your team","It's a team assignment"],
+  notes: "Give inspiration, not a definition. Press → and the ideas come out of AetherBOT's head one by one. What a team ends up with can be an agent, a set of skills, a pipeline or an automation: anything that elevates your team and saves time, money or effort. Make it explicit that this is a team assignment: you build it together with your team, not as a personal trick."
 },
 
 { // Slide 13
@@ -328,7 +323,7 @@ window.SLIDES = [
   kicker: "DAY 1 · WELCOME",
   subtitle: "AI fundamentals, and getting to know Claude Code.",
   type: "context",
-  visual: { bot: 'wave', place: 'beside' },
+  visual: { bot: 'wave', place: 'clouds' },
   cards: [
     { title: "AI fundamentals", body: "What AI is, how a model reads your input, and how to write a prompt that works." },
     { title: "Get acquainted with Claude Code", body: "A tour, your own profile, and your first game: play around and try things." }
@@ -344,19 +339,20 @@ window.SLIDES = [
 { // Slide 15
   title: "Where AI comes from",
   kicker: "DAY 1 · PART 1 · AI FOUNDATIONS",
-  subtitle: "A short story, from calculating machines to the model you use today.",
+  subtitle: "Seventy years in six moments.",
   type: "concept",
   layout: "steps",
   visual: { stepKeys: true },
   items: [
-    { label: "After the war", caption: "Computers start as pure calculating power: fast, but only doing what they are told." },
-    { label: "Machine learning", caption: "Instead of writing every rule, we let computers learn from examples." },
-    { label: "Deep learning", caption: "Many layers of learning, stacked, find patterns no person could write down." },
-    { label: "Generative AI", caption: "Since 2017 a new kind of model (the transformer) can create new text, images and code." },
-    { label: "Your language model", caption: "Today: a model that read huge amounts of text and answers you in plain language." }
+    { label: "1950", caption: "Alan Turing asks the question: \"Can machines think?\" His Turing Test is still the best-known definition of machine intelligence." },
+    { label: "1997", caption: "IBM's Deep Blue beats world chess champion Kasparov. Not by thinking, but by brute computing power." },
+    { label: "2012", caption: "The deep learning breakthrough: a neural network wins the ImageNet image-recognition contest by a wide margin. Speech, images and translation all start here." },
+    { label: "2017", caption: "\"Attention Is All You Need\": Google publishes the transformer, the engine under every modern language model." },
+    { label: "2022", caption: "ChatGPT: one million users in five days. AI becomes something everyone can use." },
+    { label: "2025–2026", caption: "Agentic AI: AI no longer only answers, it carries out tasks. That is where you are now." }
   ],
-  keyPoints: ["Tell it as a story, not definitions","Press → for each step","After the war → ML → deep learning → GenAI → LLM","The next slides zoom in on each step"],
-  notes: "Tell this as a story, not as a list of definitions. Press → for each step. Right after the war, computers were calculating power: fast, but only doing exactly what they were told. Then machine learning: instead of writing every rule, we let the computer learn from examples. Deep learning stacks many layers of that learning on top of each other, so it can find patterns nobody could write down. In 2017 a new kind of model, the transformer, made generative AI possible: AI that creates something new. And that brings us to the language model you work with today. The next slides zoom in on each step."
+  keyPoints: ["Tell it as a story, not definitions","Press → for one year further","1950 · 1997 · 2012 · 2017 · 2022 · now","The next slides zoom in on the steps"],
+  notes: "Tell this as a story. Press → to move one year further. 1950: Alan Turing asks 'Can machines think?'. 1997: Deep Blue beats Kasparov at chess, by brute computing power rather than thinking. 2012: deep learning breaks through when a neural network wins the ImageNet contest. 2017: Google's transformer paper, 'Attention Is All You Need', the engine under every modern language model. 2022: ChatGPT reaches a million users in five days. And now, 2025–2026: agentic AI, which no longer only answers but carries out tasks. That is where you are today. The next slides zoom in on the steps."
 },
 
 { // Slide 16
@@ -386,7 +382,7 @@ window.SLIDES = [
     highlight: [{ in: 'card:0', text: 'learns from examples', tone: 'orange' }] },
   cards: [
     { title: "Machine learning", body: "Nobody writes a rule for every case. The system learns from examples, and you have been giving it those examples for years." },
-    { title: "You did this", body: "traffic-light captchas\nNetflix ratings\nthe spam button\nYouTube's next video" }
+    { title: "You taught AI", body: "traffic-light captchas\nNetflix ratings\nthe spam button\nYouTube's next video" }
   ],
   keyPoints: ["Ask: who clicked traffic lights this week?","That trained a machine","Netflix, YouTube, spam: all learned","Contrast: rules vs examples"],
   notes: "Ask the room: who had to click all the traffic lights to log in somewhere this week? Notice that the puzzles keep changing. Every time you do it, you help train a machine to recognise traffic lights, buses and animals. That is machine learning: nobody writes a rule for every picture; the system learns from millions of examples. Netflix recommendations, YouTube's next video and your spam filter work the same way."
@@ -498,15 +494,15 @@ window.SLIDES = [
   subtitle: "Desktop or API: same models, different costs.",
   type: "concept",
   visual: { stepThrough: true,
-    highlight: [{ in: 'card:2', text: 'Google Vertex AI', tone: 'purple' }] },
+    highlight: [{ in: 'card:2', text: 'a secure route', tone: 'purple' }] },
   cards: [
     { title: "On your desktop", body: "A subscription: a fixed price per month, with usage limits." },
     { title: "Through the API", body: "You pay for what you use, counted in tokens." },
-    { title: "Your setup", body: "Claude Code runs through Google Vertex AI: a secure route, used through the API." }
+    { title: "Your setup", body: "Claude Code runs through your company's own setup: a secure route, used through the API." }
   ],
   tagline: "Through the API, every token has a price.",
-  keyPoints: ["Same models, different ways in","Desktop: subscription","API: pay per token","Here: via Google Vertex AI, through the API","So tokens matter"],
-  notes: "Same models, different ways in, and different costs. On your desktop you have a subscription: a fixed price per month with usage limits. Through the API you pay for what you use, counted in tokens. In your setup Claude Code runs through Google Vertex AI: a secure route, because you work with sensitive systems, and it is used through the API. So every token has a price — which brings us to tokens."
+  keyPoints: ["Same models, different ways in","Desktop: subscription","API: pay per token","Here: a secure route, through the API","So tokens matter"],
+  notes: "Same models, different ways in, and different costs. On your desktop you have a subscription: a fixed price per month with usage limits. Through the API you pay for what you use, counted in tokens. In your setup Claude Code runs through your company's own secure route, because you work with sensitive systems, and it is used through the API. So every token has a price — which brings us to tokens."
 },
 
 { // Slide 25
@@ -514,11 +510,10 @@ window.SLIDES = [
   kicker: "DAY 1 · PART 1 · STEERING AI",
   subtitle: "The currency of your AI.",
   type: "concept",
-  visual: { stepThrough: true,
+  visual: { stepThrough: true, flowText: ["your text", "tokens", "numbers", "the model"],
     highlight: [{ in: 'tagline', text: 'not the same as a word', tone: 'orange' }] },
   cards: [
     { title: "Definition", body: "A token is a small piece of text that a model reads and writes: often a whole word, sometimes part of a word or a single character." },
-    { title: "How it works", body: "your text → tokens → numbers → the model" },
     { title: "Why it matters", body: "Context limits, usage limits and costs are all counted in tokens. The clearer your prompt, the fewer you waste." }
   ],
   tagline: "A token is not the same as a word.",
@@ -553,11 +548,11 @@ window.SLIDES = [
     { title: "Memory", body: "CLAUDE.md: who you are, what you do, how it should work with you." },
     { title: "Hands and feet", body: "MCP connections to Jira, GitLab and Confluence." },
     { title: "Defaults", body: "Settings, rules and the model it starts with." },
-    { title: "LibreChat", body: "For the things Claude Code doesn't do, like making images." }
+    { title: "LibreChat", body: "For your basic questions. And we make an image together, in the library, where you find an image generator." }
   ],
   tagline: "We set this up with you, step by step.",
-  keyPoints: ["Draw the landscape once","Memory: CLAUDE.md","Hands and feet: MCP to Jira, GitLab, Confluence","Defaults and LibreChat","We set it up together"],
-  notes: "Draw the landscape they are heading to, once, so they see it before they need it. Your Claude Code is your personal assistant. It gets a memory (CLAUDE.md: who you are and how it should work with you), hands and feet through MCP connections to Jira, GitLab and Confluence, and defaults: settings, rules and the model it starts with. For images you use LibreChat. Don't explain each piece in depth: all of them come back today and tomorrow, and we set them up together."
+  keyPoints: ["Draw the landscape once","Memory: CLAUDE.md","Hands and feet: MCP to Jira, GitLab, Confluence","Defaults, and LibreChat for basic questions","Make an image together via the library","We set it up together"],
+  notes: "Draw the landscape they are heading to, once, so they see it before they need it. Your Claude Code is your personal assistant. It gets a memory (CLAUDE.md: who you are and how it should work with you), hands and feet through MCP connections to Jira, GitLab and Confluence, and defaults: settings, rules and the model it starts with. LibreChat is for basic questions, and together we make an image in the library, where you find an image generator. Don't explain each piece in depth: all of them come back today and tomorrow, and we set them up together."
 },
 
 { // Slide 28
