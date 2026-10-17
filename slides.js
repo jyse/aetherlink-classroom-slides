@@ -1668,7 +1668,7 @@ Check: show the evidence for your answer; mark anything you are not sure of as O
   ],
   tagline: "That only works if you agree first.",
   keyPoints: ["Why: no single prompt builds this","Three layers: scoreboard, connection, start screen","The format is the agreement","Collected on one laptop, on the big screen"],
-  notes: "Why the arcade: Claude can build one game in one prompt. Five games from five people talking to one scoreboard can't be done in one prompt: the team has to agree on a format, write it down and build in layers. That is the software lifecycle and the team work we want them to feel. Three layers: a scoreboard that receives scores and shows a top 10, a connection that every game uses at game over, and a start screen. Every game comes from its own GitLab repo and is collected on one laptop, the arcade, shared on the big screen."
+  notes: "Why the arcade: Claude can build one game in one prompt. Five games from five people talking to one scoreboard can't: it needs one agreement that everyone keeps, and building in layers. That is the software lifecycle and the team work we want them to feel. The agreement is already made for them: the arcade starter has one fixed contract (arcade.js) and a skill that connects a game to it. Three layers: the scoreboard, the connection every game uses at game over, and the start screen. Everything runs on one laptop, the arcade, shared on the big screen.",
 },
 
 { // Slide 93
@@ -1679,15 +1679,15 @@ Check: show the evidence for your answer; mark anything you are not sure of as O
   layout: "steps",
   visual: { stepKeys: true },
   items: [
-    { label: "Agree", caption: "The score format, as a shared skill." },
-    { label: "Scoreboard", caption: "Build it and test it with fake scores." },
+    { label: "Set up", caption: "The manager puts the arcade starter on GitLab." },
+    { label: "Scoreboard", caption: "Fill it in. Test it with the example game." },
     { label: "One game", caption: "Connect one game. Test it." },
     { label: "All games", caption: "Then the rest, one by one." },
     { label: "Start screen", caption: "One menu for the whole arcade." }
   ],
   tagline: "Test each layer before the next one.",
   keyPoints: ["Order matters","Fake scores first","One game, then the rest","Same as a release: layer by layer"],
-  notes: "The order is the lesson. First agree the format, as a skill everyone uses. Then the scoreboard, tested with fake scores before any game is connected. Then one game, test, and only then the rest. The start screen last. Ask the room where this looks like their own releases."
+  notes: "The order is the lesson. First the set-up: the manager puts the arcade starter on GitLab and everyone reads the score skill. Then the scoreboard, tested with the example game before any real game is connected. Then one game, test, and only then the rest. The start screen last. Ask the room where this looks like their own releases.",
 },
 
 { // Slide 94
@@ -1698,46 +1698,46 @@ Check: show the evidence for your answer; mark anything you are not sure of as O
   visual: { stepThrough: true },
   cards: [
     { title: "Frontender", body: "The start screen, and how the scores look." },
-    { title: "Backender", body: "The score format, and the scoreboard that receives it." },
-    { title: "Manager", body: "The agreement, the order, and the arcade laptop." }
+    { title: "Backender", body: "The scoreboard, and checking every game against the contract." },
+    { title: "Manager", body: "The arcade repo, the order, and the arcade laptop." }
   ],
   tagline: "No frontender in your team? Then someone else learns it today.",
   keyPoints: ["Split by role","Manager owns agreement + arcade laptop","Backender: format + scoreboard","Frontender: start screen"],
-  notes: "Split the work by role. The manager owns the agreement, the order and the arcade laptop where everything comes together, so the manager is right in the middle and sees what can be done from their own laptop. The backender owns the format and the scoreboard. The frontender owns the start screen and how scores look. Teams without a frontender: someone else learns it today."
+  notes: "Split the work by role. The manager sets up the arcade repo, guards the order and runs the arcade laptop where everything comes together, so the manager is right in the middle and sees what can be done from their own laptop. The backender owns the scoreboard and checks every game against the contract. The frontender owns the start screen and how scores look. Teams without a frontender: someone else learns it today.",
 },
 
 { // Slide 95
-  title: "Assignment 12: The score agreement",
+  title: "Assignment 12: Set up the arcade",
   kicker: "DAY 2 · ASSIGNMENT 12",
-  subtitle: "Agree as a team what every game sends, and write it down as a shared skill.",
+  subtitle: "The agreement is ready: one contract, one skill. Put it on GitLab and read it together.",
   type: "practice",
   layout: "exercise",
   cards: [
-    { title: "Every score contains", body: "player name\npicture\npoints\ngame name" }
+    { title: "In the starter", body: "arcade.js: the contract\nthe arcade-score skill\nserve.js: the arcade server\nan empty scoreboard and start screen\nan example game" }
   ],
   stepsHeading: "Do this:",
-  steps: ["The manager makes one team repo on GitLab: arcade. Everyone gets access.", "Agree the format as a team. Five minutes, on paper first.", "One person asks Claude to write it as a skill: arcade-score.", "Everyone reads it. Agreed? Commit and push it to the arcade repo.", "Everyone copies the skill into their own game repo."],
-  expected: "One arcade-score skill in the team repo, the same in every game repo.",
-  prompt: "Write a skill called arcade-score in .claude/skills/arcade-score/SKILL.md. It describes how a game in our arcade reports a score at game over: player name, picture, points and game name, in exactly this format: [the format your team agreed]. Add one example and a way to check it. Show me the skill before you save it.",
-  keyPoints: ["Paper first, then Claude","The format is the contract","One skill, in every repo","The manager hosts the arcade repo"],
-  notes: "The format is the contract between all games and the scoreboard. Let the team agree it on paper first; then one person asks Claude to write it as a skill. Everyone reads it before it's committed, because changing it later breaks every game. The skill goes into the team repo and into every game repo. We let them make it themselves, together: that's the point."
+  steps: ["Manager: create a repo arcade in your GitLab space, give your team access.", "Manager: copy the arcade starter in (from your trainer), commit and push.", "Everyone: clone it and read the arcade-score skill. What does every game send?", "On the arcade laptop: npm test, then node serve.js. Open localhost:8080.", "Play the example game once. Its score is the first one in the arcade."],
+  expected: "The arcade runs on the arcade laptop, the tests pass, and everyone knows what their game must send.",
+  prompt: "Read the arcade-score skill in this repo. Explain in five lines what my game must do to join the arcade, and what I must never change.",
+  keyPoints: ["The agreement is given: arcade.js + skill","Manager sets up the repo","Everyone reads the skill","npm test, node serve.js","Example game = first score"],
+  notes: "The agreement is already made: one contract (arcade.js) and one skill (arcade-score) that every game uses. The manager creates the arcade repo on GitLab, copies the starter in and pushes; the trainer has the starter (https://github.com/jyse/aetherlink-classroom-slides/tree/cons/dag1-herziening/arcade-starter). Everyone clones it and reads the skill: the Example prompt lets Claude summarise it in five lines. On the arcade laptop: npm test (it tests the contract), then node serve.js and open localhost:8080. Play the example game once so there is a first score. No install is needed: serve.js uses Node only."
 },
 
 { // Slide 96
   title: "Assignment 13: Build the scoreboard",
   kicker: "DAY 2 · ASSIGNMENT 13",
-  subtitle: "On the arcade laptop: one place that receives scores and shows the top 10.",
+  subtitle: "On the arcade laptop: fill in the empty scoreboard.",
   type: "practice",
   layout: "exercise",
   cards: [
-    { title: "Done when", body: "it accepts a score in your format\nit shows the top 10 with picture and name\nit survives a reload" }
+    { title: "Done when", body: "it shows the top 10\nwith picture, name, game and points\nit survives a reload" }
   ],
   stepsHeading: "Do this:",
-  steps: ["On the arcade laptop, in the arcade repo: start claude.", "Ask Claude to build the scoreboard with the arcade-score skill. Plan first.", "Test it with three fake scores before any game is connected.", "Commit and push."],
-  expected: "A scoreboard that shows fake scores in the top 10, with picture and name.",
-  prompt: "Use the arcade-score skill to build a scoreboard in this repo: it receives scores in our format and shows the top 10 with picture and player name. Keep the scores after a reload. First show me the plan, then test it with three fake scores.",
-  keyPoints: ["On the arcade laptop","Fake scores first","Backender + manager","Commit and push"],
-  notes: "The scoreboard is built on the arcade laptop, in the team repo. Mostly backender and manager, with the rest watching or preparing their game. The simplest route: everything runs from that one laptop, so the scores can be kept locally (for example in the browser or a file). Let the team choose; that is part of the lesson. Test with fake scores before any game is connected."
+  steps: ["Arcade laptop, arcade repo: start claude.", "Ask Claude to fill in scoreboard.html with Arcade.topScores(10). Plan first.", "Test with the example game: game over twice.", "All visible? npm test passes? Commit and push."],
+  expected: "A scoreboard that shows the example scores in the top 10, with picture and name.",
+  prompt: "Fill in scoreboard.html: show Arcade.topScores(10) as a top 10, each row with the player's picture, name, game and points. Don't change arcade.js. Plan first.",
+  keyPoints: ["On the arcade laptop", "Fill in, don't start from scratch", "Test with the example game", "arcade.js stays untouched"],
+  notes: "The scoreboard is half there: scoreboard.html is an empty page with the contract loaded. Claude fills it in with Arcade.topScores(10). Test with the example game before any real game is connected. arcade.js is the contract and stays untouched; if Claude wants to change it, say no. Mostly backender and manager, with the rest preparing their game.",
 },
 
 { // Slide 97
@@ -1763,11 +1763,11 @@ Check: show the evidence for your answer; mark anything you are not sure of as O
     { title: "The order", body: "one game first\ntest it\nthen the next one" }
   ],
   stepsHeading: "Do this:",
-  steps: ["Ask Claude to make your game send its score with the arcade-score skill.", "Push your game to your GitLab repo.", "On the arcade laptop: pull your game in.", "Play one round. Is your score on the board, with your picture?", "Works? Next game. Doesn't? Fix it before the next one joins."],
+  steps: ["Copy your game into the arcade repo: games/<game>-<your name>/, with your picture.", "Ask Claude to connect it with the arcade-score skill. Plan first.", "npm test passes, and your game is in localhost:8080/games.json.", "On the arcade laptop: play one round. Is your score on the board, with your picture?", "Works? Push, and the next player goes. Doesn't? Fix it first."],
   expected: "Every game sends its score, and every score shows on the scoreboard with the right picture.",
-  prompt: "Use the arcade-score skill to make my game send its score at game over: my player name, my picture, my points and the game name. Plan first.",
-  keyPoints: ["One game first, then test","Push to your own GitLab repo","Pull it onto the arcade laptop","Fix before the next one joins"],
-  notes: "One game first: connect, push to its GitLab repo, pull it onto the arcade laptop, play one round, check the scoreboard. Only when that works does the next game join. When something breaks, it's almost always the format: back to the skill. That's exactly why the agreement came first."
+  prompt: "Use the arcade-score skill to connect my game in games/[your folder]. Plan first.",
+  keyPoints: ["Your game into games/<game>-<name>/", "The skill does the connecting", "Check /games.json", "One game first, then the next"],
+  notes: "Every player copies their game into the arcade repo, in games/<game>-<name>/, with their picture. The skill does the connecting: game.json, the contract script, one Arcade.submitScore at game over. One game first: connect, check /games.json, play one round on the arcade laptop, check the scoreboard. Only when that works does the next game join. When something breaks, it is almost always the score: the contract rejects it with a clear message.",
 },
 
 { // Slide 99
@@ -1780,11 +1780,11 @@ Check: show the evidence for your answer; mark anything you are not sure of as O
     { title: "The start screen shows", body: "every player's avatar\nevery game\nthe top 10" }
   ],
   stepsHeading: "Do this:",
-  steps: ["On the arcade laptop: ask Claude for a start screen. Plan first.", "Pick your avatar, pick a game, play.", "After game over: back to the start screen, with the new top 10.", "Commit and push."],
+  steps: ["On the arcade laptop: ask Claude to fill in index.html. Plan first.", "Pick your avatar, pick a game, play.", "After game over: back to the start screen, with the new top 10.", "Commit and push."],
   expected: "From one start screen, everyone can pick their avatar and play every game.",
-  prompt: "Build a start screen for our arcade: show every player's avatar, every game in this repo, and the top 10. Picking an avatar and a game starts that game; after game over you come back here. Plan first.",
+  prompt: "Fill in index.html as the arcade's start screen: every player's avatar and every game from Arcade.games(), and the top 10 from Arcade.topScores(10). Picking a game opens it. Don't change arcade.js. Plan first.",
   keyPoints: ["Frontender-led","Avatar → game → play → back","Top 10 on the start screen","Then: the tournament"],
-  notes: "Mostly the frontender, on the arcade laptop. One menu: pick your avatar, pick a game, play, and after game over you're back with the new top 10. When this works, the arcade is ready for the tournament."
+  notes: "Mostly the frontender, on the arcade laptop. index.html is an empty start screen with three sections: players, games and the top 10. Arcade.games() gives every connected game with its player and picture. Pick your avatar, pick a game, play, and after game over you're back with the new top 10. When this works, the arcade is ready for the tournament.",
 },
 
 { // Slide 100
@@ -1799,7 +1799,7 @@ Check: show the evidence for your answer; mark anything you are not sure of as O
   stepsHeading: "Do this:",
   steps: ["Ask Claude to write a skill: arcade-coach.", "The coach looks at the round that just ended and gives one short comment.", "Make it fun, never mean.", "Play a round and read the comment."],
   expected: "After every round your game gives one short, fun comment that fits what you just did.",
-  prompt: "Write a skill called arcade-coach. After every round it looks at what happened (score, how you lost, your previous best) and shows one short, fun comment in the game. Fixed comments are fine: no AI connection in the game itself. Show me the skill first.",
+  prompt: "Write a skill called arcade-coach. After every round it looks at what happened (score, how you lost, your previous best) and shows one short, fun comment in the game. Fixed comments are fine: no AI connection in the game itself. Only change files in my own game folder. Show me the skill first.",
   keyPoints: ["Optional, for fast teams","Skill + memory + creativity","No AI connection in the game","Fun, never mean"],
   notes: "Optional, for teams that are done early. The game comments on itself after every round: skills, memory and creativity together. The comments are fixed texts chosen by rules: there is no AI connection inside the game itself."
 },

@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Example game</title><link rel="stylesheet" href="../../arcade.css"></head>
+<body>
+  <h1>EXAMPLE</h1>
+  <p>Not a real game: it shows how a game reports its score.</p>
+  <button id="end">Game over with a random score</button>
+  <p id="msg"></p><p><a href="/">Back to the arcade</a></p>
+  <script src="../../arcade.js"></script>
+  <script>
+    // This is all a game needs to do at game over:
+    document.getElementById('end').onclick = () => {
+      const points = Math.floor(Math.random() * 100);
+      Arcade.submitScore({ player: 'AetherBOT', avatar: '/games/example/avatar.svg', points, game: 'Example' });
+      document.getElementById('msg').textContent = 'Score sent: ' + points;
+    };
+  </script>
+</body></html>
