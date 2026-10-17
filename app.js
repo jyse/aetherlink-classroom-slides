@@ -388,7 +388,7 @@ function renderExtras(stage, main, s, v) {
   }
   if (v.repeatStack != null && cards[v.repeatStack]) {          // 49: the same list, again and again
     const c = cards[v.repeatStack]; const wrap = node('div', 'rep-hand'); c.replaceWith(wrap);
-    ['card 1', 'card 2', 'card 3 …'].forEach((t, i) => { const k = i === 2 ? c : c.cloneNode(true); k.classList.add('rep-card', 'rep-c' + i); if (i < 2) k.setAttribute('aria-hidden', 'true');
+    (v.repeatTags || ['card 1', 'card 2', 'card 3 …']).forEach((t, i) => { const k = i === 2 ? c : c.cloneNode(true); k.classList.add('rep-card', 'rep-c' + i); if (i < 2) k.setAttribute('aria-hidden', 'true');
       k.style.setProperty('--i', i); k.append(node('span', 'rep-tag', t)); wrap.append(k); });
     main.classList.add('side-grid'); x.aside = main;
   }
